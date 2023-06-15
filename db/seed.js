@@ -3,6 +3,12 @@ const client = require("./client");
 async function dropTables() {
   console.log("Dropping tables...");
   try {
+    await client.query(`
+    DROP TABLE IF EXISTS category
+    DROP TABLE IF EXISTS order_items;
+    DROP TABLE IF EXISTS order;
+    DROP TABLE IF EXISTS items;
+    DROP TABLE IF EXISTS users`);
   } catch (error) {
     console.error(error);
   }
