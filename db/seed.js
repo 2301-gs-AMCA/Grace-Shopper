@@ -3,7 +3,7 @@ const { users, items } = require("./seedData");
 const { createUser } = require("./adapters/users");
 const { createItem } = require("./adapters/items");
 
-let settled = false;
+
 
 async function dropTables() {
   console.log("Dropping tables...");
@@ -47,10 +47,15 @@ async function createTables() {
 async function populateTables() {
   console.log("Populating tables...");
   try {
-    const populateUsers = users.map(async (user) => await createUser(user));
-    const populateItems = items.map(async (item) => await createItem(item));
+    for (const user of users) {
+      await createUser(user);
+    }
+
+    for (const item of items) {
+      await createItem(item);
+    }
     console.log("Tables populated!");
-    Promise.all([populateUsers, populateItems]).then((settled = true));
+     
   } catch (error) {
     console.error(error);
   }
@@ -61,13 +66,14 @@ async function rebuildDb() {
     await dropTables();
     await createTables();
     await populateTables();
+    console.log("<----testing database----->");
+    console.log("<----testing database----->");
+    console.log("<----testing database----->");
   } catch (error) {
     console.error(error);
   } finally {
-    console.log("ending client");
-    if (settled) {
-      client.end();
-    }
+    console.log("ending client")
+   client.end();
   }
 }
 

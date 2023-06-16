@@ -4,7 +4,7 @@ const client = require("../client");
   console.log("createItem:",itemObj)
   try {
     const {
-      rows: [user],
+      rows: [item],
     } = await client.query(
       `
             INSERT INTO Items(name, description, cost, categoryId,available,tags) 
@@ -15,7 +15,7 @@ const client = require("../client");
       [itemObj.name,itemObj.description,itemObj.cost,itemObj.categoryId,itemObj.available,itemObj.tags]
     );
 
-    return user;
+    return item;
   } catch (error) {
     throw error;
   }
