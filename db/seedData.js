@@ -1,22 +1,24 @@
 // Create some seed data and export it from this file
 const users = [
-  { username: "Andrew C", password: "noway" },
-  { username: "Matt R", password: "yesway" },
-  { username: "BigJoe", password: "toemeat" },
-  { username: "mother", password: "quesswho" },
-  { username: "Rara", password: "boug" },
-  { username: "Ced", password: "ric" },
+  { username: "Andrew C", password: "noway",isAdmin:false,loggedIn:false },
+  { username: "Matt R", password: "yesway",isAdmin:false,loggedIn:false  },
+  { username: "BigJoe", password: "toemeat",isAdmin:false,loggedIn:false  },
+  { username: "mother", password: "quesswho",isAdmin:false,loggedIn:false  },
+  { username: "Rara", password: "boug",isAdmin:false,loggedIn:false },
+  { username: "Ced", password: "ric" ,isAdmin:true,loggedIn:false}
 ];
 
 const items = [
-  { pants: "small", available: true, cost: "$15", description: "ripless" },
+  { name: "smallpants", available: true, cost: "$15", description: "ripless",categoryId:5120,tags:["tight-fit","pants"]},
   {
-    shirts: "small",
+    name: "smallshirt",
     available: true,
     cost: "$20",
     description: "makes u look buff",
+    categoryId:2222,
+    tags:["tight-fit","shirt","sleeveless"]
   },
-  { shoes: "small", available: true, cost: "$20", description: "fast" },
+  { name: "smallshoes", available: true, cost: "$20", description: "fast",categoryId:1224,tags:["casual","small"]},
 ];
 
 module.exports = { users, items };
