@@ -1,99 +1,79 @@
 const client = require("./client");
+const { users, items } = require("./seedData");
+const { createUser } = require("./adapters/users");
+const { createItem } = require("./adapters/items");
+
+
 
 async function dropTables() {
   console.log("Dropping tables...");
   try {
     await client.query(`
-    DROP TABLE IF EXISTS category
-    DROP TABLE IF EXISTS order_items;
-    DROP TABLE IF EXISTS order;
-    DROP TABLE IF EXISTS items;
-    DROP TABLE IF EXISTS users`);
+    DROP TABLE IF EXISTS Items;
+    DROP TABLE IF EXISTS Users;`);
+    console.log("Finished dropping Tables!");
   } catch (error) {
-    console.error(error);
+    console.error("Error dropping tables...");
+    throw error;
   }
 }
 
 async function createTables() {
   console.log("Creating tables...");
   try {
-    await client.query(`CREATE TABLE "Users" (
-      "id" int   NOT NULL,
-      "isAdmin" boolean   NOT NULL,
-      "loggedIn" boolean   NOT NULL,
-      "username" text   NOT NULL,
-      "password" text   NOT NULL,
-      CONSTRAINT "pk_Users" PRIMARY KEY (
-          "id"
-       )
+    await client.query(`CREATE TABLE Users (
+      id SERIAL Primary Key,
+      isAdmin boolean NOT NULL,
+      loggedIn boolean NOT NULL,
+      username varchar(255) UNIQUE NOT NULL,
+      password varchar(255) NOT NULL
   );`);
-    await client.query(`
-    CREATE TABLE "Items" (
-      "id" int   NOT NULL,
-      "name" text   NOT NULL,
-      "description" text   NOT NULL,
-      "cost" int   NOT NULL,
-      "categoryId" int   NOT NULL,
-      "available" boolean   NOT NULL,
-      "tags" text   NOT NULL,
-      CONSTRAINT "pk_Items" PRIMARY KEY (
-          "id"
-       )
+    await client.query(`CREATE TABLE Items (
+      id SERIAL Primary Key,
+      name varchar(255) UNIQUE NOT NULL,
+      description text   NOT NULL,
+      cost varchar(255)   NOT NULL,
+      categoryId int   NOT NULL,
+      available boolean   NOT NULL, 
+      tags text   NOT NULL
+  
   );`);
-    await client.query(`
-    CREATE TABLE "Category" (
-      "id" int   NOT NULL,
-      "name" text   NOT NULL,
-      "description" text   NOT NULL,
-      CONSTRAINT "pk_Category" PRIMARY KEY (
-          "id"
-       )
-  );`);
-    await client.query(`
-    CREATE TABLE "Order_Items" (
-      "id" int   NOT NULL,
-      "itemId" int   NOT NULL,
-      "item_quantity" int   NOT NULL,
-      "price" int   NOT NULL,
-      "orderId" int   NOT NULL,
-      CONSTRAINT "pk_Order_Items" PRIMARY KEY (
-          "id"
-       )
-  );
-    `);
-    await client.query(`
-    CREATE TABLE "Order" (
-      "id" int   NOT NULL,
-      "usersId" int   NOT NULL,
-      "totalPrice" int   NOT NULL,
-      CONSTRAINT "pk_Order" PRIMARY KEY (
-          "id"
-       )
-  );
-    `);
   } catch (error) {
-    console.log(error);
+    console.log("Error creating tables...");
+    throw error;
   }
 }
 
 async function populateTables() {
   console.log("Populating tables...");
   try {
+    for (const user of users) {
+      await createUser(user);
+    }
+
+    for (const item of items) {
+      await createItem(item);
+    }
+    console.log("Tables populated!");
+     
   } catch (error) {
     console.error(error);
   }
 }
-
 async function rebuildDb() {
-  client.connect();
   try {
+    client.connect();
     await dropTables();
     await createTables();
     await populateTables();
+    console.log("<----testing database----->");
+    console.log("<----testing database----->");
+    console.log("<----testing database----->");
   } catch (error) {
     console.error(error);
   } finally {
-    client.end();
+    console.log("ending client")
+   client.end();
   }
 }
 
