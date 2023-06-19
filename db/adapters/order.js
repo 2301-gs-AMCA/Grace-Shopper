@@ -8,7 +8,7 @@ async function createOrder(userId, totalPrice) {
       `
                 INSERT INTO orders ("userId", totalPrice)
                 VALUES ($1, $2)
-                RETURNING *
+                RETURNING *;
             `,
       [userId, totalPrice]
     );
@@ -63,7 +63,7 @@ async function getAllUsersOrders(userId) {
                 JOIN users us
                     ON us.id = ords.userId
                 WHERE us.id = $1
-                GROUP BY ords.id, orditms.orderId
+                GROUP BY ords.id, orditms.orderId;
             `,
       [userId]
     );
@@ -120,7 +120,7 @@ async function updateOrder(orderId, totalPrice) {
                 UPDATE orders
                 SET totalprice = $2
                 WHERE id = $1
-                RETURNING *
+                RETURNING *;
             `,
       [orderId, totalPrice]
     );
