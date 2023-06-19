@@ -9,7 +9,7 @@ async function dropTables() {
     await client.query(`
     DROP TABLE IF EXISTS order_items;
     DROP TABLE IF EXISTS items;
-    DROP TABLE IF EXISTS cart;
+    DROP TABLE IF EXISTS orders;
     DROP TABLE IF EXISTS users;
     `);
     console.log("Finished dropping Tables!");
@@ -32,7 +32,7 @@ async function createTables() {
 
   //changed order to cart because the word order is used in SQL,
   //and it was causing errors building the tables and dropping.-cb
-    await client.query(`CREATE TABLE cart (
+    await client.query(`CREATE TABLE orders (
     id SERIAL PRIMARY KEY,
     userId INTEGER REFERENCES users("id"),
     totalPrice INTEGER
@@ -49,7 +49,7 @@ async function createTables() {
   );`);
     await client.query(`CREATE TABLE order_items (
     id SERIAL PRIMARY KEY,
-    orderId INTEGER REFERENCES cart(id),
+    orderId INTEGER REFERENCES orders(id),
     itemId INTEGER REFERENCES items(id),
     item_quantity INTEGER,
     price INTEGER
