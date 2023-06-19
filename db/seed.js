@@ -7,8 +7,11 @@ async function dropTables() {
   console.log("Dropping tables...");
   try {
     await client.query(`
-    DROP TABLE IF EXISTS Items;
-    DROP TABLE IF EXISTS Users;`);
+    DROP TABLE IF EXISTS order_items;
+    DROP TABLE IF EXISTS items;
+    DROP TABLE IF EXISTS order;
+    DROP TABLE IF EXISTS users;
+    `);
     console.log("Finished dropping Tables!");
   } catch (error) {
     console.error("Error dropping tables...");
