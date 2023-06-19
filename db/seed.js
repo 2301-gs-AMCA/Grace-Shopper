@@ -24,8 +24,8 @@ async function createTables() {
   try {
     await client.query(`CREATE TABLE users (
       id SERIAL Primary Key,
-      isAdmin boolean NOT NULL,
-      loggedIn boolean NOT NULL,
+      isAdmin BOOLEAN DEFAULT false,
+      loggedIn BOOLEAN DEFAULT false,
       username varchar(255) UNIQUE NOT NULL,
       password varchar(255) NOT NULL
   );`);
