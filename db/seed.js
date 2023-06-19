@@ -19,7 +19,7 @@ async function dropTables() {
 async function createTables() {
   console.log("Creating tables...");
   try {
-    await client.query(`CREATE TABLE Users (
+    await client.query(`CREATE TABLE users (
       id SERIAL Primary Key,
       isAdmin boolean NOT NULL,
       loggedIn boolean NOT NULL,
@@ -31,15 +31,12 @@ async function createTables() {
     userId INTEGER REFERENCES users(id),
     totalPrice INTEGER,
   );`);
-    await client.query(`CREATE TABLE Items (
-      id SERIAL Primary Key,
-      name varchar(255) UNIQUE NOT NULL,
-      description text   NOT NULL,
-      cost varchar(255)   NOT NULL,
-      categoryId int   NOT NULL,
-      available boolean   NOT NULL, 
-      tags text   NOT NULL
-  
+    await client.query(`CREATE TABLE items (
+    id SERIAL PRIMARY KEY,
+    name varchar(255) UNIQUE NOT NULL,
+    description text NOT NULL,
+    cost INTEGER,
+    isAvailable BOOLEAN DEFAULT true,
   );`);
     await client.query(`CREATE TABLE order_items (
     id SERIAL PRIMARY KEY,
