@@ -9,7 +9,7 @@ async function dropTables() {
     await client.query(`
     DROP TABLE IF EXISTS order_items;
     DROP TABLE IF EXISTS items;
-    DROP TABLE IF EXISTS order;
+    DROP TABLE IF EXISTS cart;
     DROP TABLE IF EXISTS users;
     `);
     console.log("Finished dropping Tables!");
@@ -29,24 +29,30 @@ async function createTables() {
       username varchar(255) UNIQUE NOT NULL,
       password varchar(255) NOT NULL
   );`);
-    await client.query(`CREATE TABLE order (
+
+  //changed order to cart because the word order is used in SQL,
+  //and it was causing errors building the tables and dropping.-cb
+    await client.query(`CREATE TABLE cart (
     id SERIAL PRIMARY KEY,
-    userId INTEGER REFERENCES users(id),
-    totalPrice INTEGER,
+    userId INTEGER REFERENCES users("id"),
+    totalPrice INTEGER
   );`);
+
+  //using varchar for cost because of the '$' in the value
+  //maybe switch to just numbers to make it easier to exstract?-cb
     await client.query(`CREATE TABLE items (
     id SERIAL PRIMARY KEY,
     name varchar(255) UNIQUE NOT NULL,
     description text NOT NULL,
-    cost INTEGER,
-    isAvailable BOOLEAN DEFAULT true,
+    cost varchar(255),
+    isAvailable BOOLEAN DEFAULT true
   );`);
     await client.query(`CREATE TABLE order_items (
     id SERIAL PRIMARY KEY,
-    orderId INTEGER REFERENCES order(id),
+    orderId INTEGER REFERENCES cart(id),
     itemId INTEGER REFERENCES items(id),
     item_quantity INTEGER,
-    price INTEGER,
+    price INTEGER
   )`);
   } catch (error) {
     console.log("Error creating tables...");
@@ -66,7 +72,7 @@ async function populateTables() {
     }
     console.log("Tables populated!");
   } catch (error) {
-    console.error(error);
+    console.error("Error at populate Tables",error);
   }
 }
 async function rebuildDb() {
