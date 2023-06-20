@@ -24,7 +24,7 @@ async function getOrderItemById(orderItemId) {
                     'name', itms.name,
                     'description', itms.description,
                     'cost', itms.cost,
-                    'isAvailable', itms.isAvailable,
+                    'isAvailable', itms.isAvailable
                 )
             ) END AS items
             FROM order_items orditm

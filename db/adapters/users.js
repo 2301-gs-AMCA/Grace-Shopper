@@ -76,7 +76,7 @@ async function getUserById(id) {
 
 async function getUserByUsername(username) {
   try {
-    console.log("testing username string", username);
+    
     const {
       rows: [user],
     } = await client.query(
