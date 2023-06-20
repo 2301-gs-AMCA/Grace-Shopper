@@ -37,7 +37,7 @@ async function createItem(itemObj) {
     } = await client.query(
       `
             INSERT INTO Items(name, description, cost) 
-            VALUES($1, $2, $3,) 
+            VALUES($1, $2, $3) 
             ON CONFLICT (name) DO NOTHING 
             RETURNING *;
           `,
