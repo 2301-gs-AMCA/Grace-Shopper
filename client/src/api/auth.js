@@ -1,39 +1,33 @@
-const BaseUrl = "";
-
 export async function registerUser(username, password) {
   try {
-    const response = await fetch(`${BaseUrl}/users/register`, {
+    const response = await fetch(`/api/auth/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        user: {
-          username,
-          password,
-        },
+        username,
+        password,
       }),
     });
     const result = await response.json();
     console.log("Result from register user: ", result);
     return result;
   } catch (error) {
-    console.error(error);
+    console.error("trouble posting user from register user", error);
   }
 }
 
 export async function login(username, password) {
   try {
-    const response = await fetch(`${BaseUrl}/users/login`, {
+    const response = await fetch(`/api/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        user: {
-          username,
-          password,
-        },
+        username,
+        password,
       }),
     });
     const result = await response.json();
@@ -44,16 +38,40 @@ export async function login(username, password) {
   }
 }
 
-export async function fetchMe(token) {
+export async function logout() {
+  const response = await fetch(`/api/auth/logout`);
+  const { success, message } = await response.json();
+  if (!success) {
+    throw {
+      message,
+    };
+  }
+  return {
+    success,
+    message,
+  };
+}
+
+export async function fetchMe() {
   try {
-    const response = await fetch(`${BaseUrl}/users/me`, {
+    const response = await fetch("/api/auth/me");
+    const result = await response.json();
+    console.log("Result from fetchMe: ", result);
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function fetchUsersRoutines(username) {
+  try {
+    const response = await fetch(`/api/users/${username}/routines`, {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
       },
     });
     const result = await response.json();
-    console.log("Result in fetchMe: ", result);
+    console.log("Result from fetchUsersRoutine: ", result);
     return result;
   } catch (error) {
     console.error(error);
