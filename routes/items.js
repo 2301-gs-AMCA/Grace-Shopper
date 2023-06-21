@@ -1,10 +1,10 @@
 const itemsRouter = require("express").Router();
 const { getAllItems, createItem, updateItem } = require("../db/adapters/items");
-const { addItemToOrder } = require("../db/adapters/order_items");
 const { authRequired } = require("./utils");
 
 itemsRouter.use((req, res, next) => {
   console.log("A request is being made to /items");
+  next();
 });
 
 //GET /api/items
