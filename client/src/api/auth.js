@@ -63,9 +63,9 @@ export async function fetchMe() {
   }
 }
 
-export async function fetchUsersRoutines(username) {
+export async function fetchUsersOrders(username) {
   try {
-    const response = await fetch(`/api/users/${username}/routines`, {
+    const response = await fetch(`/api/users/${username}/orders`, {
       headers: {
         "Content-Type": "application/json",
       },
