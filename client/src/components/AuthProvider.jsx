@@ -5,24 +5,33 @@ export const AuthContext = createContext();
 
 // Create our Provider (wrapper component)
 const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(localStorage.getItem("token"));
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({ id: null, username: "Guest" });
+  const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
-    async function getMe() {
-      const APIResponse = await fetchMe(token);
-      setUser(APIResponse.data);
+    async function getFetchMe() {
+      try {
+        const result = await fetchMe();
+        if (result.success) {
+          setLoggedIn(true);
+          setUser(user);
+        } else {
+          setUser({ username: "Guest" });
+          setLoggedIn(false);
+        }
+      } catch (error) {
+        setUser({ username: "Guest" });
+        setLoggedIn(false);
+      }
     }
-    if (token) {
-      getMe();
-    }
-  }, [token]);
+    getFetchMe();
+  }, [loggedIn]);
 
   const contextValue = {
-    token,
-    setToken,
     user,
     setUser,
+    loggedIn,
+    setLoggedIn,
   };
 
   return (
