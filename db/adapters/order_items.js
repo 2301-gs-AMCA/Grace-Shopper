@@ -89,16 +89,15 @@ async function updateOrderItem(orderItemId, item_quantity, price) {
 
 async function destroyOrderItem(orderItemId) {
   try {
-    const {
-      row: [deletedOrdItem],
-    } = await client.query(
+    const result = await client.query(
       `
             DELETE from order_items
             WHERE id=$1
             `,
       [orderItemId]
     );
-    return deletedOrdItem;
+    const orderItem = result.rows[0];
+    return orderItem;
   } catch (error) {
     throw error;
   }

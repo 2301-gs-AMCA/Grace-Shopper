@@ -107,7 +107,7 @@ async function rebuildDb() {
     const getItemByIdResult = await getItemById(2);
     console.log("getItemById:",getItemByIdResult);
     //
-    const updateItemResult = await updateItem(2,'10 gallon hat','a bid ol hat','$30',true);
+    const updateItemResult = await updateItem(2,'10 gallon hat','a big ol hat','$30',true);
     console.log("updateItem:",updateItemResult)
     //
     const getItemByIdResult2 = await getItemById(2);
@@ -153,9 +153,9 @@ async function rebuildDb() {
     result = await getAllUsersOrders(6);
     console.log("getAllUsersOrders to test orders_Items",result);
     //
-    // result = await destroyOrderItem(1)
-    // console.log("destroyOrderItem:",result);
-    // //
+    result = await destroyOrderItem(1)
+    console.log("destroyOrderItem:",result);
+    //
     result = await getOrderItemsByOrderId(1)
     console.log("getOrderItemByOrderId to test after destroy:",result);
     //
