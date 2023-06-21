@@ -3,6 +3,7 @@ const path = require("path");
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
 const PORT = process.env.PORT || 3000;
 const server = express();
@@ -13,6 +14,7 @@ client.connect();
 server.use(express.json());
 server.use(morgan("dev"));
 server.use(cors());
+server.use(cookieParser(process.env.COOKIE_SECRET));
 
 // Servers the built React app
 server.use(express.static(path.join(__dirname, "./client", "dist")));

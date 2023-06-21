@@ -16,6 +16,8 @@ const order_itemsRouter = require("./order_items");
 router.use("/order_items", order_itemsRouter);
 const itemsRouter = require("./items");
 router.use("/items", itemsRouter);
+const authRouter = require("./auth");
+router.use("/auth", authRouter);
 
 router.use((error, req, res, next) => {
   res.send({

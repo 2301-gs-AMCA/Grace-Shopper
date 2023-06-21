@@ -5,26 +5,23 @@ const SALT_ROUNDS = 10;
 const { createUser, getUserByUsername } = require("../db/adapters/users");
 const { authRequired } = require("./utils");
 
+//GET /api/auth
+authRouter.get("/",async(req,res,next)=>{
+  res.send({
+    message:"you are in auth",
+  });
+});
+
 //POST /api/auth/register
 authRouter.post("/register", async (req, res, next) => {
   try {
     const { username, password } = req.body;
 
-    //Check if user already exists
-    const _user = await getUserByUsername(username);
-    if (_user) {
-      res.send({
-        success: false,
-        error: {
-          message: "That user already exists!",
-          name: "Auth Error",
-        },
-      });
-      return;
-    }
+    
 
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
-    const user = await createUser({ username, password: hashedPassword });
+    const user = await createUser({ username,password: hashedPassword });
+    console.log("user:",user);
     delete user.password;
     const token = jwt.sign(user, process.env.JWT_SECRET);
 
