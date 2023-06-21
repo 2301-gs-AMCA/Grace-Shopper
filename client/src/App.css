@@ -1,0 +1,125 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  text-align: center;
+  font-family: "Poppins";
+}
+.navbar {
+  display: flex;
+  background-color: #141451;
+  padding: 1rem;
+  position: sticky;
+  top: 0;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 1px 1px 1px 1px;
+  border-radius: 6px;
+  z-index: 1;
+  margin-bottom: 2rem;
+}
+.navlinks {
+  display: flex;
+  list-style: none;
+  align-items: center;
+  font-size: 1.25rem;
+}
+.home-page {
+  width: 100vw;
+  min-height: 100vh;
+}
+.home-header {
+  text-align: center;
+  font-size: 3rem;
+}
+.home-sub-header {
+  font-style: italic;
+  text-decoration: underline;
+}
+.home-description {
+  font-size: 22px;
+  padding: 2rem 2rem 5rem 2rem;
+}
+
+.footer {
+  display: flex;
+  padding: 1rem;
+  position: sticky;
+  bottom: 0;
+  background-color: #141451;
+  justify-content: center;
+  box-shadow: 1px 1px 1px 2px;
+  border-radius: 6px;
+}
+.footlinks {
+  display: flex;
+}
+
+.footlink {
+  padding: 6px;
+  margin: 2px;
+}
+.slider {
+  position: relative;
+  height: 85vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 0;
+}
+.figcap {
+  text-align: left;
+  margin: 0 5rem 2rem 27rem;
+}
+.image {
+  width: 560px;
+  height: 500px;
+  border-radius: 10px;
+}
+.right-arrow {
+  position: absolute;
+  top: 50%;
+  right: 32px;
+  font-size: 3rem;
+  cursor: pointer;
+  z-index: 10;
+}
+.left-arrow {
+  position: absolute;
+  top: 50%;
+  left: 32px;
+  font-size: 3rem;
+  cursor: pointer;
+  z-index: 10;
+}
+.slide {
+  opacity: 0;
+  transition-duration: 1s ease;
+}
+.slide.active {
+  opacity: 1;
+  transition-duration: 1s;
+  transform: scale(1.08);
+}
+.login {
+  display: flex;
+  justify-content: center;
+  min-height: 50vh;
+}
+.login-form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+  padding: 8rem 10rem 8rem 10rem;
+  border: 1px solid;
+  box-shadow: 1px 1px 2px 2px;
+}
+.profile {
+  min-height: 100vh;
+}
