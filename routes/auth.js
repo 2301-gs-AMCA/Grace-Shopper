@@ -17,6 +17,18 @@ authRouter.post("/register", async (req, res, next) => {
   try {
     const { username, password } = req.body;
 
+        //Check if user already exists
+    const _user = await getUserByUsername(username);
+    if (_user) {
+      res.send({
+        success: false,
+        error: {
+          message: "That user already exists!",
+          name: "Auth Error",
+        },
+      });
+      return;
+    }
     
 
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
