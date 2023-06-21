@@ -1,7 +1,9 @@
 const client = require("./client");
 const { users, items } = require("./seedData");
-const { createUser } = require("./adapters/users");
-const { createItem } = require("./adapters/items");
+const { createUser, getAllUsers, getUser, getUserById,getUserByUsername} = require("./adapters/users");
+const { createItem, getAllItems, getItemById, updateItem} = require("./adapters/items");
+const { createOrder, getOrderById, updateOrder,getAllUsersOrders,getAllOrdersByUsername} = require("./adapters/order");
+const { getOrderItemById, addItemToOrder, getOrderItemsByOrderId,updateOrderItem,destroyOrderItem} = require("./adapters/order_items");
 
 async function dropTables() {
   console.log("Dropping tables...");
@@ -82,8 +84,82 @@ async function rebuildDb() {
     await createTables();
     await populateTables();
     console.log("<----testing database----->");
-    console.log("<----testing database----->");
-    console.log("<----testing database----->");
+    console.log("<----Users adapters----->");
+    ///////////////////////////////////////////
+    const allUsersResults = await getAllUsers();
+    console.log("All Users:", allUsersResults);
+    //
+    const getUserResult = await getUser('Ced','ric');
+    console.log("getUser ced:",getUserResult);
+    //
+    const getUserByIdResult = await getUserById(5);
+    console.log("getUserById of 5:",getUserByIdResult)
+    //
+    const getUserByUsernameResult = await getUserByUsername('BigJoe');
+    console.log("getUserByUsername:",getUserByUsernameResult);
+    
+
+    console.log("<----testing items adapters----->");
+    ////////////////////////////////////////////////
+    const allItemsResults = await getAllItems();
+    console.log("All Itesm:", allItemsResults);
+    //
+    const getItemByIdResult = await getItemById(2);
+    console.log("getItemById:",getItemByIdResult);
+    //
+    const updateItemResult = await updateItem(2,'10 gallon hat','a big ol hat','$30',true);
+    console.log("updateItem:",updateItemResult)
+    //
+    const getItemByIdResult2 = await getItemById(2);
+    console.log("getItemById after update:",getItemByIdResult2);
+    
+    console.log("<----testing Orders adapter----->");
+    ////////////////////////////////////////////////
+    let result = await createOrder(6,100)
+    console.log("createOrder:",result);
+    //
+    result = await getOrderById(1);
+    console.log("getOrderById:",result);
+    //
+    result = await getAllUsersOrders(6);
+    console.log("getAllUsersOrders",result);
+    //
+    result = await getAllOrdersByUsername("Ced");
+    console.log("getAllOrdersByUsername:",result);
+    //
+    result = await updateOrder(1,2000);
+    console.log("updateorder:",result);
+    //
+    result = await getOrderById(1);
+    console.log("getOrderById after update:",result);
+    //
+    console.log("<----testing Orders_Items adapter----->");
+    //
+    result = await addItemToOrder(1,2,20,30)
+    console.log("addItemToOrder:",result);
+    //
+    result = await getAllUsersOrders(6);
+    console.log("getAllUsersOrders to test orders_Items",result);
+    //
+    result = await getOrderItemById(1)
+    console.log("getOrderItemById:",result);
+    //
+    result = await getOrderItemsByOrderId(1)
+    console.log("getOrderItemByOrderId:",result);
+    //
+    result = await updateOrderItem(1,2,30)
+    console.log("updateOrderItem:",result);
+    //
+    result = await getAllUsersOrders(6);
+    console.log("getAllUsersOrders to test orders_Items",result);
+    //
+    result = await destroyOrderItem(1)
+    console.log("destroyOrderItem:",result);
+    //
+    result = await getOrderItemsByOrderId(1)
+    console.log("getOrderItemByOrderId to test after destroy:",result);
+    //
+
   } catch (error) {
     console.error(error);
   } finally {

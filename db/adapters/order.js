@@ -6,7 +6,7 @@ async function createOrder(userId, totalPrice) {
       rows: [order],
     } = await client.query(
       `
-                INSERT INTO orders ("userId", totalPrice)
+                INSERT INTO orders (userId, totalPrice)
                 VALUES ($1, $2)
                 RETURNING *;
             `,
@@ -48,11 +48,7 @@ async function getAllUsersOrders(userId) {
                         'name', itms.name,
                         'description', itms.description,
                         'cost', itms.cost,
-                        'categoryId', itms.categoryId,
-                        'isAvailable', itms.isAvailable,
-                        'tags', itms.tags,
-                        'item_quantity', orditms.item_quantity,
-                        'price', orditms.price
+                        'isAvailable', itms.isAvailable
                     )
                 ) END AS items
                 FROM orders ords
@@ -86,11 +82,8 @@ async function getAllOrdersByUsername(username) {
                         'name', itms.name,
                         'description', itms.description,
                         'cost', itms.cost,
-                        'categoryId', itms.categoryId,
-                        'isAvailable', itms.isAvailable,
-                        'tags', itms.tags,
-                        'item_quantity', orditms.item_quantity,
-                        'price', orditms.price
+                        'isAvailable', itms.isAvailable
+              
                     )
                 ) END AS items
                 FROM orders ords
