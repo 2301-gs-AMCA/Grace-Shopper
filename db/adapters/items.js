@@ -51,6 +51,7 @@ async function createItem(itemObj) {
 }
 
 async function updateItem(itemId, name, description, cost, isAvailable) {
+  
   try {
     const {
       rows: [item],

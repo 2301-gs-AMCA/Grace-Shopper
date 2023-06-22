@@ -20,14 +20,20 @@ itemsRouter.get("/", async (req, res) => {
 
 //POST /api/items
 itemsRouter.post("/", authRequired, async (req, res, next) => {
+  if(req.user.isadmin != true){
+    res.send(
+      {message:"you are not an admin"}
+    )
+    return
+  }
   const { name, description, cost } = req.body;
   const itemsObj = {};
   try {
     itemsObj.name = name;
     itemsObj.description = description;
     itemsObj.cost = cost;
-
-    const item = await createItem(itemObj);
+    
+    const item = await createItem(itemsObj);
 
     if (item) {
       res.send({
@@ -47,8 +53,9 @@ itemsRouter.post("/", authRequired, async (req, res, next) => {
 });
 
 //PATCH /api/items/:itemId
-itemsRouter.patch("/:itemsId", authRequired, async (req, res, next) => {
+itemsRouter.patch("/:itemId", authRequired, async (req, res, next) => {
   const { itemId } = req.params;
+  
   const { name, description, cost, isAvailable } = req.body;
   const updateItemsObj = {};
 
@@ -66,7 +73,7 @@ itemsRouter.patch("/:itemsId", authRequired, async (req, res, next) => {
   }
 
   try {
-    if (req.user.isAdmin) {
+    if (req.user.isadmin) {
       const updatedItem = await updateItem(
         itemId,
         name,
@@ -74,6 +81,7 @@ itemsRouter.patch("/:itemsId", authRequired, async (req, res, next) => {
         cost,
         isAvailable
       );
+      console.log("updating item:",updatedItem)
       res.send({
         success: true,
         message: "Item updated",

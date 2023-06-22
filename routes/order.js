@@ -13,7 +13,7 @@ orderRouter.use((req, res, next) => {
   next();
 });
 
-//GET /orders
+//GET /orders/myOrders
 orderRouter.get("/myOrders", authRequired, async (req, res, next) => {
   try {
     const orders = await getAllOrdersByUsername(req.user.username);
@@ -35,10 +35,8 @@ orderRouter.post("/", authRequired, async (req, res, next) => {
     res.send({
       success: true,
       message: "Order posted",
-      order: {
-        userId: order.userId,
-        totalPrice: order.totalPrice,
-      },
+      order
+    ,
     });
   } catch (error) {
     next(error);
@@ -72,7 +70,7 @@ orderRouter.patch("/:orderId", authRequired, async (req, res, next) => {
   try {
     const originalOrder = await getOrderById(orderId);
 
-    if (originalOrder.userId === req.user.id || req.user.isAdmin) {
+    if (originalOrder.userid === req.user.id || req.user.isadmin) {
       const updatedOrder = await updateOrder(orderId, totalPrice);
       res.send({
         success: true,
