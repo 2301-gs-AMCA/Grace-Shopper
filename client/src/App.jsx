@@ -1,33 +1,25 @@
 import { useEffect, useState } from "react";
+import { Link, Routes, Route } from "react-router-dom";
+import useAuth from "./hooks/useAuth";
 import "./App.css";
+import Home from "./Components/Home";
 
 function App() {
-  const [healthMsg, setHealthMsg] = useState(null);
+  const { user } = useAuth();
   const [err, setErr] = useState(null);
-
-  useEffect(() => {
-    async function checkHealth() {
-      try {
-        const response = await fetch("/api/health");
-        if (!response.ok) {
-          throw {
-            message: "Api is Down 😭",
-          };
-        }
-        const { message } = await response.json();
-        setHealthMsg(message);
-      } catch (error) {
-        setErr(error.message);
-      }
-    }
-    checkHealth();
-  }, []);
 
   return (
     <div>
-      <h1>Welcome to Grace Shopper</h1>
-      {healthMsg && <p>{healthMsg}</p>}
-      {err && <p>{err}</p>}
+      <div id="header">
+        <Link to="/" className="link">
+          Home
+        </Link>
+      </div>
+      <div id="main">
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </div>
     </div>
   );
 }
