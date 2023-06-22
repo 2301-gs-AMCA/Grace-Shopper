@@ -4,7 +4,8 @@ const { createUser, getAllUsers, getUser, getUserById,getUserByUsername} = requi
 const { createItem, getAllItems, getItemById, updateItem} = require("./adapters/items");
 const { createOrder, getOrderById, updateOrder,getAllUsersOrders,getAllOrdersByUsername} = require("./adapters/order");
 const { getOrderItemById, addItemToOrder, getOrderItemsByOrderId,updateOrderItem,destroyOrderItem} = require("./adapters/order_items");
-
+const bcrypt = require("bcrypt");
+const SALT_ROUNDS = 10;
 async function dropTables() {
   console.log("Dropping tables...");
   try {
@@ -159,7 +160,8 @@ async function rebuildDb() {
     result = await getOrderItemsByOrderId(1)
     console.log("getOrderItemByOrderId to test after destroy:",result);
     //
-    /////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////
+    // builds a small list of orders and joins them to the order_items table on user 2,Matt R
     let cost = 20;
     for(let i = 0;i<11;i++){
       
@@ -179,7 +181,9 @@ async function rebuildDb() {
     result = await getAllOrdersByUsername("Matt R");
     console.log("getAllOrdersByUsername:",result);
     //
-  
+  /////////////////////////////////////////////////////////////////////////
+  const hashedPassword = await bcrypt.hash("password", SALT_ROUNDS);
+  result = await createUser({username: "admin",password: hashedPassword,isAdmin:true,loggedIn:true})
 
   } catch (error) {
     console.error(error);
