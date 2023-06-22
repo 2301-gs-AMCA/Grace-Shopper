@@ -53,7 +53,7 @@ async function getAllUsersOrders(userId) {
                 ) END AS items
                 FROM orders ords
                 FULL OUTER JOIN order_items orditms
-                    ON ords.id = orditms.itemId
+                    ON ords.id = orditms.orderId
                 FULL OUTER JOIN items itms
                     ON orditms.itemId = itms.id
                 JOIN users us
@@ -88,7 +88,7 @@ async function getAllOrdersByUsername(username) {
                 ) END AS items
                 FROM orders ords
                 FULL OUTER JOIN order_items orditms
-                    ON ords.id = orditms.itemId
+                    ON ords.id = orditms.orderId
                 FULL OUTER JOIN items itms
                     ON orditms.itemId = itms.id
                 JOIN users us

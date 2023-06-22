@@ -159,6 +159,27 @@ async function rebuildDb() {
     result = await getOrderItemsByOrderId(1)
     console.log("getOrderItemByOrderId to test after destroy:",result);
     //
+    /////////////////////////////////////////////
+    let cost = 20;
+    for(let i = 0;i<11;i++){
+      
+      result = await createOrder(2,cost)
+      console.log("createOrder:",result);
+      cost=cost-1;
+    }
+    for(let i = 0;i<9;i++){
+      let cost = 20;
+      result = await addItemToOrder(2+i,2,20-i,30)
+      console.log("addItemToOrder:",result);
+      //
+    }
+    result = await getAllUsersOrders(2);
+    console.log("getAllUsersOrders to test orders_Items",result);
+    //
+    result = await getAllOrdersByUsername("Matt R");
+    console.log("getAllOrdersByUsername:",result);
+    //
+  
 
   } catch (error) {
     console.error(error);

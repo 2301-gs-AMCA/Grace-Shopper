@@ -32,7 +32,7 @@ authRouter.post("/register", async (req, res, next) => {
     
 
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
-    const user = await createUser({ username,password: hashedPassword });
+    const user = await createUser({ username,password: hashedPassword,isAdmin: false,loggedIn:false});
     console.log("user:",user);
     delete user.password;
     const token = jwt.sign(user, process.env.JWT_SECRET);
