@@ -8,6 +8,8 @@ import Footer from "./components/Footer";
 import Profile from "./components/Profile";
 import Shop from "./components/Shop";
 import Cart from "./components/Cart";
+import AuthForm from "./components/AuthForm";
+import Dashboard from "./components/Dashboard";
 import "./App.css";
 import { useEffect, useState } from "react";
 import "./App.css";
@@ -40,9 +42,13 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         {/* <Route path="/Logout" element={<Logout />} /> */}
-        <Route path="/Profile" element={<Profile />} />
+        <Route path="/dashboard/Profile" element={<Profile />} />
         <Route path="/Shop" element={<Shop />} />
         <Route path="/Cart" element={<Cart />} />
+        <Route path="/login" element={<AuthForm/>}/>
+        <Route path="/register" element={<AuthForm/>}/>
+        <Route path="/Dashboard" element={<Dashboard/>}/>
+        
       </Routes>
       <Footer />
     </div>
