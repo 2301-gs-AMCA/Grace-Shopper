@@ -1,12 +1,13 @@
 import { Route, Routes } from "react-router-dom";
-import Navbar from "./Components/Navbar";
-import Home from "./Components/Home";
-import Footer from "./Components/Footer";
+// import Navbar from "./Components/Navbar";
+import Navbar  from  "./components/Navbar"
+import Home from "./components/Home";
+import Footer from "./components/Footer";
 
-import Logout from "./Components/Logout";
-import Profile from "./Components/Profile";
-import Shop from "./Components/Shop";
-import Cart from "./Components/Cart";
+// import Logout from "./components/Logout";
+import Profile from "./components/Profile";
+import Shop from "./components/Shop";
+import Cart from "./components/Cart";
 import "./App.css";
 import { useEffect, useState } from "react";
 import "./App.css";
@@ -38,7 +39,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/Logout" element={<Logout />} />
+        {/* <Route path="/Logout" element={<Logout />} /> */}
         <Route path="/Profile" element={<Profile />} />
         <Route path="/Shop" element={<Shop />} />
         <Route path="/Cart" element={<Cart />} />
