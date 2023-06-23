@@ -8,16 +8,16 @@ const {
 } = require("../db/adapters/order_items");
 const { getOrderById } = require("../db/adapters/order");
 const { authRequired } = require("./utils");
+const { getItemById } = require("../db/adapters/items");
 
 order_itemsRouter.use((req, res, next) => {
   console.log("A request is being made to activity_routines");
+  next();
 });
 
 //POST api/order_items
 order_itemsRouter.post("/", async (req, res, next) => {
   const { orderId, itemId, item_quantity, price } = req.body;
-  const { order } = req.order;
-  const { item } = req.item;
   const ordItmData = {};
 
   try {
@@ -48,7 +48,7 @@ order_itemsRouter.post("/", async (req, res, next) => {
     next({ name, message });
   }
 });
-
+//PATCH api/order_items/:orderItemid
 order_itemsRouter.patch(
   "/:orderItemId",
   authRequired,
@@ -66,8 +66,8 @@ order_itemsRouter.patch(
 
     try {
       const originalOrderItem = await getOrderItemById(orderItemId);
-      const order = await getOrderById(originalOrderItem.orderId);
-      if (order.userId === req.user.id || req.user.isAdmin) {
+      const order = await getOrderById(originalOrderItem.orderid);
+      if (order.userid === req.user.id || req.user.isadmin) {
         const updatedOrderItem = await updateOrderItem(
           orderItemId,
           item_quantity,
@@ -92,11 +92,14 @@ order_itemsRouter.delete(
   async (req, res, next) => {
     const { orderItemId } = req.params;
     try {
-      const orderItem = await getOrderById(orderItemId);
-      const order = await getOrderById(orderItem.orderId);
-      if (orderItem && (order.userId === req.user.id || req.user.isAdmin)) {
+      const orderItem = await getOrderItemById(orderItemId);
+      const order = await getOrderById(orderItem.orderid);
+      const item = await getItemById(orderItem.itemid);
+      if (orderItem && (order.userid === req.user.id || req.user.isadmin)) {
         const deletedOrderItem = await destroyOrderItem(orderItemId);
-        res.send({ order_item: deletedOrderItem });
+        res.send({ 
+          message: `${item.name} is deleted from order ${order.id}`
+          });
       } else {
         next(
           orderItem
