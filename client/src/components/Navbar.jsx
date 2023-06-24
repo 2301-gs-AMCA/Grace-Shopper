@@ -3,6 +3,8 @@ import { useNavigate } from "react-router";
 import useAuth from "../hooks/useAuth";
 import { useState, useEffect } from "react";
 
+export default function Navbar() {
+  const nav = useNavigate();
   const { user, loggedIn, setLoggedIn } = useAuth();
   const [navButtons, setNavButtons] = useState("");
 
@@ -19,12 +21,15 @@ import { useState, useEffect } from "react";
                 </button>
               </li>
               <li>
-                <button className="link" onClick={() => nav("/login")}>
+                <button className="link" onClick={() => nav("/Login")}>
                   Login/Register
                 </button>
               </li>
               <li>
-                <button className="link" onClick={() => nav("/dashboard/Profile")}>
+                <button
+                  className="link"
+                  onClick={() => nav("/dashboard/Profile")}
+                >
                   {user.username}
                 </button>
               </li>
@@ -42,13 +47,15 @@ import { useState, useEffect } from "react";
           </div>
         );
       } else {
-        let adminhtml =""
-        if(user.isadmin){
-          adminhtml = (<li>
-            <button className="link" onClick={() => nav("/Dashboard")}>
-              Dashboard
-            </button>
-          </li>)
+        let adminhtml = "";
+        if (user.isadmin) {
+          adminhtml = (
+            <li>
+              <button className="link" onClick={() => nav("/Dashboard")}>
+                Dashboard
+              </button>
+            </li>
+          );
         }
         html = (
           <div>
@@ -59,19 +66,16 @@ import { useState, useEffect } from "react";
                 </button>
               </li>
               <li>
-                <button
-                  className="link"
-                  onClick={async () => {
-                    logout();
-                    setLoggedIn(false);
-                  }}
-                >
-                  Logout
+                <button className="link" onClick={() => nav("/Login")}>
+                  Login
                 </button>
               </li>
               <li>
-                <button className="link" onClick={() => nav("/dashboard/Profile")}>
-                {user.username}
+                <button
+                  className="link"
+                  onClick={() => nav("/dashboard/Profile")}
+                >
+                  {user.username}
                 </button>
               </li>
               {adminhtml}
@@ -89,7 +93,7 @@ import { useState, useEffect } from "react";
           </div>
         );
       }
-      return(setNavButtons(html))
+      return setNavButtons(html);
     }
     headerButtons(loggedIn);
   }, [loggedIn]);

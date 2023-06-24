@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 
 // import Navbar from "./Components/Navbar";
-import Navbar  from  "./components/Navbar"
+import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import Footer from "./components/Footer";
 
@@ -28,17 +28,15 @@ function App() {
 
         <Route path="/Login" element={<AuthForm />} />
         <Route path="/Register" element={<AuthForm />} />
-       
 
         {/* <Route path="/Logout" element={<Logout />} /> */}
         <Route path="/dashboard/Profile" element={<Profile />} />
 
         <Route path="/Shop" element={<Shop />} />
         <Route path="/Cart" element={<Cart />} />
-        <Route path="/login" element={<AuthForm/>}/>
-        <Route path="/register" element={<AuthForm/>}/>
-        <Route path="/Dashboard" element={<Dashboard/>}/>
-        
+        <Route path="/login" element={<AuthForm />} />
+        <Route path="/register" element={<AuthForm />} />
+        <Route path="/Dashboard" element={<Dashboard />} />
       </Routes>
       <Footer />
     </div>
