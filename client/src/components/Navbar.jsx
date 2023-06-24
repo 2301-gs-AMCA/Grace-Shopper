@@ -8,6 +8,12 @@ export default function Navbar() {
   const { user, loggedIn, setLoggedIn } = useAuth();
   const [navButtons, setNavButtons] = useState("");
 
+  async function handleLogout() {
+    await logout();
+    setLoggedIn(!loggedIn);
+    navigate("/");
+  }
+
   useEffect(() => {
     function headerButtons(loggedIn) {
       let html = "";
@@ -66,8 +72,8 @@ export default function Navbar() {
                 </button>
               </li>
               <li>
-                <button className="link" onClick={() => nav("/Login")}>
-                  Login
+                <button className="link" onClick={handleLogout}>
+                  Logout
                 </button>
               </li>
               <li>
