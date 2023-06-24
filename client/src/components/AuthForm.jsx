@@ -35,35 +35,38 @@ export default function AuthForm() {
   }
 
   return (
-    <div>
+    <div className="login">
       {error && <p>{error}</p>}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="login-form">
         {pathname === "/register" ? <h2>Register</h2> : <h2>Login</h2>}
+        <br></br>
         <label>Username: </label>
         <input
           type="text"
-          placeholder="username"
+          placeholder="Username"
           name="username"
           onChange={(e) => setUsername(e.target.value)}
         />
         <label>Password: </label>
         <input
           type="text"
-          placeholder="password"
+          placeholder="Password"
           name="password"
           onChange={(e) => setPassword(e.target.value)}
         />
+        <br></br>
         <button>Submit</button>
+        <br></br>
+        {pathname === "/register" ? (
+          <p className="logaccount">
+            Already have an account? <Link to="/login">Login Here</Link>
+          </p>
+        ) : (
+          <p className="regaccount">
+            Don't have an account? <Link to="/register">Register Here</Link>
+          </p>
+        )}
       </form>
-      {pathname === "/register" ? (
-        <p>
-          Already have an account? <Link to="/login">Login Here</Link>
-        </p>
-      ) : (
-        <p>
-          Don't have an account? <Link to="/register">Register Here</Link>
-        </p>
-      )}
     </div>
   );
 }
