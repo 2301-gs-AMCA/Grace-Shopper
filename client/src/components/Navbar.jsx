@@ -1,11 +1,8 @@
 import { useNavigate } from "react-router";
+
 import useAuth from "../hooks/useAuth";
 import { useState, useEffect } from "react";
-import "../App.css";
-import { logout } from "../api/auth";
 
-export default function Navbar() {
-  const nav = useNavigate();
   const { user, loggedIn, setLoggedIn } = useAuth();
   const [navButtons, setNavButtons] = useState("");
 

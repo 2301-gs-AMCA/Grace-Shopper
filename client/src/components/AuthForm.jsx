@@ -27,7 +27,9 @@ export default function AuthForm() {
           setUser(result.user),
           setUsername(""),
           setPassword(""),
-          navigate("/"))
+
+          navigate("/profile"))
+
         : alert(result.error.message);
     } catch (error) {
       setError(error.message);

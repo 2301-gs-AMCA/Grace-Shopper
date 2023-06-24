@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+
 // import Navbar from "./Components/Navbar";
 import Navbar  from  "./components/Navbar"
 import Home from "./components/Home";
@@ -12,37 +13,26 @@ import AuthForm from "./components/AuthForm";
 import Dashboard from "./components/Dashboard";
 import "./App.css";
 import { useEffect, useState } from "react";
+import useAuth from "./hooks/useAuth";
 import "./App.css";
 
 function App() {
-  const [healthMsg, setHealthMsg] = useState(null);
+  const { user } = useAuth();
   const [err, setErr] = useState(null);
-
-  useEffect(() => {
-    async function checkHealth() {
-      try {
-        const response = await fetch("/api/health");
-        if (!response.ok) {
-          throw {
-            message: "Api is Down 😭",
-          };
-        }
-        const { message } = await response.json();
-        setHealthMsg(message);
-      } catch (error) {
-        setErr(error.message);
-      }
-    }
-    checkHealth();
-  }, []);
 
   return (
     <div className="app">
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+
+        <Route path="/Login" element={<AuthForm />} />
+        <Route path="/Register" element={<AuthForm />} />
+       
+
         {/* <Route path="/Logout" element={<Logout />} /> */}
         <Route path="/dashboard/Profile" element={<Profile />} />
+
         <Route path="/Shop" element={<Shop />} />
         <Route path="/Cart" element={<Cart />} />
         <Route path="/login" element={<AuthForm/>}/>
