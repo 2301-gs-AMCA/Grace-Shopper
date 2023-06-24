@@ -123,3 +123,37 @@
 .profile {
   min-height: 100vh;
 }
+.profile {
+  display: flexbox;
+  min-height: 100vh;
+  margin: 0 1rem 0 1rem;
+}
+.userHeader{
+  margin-bottom: 2rem;
+  text-align: center;
+}
+.userInfo {
+  float: right;
+  list-style: none;
+  font-size: 24px;
+  width: 25vw;
+  border: 1px solid;
+  
+}
+.itemsULike{
+float: left;
+min-width: 68vw;
+min-height: 43vh;
+border: 1px solid;
+}
+.likedItems{
+  list-style: none;
+}
+.orderHistory{
+margin-top: 30rem;
+border: 1px solid;
+min-height: 30vh;
+}
+.history{
+list-style: none;
+}
