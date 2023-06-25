@@ -21,18 +21,19 @@ export default function AuthForm() {
       } else {
         result = await login(username, password);
       }
+
+      console.log(result);
+
       result.success
         ? (alert(result.message),
           setLoggedIn(true),
           setUser(result.user),
           setUsername(""),
           setPassword(""),
-
           navigate("/profile"))
-
         : alert(result.error.message);
     } catch (error) {
-      setError(error.message);
+      setError(result.error.message);
     }
   }
 
@@ -60,11 +61,11 @@ export default function AuthForm() {
         <button>Submit</button>
         <br></br>
         {pathname === "/register" ? (
-          <p className="logaccount">
+          <p>
             Already have an account? <Link to="/login">Login Here</Link>
           </p>
         ) : (
-          <p className="regaccount">
+          <p>
             Don't have an account? <Link to="/register">Register Here</Link>
           </p>
         )}

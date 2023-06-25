@@ -1,8 +1,10 @@
 // import React from "react";
 import { Imageslider } from "../assets/Imageslider";
 import { SliderData } from "../assets/SliderData";
+import useAuth from "../hooks/useAuth";
 
 export default function Home() {
+  const { user, loggedIn, isLoggedIn } = useAuth();
   return (
     <div className="home-page">
       <h1 className="home-header">Welcome to AMCA</h1>
@@ -17,7 +19,25 @@ export default function Home() {
         comforting items and accessories. Our goal is to keep you on your couch
         for as long as humanly possible without feeling a slight itch or any
         discomfort whatsoever. If your goal is to be comfortable, we wish to
-        fulfill that. But, Be Careful... the Power of Comfort is Strong.
+        fulfill that. However, be Careful... the Power of Comfort is Strong.
+        <br></br>
+        {loggedIn === false && (
+          <p>
+            <a link="login" href="/login">
+              {" "}
+              <u>Login</u>
+            </a>
+            {""} or
+            <a
+              link="register"
+              href="/register"
+              style={{ textDecoration: "underline" }}
+            >
+              {" "}
+              Register Here
+            </a>
+          </p>
+        )}
       </p>
     </div>
   );

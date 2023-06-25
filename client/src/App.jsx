@@ -25,17 +25,11 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-
-        <Route path="/Login" element={<AuthForm />} />
-        <Route path="/Register" element={<AuthForm />} />
-
-        {/* <Route path="/Logout" element={<Logout />} /> */}
-        <Route path="/dashboard/Profile" element={<Profile />} />
-
-        <Route path="/Shop" element={<Shop />} />
-        <Route path="/Cart" element={<Cart />} />
         <Route path="/login" element={<AuthForm />} />
         <Route path="/register" element={<AuthForm />} />
+        <Route path="/dashboard/Profile" element={<Profile />} />
+        <Route path="/Shop" element={<Shop />} />
+        <Route path="/Cart" element={<Cart />} />
         <Route path="/Dashboard" element={<Dashboard />} />
       </Routes>
       <Footer />

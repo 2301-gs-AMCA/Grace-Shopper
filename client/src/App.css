@@ -29,11 +29,6 @@
   align-items: center;
   font-size: 1.25rem;
 }
-.item-card{
-  outline-style:dashed;
-  outline-color:red;
-  margin: 1rem;
-}
 .home-page {
   width: 99vw;
   min-height: 75vh;
@@ -77,6 +72,7 @@
   align-items: center;
   z-index: 0;
 }
+
 .figcap {
   text-align: left;
   margin: 0 5rem 2rem 27rem;
@@ -161,4 +157,16 @@ min-height: 30vh;
 }
 .history{
 list-style: none;
+}
+.shop{
+  display: flex;
+  flex-flow: column wrap;
+  flex-wrap: wrap;
+  margin: 1rem 2rem 1rem 2rem; 
+  min-height: 99vh;
+}
+.item-card{
+  padding: 5rem;
+  border: 2px dotted red;
+  margin: 1rem;
 }
