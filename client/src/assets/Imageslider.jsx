@@ -30,11 +30,16 @@ export const Imageslider = ({ slides }) => {
       <FaArrowAltCircleRight className="right-arrow" onClick={nextSlide} />
       {SliderData.map((slide, id) => {
         return (
-          <div className={id === pic ? "slide active" : "slide"} key={id}>
+          <div
+            className={id === pic ? "slide active" : "slide"}
+            key={id}
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              nav("/Shop");
+            }}
+          >
             {id === pic && (
-              <a>
-                <img src={slide.image} key={id} alt="comfy" className="image" />
-              </a>
+              <img src={slide.image} key={id} alt="comfy" className="image" />
             )}
           </div>
         );

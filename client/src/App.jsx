@@ -30,7 +30,6 @@ function App() {
         <Route path="/dashboard/Profile" element={<Profile />} />
         <Route path="/Shop" element={<Shop />} />
         <Route path="/Cart" element={<Cart />} />
-        <Route path="/register" element={<AuthForm />} />
         <Route path="/Dashboard" element={<Dashboard />} />
       </Routes>
       <Footer />

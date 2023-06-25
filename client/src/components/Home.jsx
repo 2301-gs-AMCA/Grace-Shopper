@@ -23,13 +23,9 @@ export default function Home() {
         <br></br>
         {loggedIn === false && (
           <p>
-            <a
-              link="login"
-              href="/login"
-              style={{ textDecoration: "underline" }}
-            >
+            <a link="login" href="/login">
               {" "}
-              Login
+              <u>Login</u>
             </a>
             {""} or
             <a
