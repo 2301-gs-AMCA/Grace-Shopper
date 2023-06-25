@@ -12,7 +12,7 @@ export default function Home() {
       <figure>
         <Imageslider slides={SliderData} />
       </figure>
-      <p className="home-description">
+      <div className="home-description">
         If you have found yourself visiting this website, then you are about to
         embark on a journey of which you have never <u>truly</u> endeavored. The
         journey... of Comfort. Here at AMCA, we promise to provide only the most
@@ -38,7 +38,7 @@ export default function Home() {
             </a>
           </p>
         )}
-      </p>
+      </div>
     </div>
   );
 }
