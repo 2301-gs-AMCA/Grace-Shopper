@@ -1,5 +1,5 @@
 const itemsRouter = require("express").Router();
-const { getAllItems, createItem, updateItem } = require("../db/adapters/items");
+const { getAllItems, createItem, updateItem, getItemById } = require("../db/adapters/items");
 const { authRequired } = require("./utils");
 
 itemsRouter.use((req, res, next) => {
@@ -96,6 +96,17 @@ itemsRouter.patch("/:itemId", authRequired, async (req, res, next) => {
   } catch ({ name, message }) {
     next({ name, message });
   }
+});
+
+itemsRouter.get("/:itemId", async (req,res,next)=>{
+  const {itemId}= req.params;
+const item = await getItemById(itemId);
+
+res.send({
+  success:true,
+  message: "got item",
+  item
+})
 });
 
 module.exports = itemsRouter;
