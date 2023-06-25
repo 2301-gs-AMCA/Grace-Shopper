@@ -3,6 +3,7 @@ const {
   createOrder,
   getOrderById,
   getAllUsersOrders,
+  getAllOrders,
   getAllOrdersByUsername,
   updateOrder,
 } = require("../db/adapters/order");
@@ -13,11 +14,39 @@ orderRouter.use((req, res, next) => {
   next();
 });
 
+//GET /orders
+orderRouter.get("/", async (req, res, next) => {
+  try {
+    const orders = await getAllOrders();
+    res.send({
+      success: true,
+      message: "All orders fetched",
+      orders,
+    });
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
+
 //GET /orders/myOrders
 orderRouter.get("/myOrders", authRequired, async (req, res, next) => {
   try {
     const orders = await getAllOrdersByUsername(req.user.username);
     res.send({ success: true, message: "My Orders ", orders });
+  } catch (error) {
+    next(error);
+  }
+});
+
+//GET /orders/userOrders
+orderRouter.get("/:userId", authRequired, async (req, res, next) => {
+  try {
+    const orders = await getAllUsersOrders(req.params.userid);
+    res.send({
+      success: true,
+      message: "Found orders",
+      orders,
+    });
   } catch (error) {
     next(error);
   }
@@ -35,8 +64,7 @@ orderRouter.post("/", authRequired, async (req, res, next) => {
     res.send({
       success: true,
       message: "Order posted",
-      order
-    ,
+      order,
     });
   } catch (error) {
     next(error);
@@ -75,7 +103,7 @@ orderRouter.patch("/:orderId", authRequired, async (req, res, next) => {
       res.send({
         success: true,
         message: "Order Updated",
-        order: updateOrder,
+        order: updatedOrder,
       });
     } else {
       next({
