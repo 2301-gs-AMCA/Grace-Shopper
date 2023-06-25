@@ -8,3 +8,13 @@ return item;
     }
 }
 
+export async function fetchAllItems(){
+try {
+    const response = await fetch('/api/items');
+    const items = await response.json();
+
+    return items;
+} catch (err) {
+    console.error(err)
+}
+}
