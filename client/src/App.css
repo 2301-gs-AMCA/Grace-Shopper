@@ -29,6 +29,11 @@
   align-items: center;
   font-size: 1.25rem;
 }
+.item-card{
+  outline-style:dashed;
+  outline-color:red;
+  margin: 1rem;
+}
 .home-page {
   width: 99vw;
   min-height: 75vh;
