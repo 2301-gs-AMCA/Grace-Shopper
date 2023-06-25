@@ -1,8 +1,10 @@
 import { SliderData } from "./SliderData";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
 
 export const Imageslider = ({ slides }) => {
+  const nav = useNavigate();
   const [pic, setPic] = useState(0);
   const length = slides.length;
 
@@ -21,7 +23,6 @@ export const Imageslider = ({ slides }) => {
   if (!Array.isArray(slides) || length <= 0) {
     return null;
   }
-  console.log(pic);
 
   return (
     <figure className="slider">
@@ -31,7 +32,9 @@ export const Imageslider = ({ slides }) => {
         return (
           <div className={id === pic ? "slide active" : "slide"} key={id}>
             {id === pic && (
-              <img src={slide.image} key={id} alt="comfy" className="image" />
+              <a>
+                <img src={slide.image} key={id} alt="comfy" className="image" />
+              </a>
             )}
           </div>
         );
