@@ -5,8 +5,21 @@ async function getItemById(itemId) {
     const {
       rows: [item],
     } = await client.query(
-      `
-        SELECT * FROM items WHERE id =$1;`,
+      ` SELECT itms.id,itms.name,itms.description,itms.cost,itms.isavailable , CASE WHEN it_imgs.itemId IS NULL THEN '[]'::json
+      ELSE
+      JSON_AGG(
+        JSON_BUILD_OBJECT(
+          'id',it_imgs.id,
+          'image',it_imgs.image
+        )
+      )END AS imagereel
+      FROM items itms
+      JOIN items_imgs it_imgs 
+      ON itms.id = it_imgs.itemId
+      WHERE itms.id = $1
+      GROUP BY it_imgs.itemid,itms.id
+      ORDER BY itms.id;
+        `,
       [itemId]
     );
     if (!item) {

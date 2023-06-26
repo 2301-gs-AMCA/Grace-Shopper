@@ -133,9 +133,9 @@ async function rebuildDb() {
       const getItemByIdResult = await getItemById(2);
       console.log("getItemById:",getItemByIdResult);
       //
-      const updateItemResult = await updateItem(2,'10 gallon hat','a big ol hat','30',true);
-      console.log("updateItem:",updateItemResult)
-      //
+      // const updateItemResult = await updateItem(2);
+      // console.log("updateItem:",updateItemResult)
+      // //
       const getItemByIdResult2 = await getItemById(2);
       console.log("getItemById after update:",getItemByIdResult2);
       // 
