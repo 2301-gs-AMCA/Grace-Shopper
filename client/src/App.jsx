@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router-dom";
-
 // import Navbar from "./Components/Navbar";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
@@ -7,11 +6,10 @@ import Footer from "./components/Footer";
 
 // import Logout from "./components/Logout";
 import Profile from "./components/Profile";
-import Shop from "./components/Shop";
+import Shop from "./components/Shop/Shop";
 import Cart from "./components/Cart";
 import AuthForm from "./components/AuthForm";
 import Dashboard from "./components/Dashboard";
-import "./App.css";
 import { useEffect, useState } from "react";
 import useAuth from "./hooks/useAuth";
 import "./App.css";
