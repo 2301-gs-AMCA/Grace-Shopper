@@ -11,6 +11,8 @@ async function dropTables() {
   try {
     await client.query(`
     DROP TABLE IF EXISTS order_items;
+    DROP TABLE IF EXISTS items-images-throughtable;
+    DROP TABLE IF EXISTS items_imgs;
     DROP TABLE IF EXISTS items;
     DROP TABLE IF EXISTS orders;
     DROP TABLE IF EXISTS users;
@@ -33,23 +35,37 @@ async function createTables() {
       password varchar(255) NOT NULL
   );`);
 
-  //changed order to cart because the word order is used in SQL,
-  //and it was causing errors building the tables and dropping.-cb
+
     await client.query(`CREATE TABLE orders (
     id SERIAL PRIMARY KEY,
     userId INTEGER REFERENCES users("id"),
     totalPrice INTEGER
   );`);
 
-  //using varchar for cost because of the '$' in the value
-  //maybe switch to just numbers to make it easier to exstract?-cb
+  //changed cost to INTEGER -cb
     await client.query(`CREATE TABLE items (
     id SERIAL PRIMARY KEY,
     name varchar(255) UNIQUE NOT NULL,
     description text NOT NULL,
-    cost varchar(255),
+    cost INTEGER,
     isAvailable BOOLEAN DEFAULT true
   );`);
+
+  //images for items
+
+  await client.query(`CREATE TABLE items_imgs (
+    id SERIAL PRIMARY KEY,
+    itemId INTEGER REFERENCE items("id"),
+    url varchar(255)
+  )`);
+
+  await client.query(`CREATE TABLE items-images-throughtable (
+    id SERIAL PRIMARY KEY,
+    itemId INTEGER REFERENCE items(id),
+    imageId INTEGER REFERENCE items_imgs(id)
+  )`)
+
+
     await client.query(`CREATE TABLE order_items (
     id SERIAL PRIMARY KEY,
     orderId INTEGER REFERENCES orders(id),
