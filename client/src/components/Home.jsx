@@ -9,7 +9,7 @@ export default function Home() {
     <div className="home-page">
       <h1 className="home-header">Welcome to AMCA</h1>
       <h2 className="home-sub-header">Where comfy meets cozy</h2>
-      <figure>
+      <figure className="figure">
         <Imageslider slides={SliderData} />
       </figure>
       <div className="home-description">
