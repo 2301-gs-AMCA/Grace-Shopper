@@ -2,6 +2,8 @@
 import { Imageslider } from "../assets/Imageslider";
 import { SliderData } from "../assets/SliderData";
 import useAuth from "../hooks/useAuth";
+import { Link } from "react-router-dom";
+import "../App.css";
 
 export default function Home() {
   const { user, loggedIn, isLoggedIn } = useAuth();
@@ -23,19 +25,15 @@ export default function Home() {
         <br></br>
         {loggedIn === false && (
           <p>
-            <a link="login" href="/login">
+            <Link to="/login">
               {" "}
               <u>Login</u>
-            </a>
+            </Link>
             {""} or
-            <a
-              link="register"
-              href="/register"
-              style={{ textDecoration: "underline" }}
-            >
+            <Link to="/register">
               {" "}
-              Register Here
-            </a>
+              <u>Register Here</u>
+            </Link>
           </p>
         )}
       </div>
