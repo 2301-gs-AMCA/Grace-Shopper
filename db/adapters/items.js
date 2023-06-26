@@ -21,8 +21,19 @@ async function getItemById(itemId) {
 async function getAllItems() {
   try {
     const { rows } = await client.query(`
-      SELECT * FROM items
-      ORDER BY id;`);
+    SELECT itms.id,itms.name,itms.description,itms.cost,itms.isavailable , CASE WHEN it_imgs.itemId IS NULL THEN '[]'::json
+    ELSE
+    JSON_AGG(
+      JSON_BUILD_OBJECT(
+        'id',it_imgs.id,
+        'image',it_imgs.image
+      )
+    )END AS imagereel
+    FROM items itms
+    JOIN items_imgs it_imgs 
+    ON itms.id = it_imgs.itemId
+    GROUP BY it_imgs.itemid,itms.id
+    ORDER BY itms.id;`);
     return rows;
   } catch (error) {
     throw error;
