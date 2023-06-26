@@ -30,7 +30,7 @@ async function getAllItems() {
 }
 
 async function createItem(itemObj) {
-  console.log("createItem:", itemObj);
+ 
   try {
     const {
       rows: [item],
