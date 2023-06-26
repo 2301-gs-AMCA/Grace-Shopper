@@ -145,28 +145,35 @@
 float: left;
 min-width: 68vw;
 min-height: 43vh;
-border: 1px solid;
+border: 2px solid;
 }
 .likedItems{
   list-style: none;
 }
 .orderHistory{
 margin-top: 30rem;
-border: 1px solid;
+border: 2px solid;
 min-height: 30vh;
 }
 .history{
 list-style: none;
 }
-.shop{
-  display: flex;
-  flex-flow: column wrap;
-  flex-wrap: wrap;
-  margin: 1rem 2rem 1rem 2rem; 
+.items-shop{
   min-height: 99vh;
+  text-align: center;
 }
+.items-container{
+  display: flex;
+  min-height: 99vh;
+  text-align: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 1rem 1rem;
+}
+
 .item-card{
-  padding: 5rem;
+  text-align: center;
+  padding: 10rem;
   border: 2px dotted red;
-  margin: 1rem;
+  margin: 2rem;
 }
