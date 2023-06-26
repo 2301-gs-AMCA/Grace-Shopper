@@ -1,6 +1,7 @@
 import { SliderData } from "./SliderData";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { fetchItemByImg } from "../api/items";
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
 
 export const Imageslider = ({ slides }) => {
@@ -34,8 +35,12 @@ export const Imageslider = ({ slides }) => {
             className={id === pic ? "slide active" : "slide"}
             key={id}
             style={{ cursor: "pointer" }}
-            onClick={() => {
-              nav("/Shop");
+            onClick={(e) => {
+              let url = e.target 
+              console.log("url:",url)
+              
+              
+              nav(`/items/${url}`);
             }}
           >
             {id === pic && (

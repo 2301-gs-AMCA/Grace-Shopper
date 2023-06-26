@@ -7,6 +7,15 @@ return item;
         console.error(error)
     }
 }
+export async function fetchItemByImg(img){
+    try {
+        const response = await fetch(`/api/items/${img}`);
+        const {item} = await response.json();
+        return item;
+    } catch (error) {
+        throw error;
+    }
+}
 
 export async function fetchAllItems(){
 try {

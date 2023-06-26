@@ -36,6 +36,16 @@ async function getImagesByItemId(itemId){
         throw error;
     }
 }
+async function getItemByImage(img){
+    try {
+        const {rows:item} = await client.query(`
+        SELECT itemId FROM item_imgs WHERE image = ($1);
+        `,[img]);
+        return item;
+    } catch (err) {
+        throw err;
+    }
+}
 
 // async function addImagestoItem(imgObj){
    
@@ -54,4 +64,4 @@ async function getImagesByItemId(itemId){
 //     }
 // }
 
-module.exports = {createImagesTable,getAllImages,getImagesByItemId};
+module.exports = {createImagesTable,getAllImages,getImagesByItemId,getItemByImage};
