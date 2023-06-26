@@ -12,9 +12,11 @@ const AuthProvider = ({ children }) => {
     async function getFetchMe() {
       try {
         const result = await fetchMe();
+        
         if (result.success) {
+          
           setLoggedIn(true);
-          setUser(user);
+          setUser(result.user);
         } else {
           setUser({ username: "Guest" });
           setLoggedIn(false);
@@ -26,7 +28,7 @@ const AuthProvider = ({ children }) => {
     }
     getFetchMe();
   }, [loggedIn]);
-
+  
   const contextValue = {
     user,
     setUser,

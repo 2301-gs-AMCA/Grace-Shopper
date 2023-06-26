@@ -102,8 +102,8 @@ export default function Navbar() {
       return setNavButtons(html);
     }
     headerButtons(loggedIn);
-  }, [loggedIn]);
-
+  }, [loggedIn,user]);
+console.log("current user:",user)
   return (
     <div className="navbar">
       <h1>A More Comfortable Area</h1>
