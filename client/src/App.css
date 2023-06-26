@@ -114,12 +114,13 @@
 .login {
   display: flex;
   justify-content: center;
+  align-items: center;
   min-height: 50vh;
 }
 .login-form {
   display: flex;
   flex-direction: column;
-  margin-top: 5rem;
+  margin-top: 2rem;
   margin-bottom: 15rem;
   padding: 8rem 8rem 8rem 8rem;
   border: 1px solid;
@@ -180,4 +181,7 @@ list-style: none;
   padding: 10rem;
   border: 2px solid red;
   margin: 2rem;
+}
+.cart{
+  min-height: 99vh;
 }
