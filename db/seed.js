@@ -56,6 +56,7 @@ async function createTables() {
 
   await client.query(`CREATE TABLE items_imgs (
     id SERIAL PRIMARY KEY,
+    itemId INTEGER REFERENCES items(id),
     image varchar(255)
   )`);
 
