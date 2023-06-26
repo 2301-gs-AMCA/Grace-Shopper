@@ -4,7 +4,7 @@ const { createUser, getAllUsers, getUser, getUserById,getUserByUsername} = requi
 const { createItem, getAllItems, getItemById, updateItem} = require("./adapters/items");
 const { createOrder, getOrderById, updateOrder,getAllUsersOrders,getAllOrdersByUsername} = require("./adapters/order");
 const { getOrderItemById, addItemToOrder, getOrderItemsByOrderId,updateOrderItem,destroyOrderItem} = require("./adapters/order_items");
-const {createImagesTable,addImagestoItem} = require("./adapters/assets");
+const {createImagesTable,getAllImages,getImagesByItemId} = require("./adapters/assets");
 const bcrypt = require("bcrypt");
 const SALT_ROUNDS = 10;
 async function dropTables() {
@@ -63,7 +63,7 @@ async function createTables() {
   await client.query(`CREATE TABLE items_images_throughtable (
     id SERIAL PRIMARY KEY,
     itemId INTEGER REFERENCES items(id),
-    imageId INTEGER REFERENCES items_imgs(id)
+    imageId INTEGER REFERENCES items_imgs(id) UNIQUE NOT NULL
   )`)
 
 
@@ -138,6 +138,9 @@ async function rebuildDb() {
       //
       const getItemByIdResult2 = await getItemById(2);
       console.log("getItemById after update:",getItemByIdResult2);
+      // 
+      const getImages = await getAllImages();
+      console.log("getAllImages", getImages)
       
     };
    
@@ -215,6 +218,9 @@ async function rebuildDb() {
     result = await getAllOrdersByUsername("Matt R");
     console.log("getAllOrdersByUsername:",result);
     //
+    result = await getImagesByItemId(2);
+    console.log("getImageByItemId",result);
+   
     };
     
   /////////////////////////////////////////////////////////////////////////

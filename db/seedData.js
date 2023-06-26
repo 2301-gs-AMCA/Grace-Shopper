@@ -111,6 +111,8 @@ const images = [
     image: `https://ae01.alicdn.com/kf/S874e7edface74419b2e51d3b3cd8b67cZ.jpg?width=1600&height=1600&hash=3200`,
     itemId: 9,
   },
+  {image : `https://i.ebayimg.com/images/g/Zw4AAOSwDjZg3MDK/s-l1200.webp`, itemId: 2},
+  { image: `https://www.picclickimg.com/GL4AAOSwfgtkZj47/DISNEY-PARKS-Lilo-Stitch-Snuggle-Snappers-Hugger.webp`,itemId: 2}
 ];
 
 
