@@ -21,14 +21,15 @@ itemsRouter.get("/", async (req, res) => {
 
 //GET /api/items/:itemId
 itemsRouter.get("/:itemId", async (req, res) => {
-  const itemId = req.params;
+  const {itemId} = req.params;
   const item = await getItemById(itemId);
-
+console.log("item route",item)
   res.send({
     success: true,
     message: "Got Item",
     item,
   });
+  
 });
 itemsRouter.get("/:imageurl",async (req,res)=>{
   const itemImg = req.params;
@@ -123,15 +124,15 @@ itemsRouter.patch("/:itemId", authRequired, async (req, res, next) => {
   }
 });
 
-itemsRouter.get("/:itemId", async (req,res,next)=>{
-  const {itemId}= req.params;
-const item = await getItemById(itemId);
+// itemsRouter.get("/:itemId", async (req,res,next)=>{
+//   const {itemId}= req.params;
+// const item = await getItemById(itemId);
 
-res.send({
-  success:true,
-  message: "got item",
-  item
-})
-});
+// res.send({
+//   success:true,
+//   message: "got item",
+//   item
+// })
+// });
 
 module.exports = itemsRouter;

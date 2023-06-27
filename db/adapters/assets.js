@@ -29,7 +29,7 @@ async function getAllImages(){
 async function getImagesByItemId(itemId){
     try {
         const{rows:image} = await client.query(`
-        SELECT id,image FROM items_imgs WHERE itemId = ($1);
+        SELECT * FROM items_imgs WHERE itemId = ($1);
         `,[itemId]);
         return image;
     } catch (error) {

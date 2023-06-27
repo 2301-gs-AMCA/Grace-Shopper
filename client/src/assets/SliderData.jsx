@@ -1,7 +1,6 @@
 import { fetchImageByItemId } from "../api/assets";
 import useState from "react";
 
-let SliderData=[]
 const collection = [];
 
 async function buildSlideshow() {
@@ -11,10 +10,12 @@ async function buildSlideshow() {
     console.log("busllshit:", img);
     collection.push(img[0]);
   }
-  SliderData = collection
-  console.log("this is shit", SliderData);
+  
+  console.log("this is shit", collection);
+  return collection
 }
 
-buildSlideshow();
 
-export {SliderData}
+let SliderData= await buildSlideshow();
+
+export default SliderData;
