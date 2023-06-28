@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { fetchAllItems, fetchItem } from "../../api/items";
 import Items from "./Items";
 import SingleItem from "./SingleItem";
+
 ("../../App.css");
 
 export default function Shop() {
@@ -18,27 +19,13 @@ export default function Shop() {
     }
   }
 
-  async function selectItem(itemId) {
-    try {
-      const result = await fetchItem(itemId);
-      console.log("result from selectItem: ", result);
-      setSelectedItem(result);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
   useEffect(() => {
     getItems();
   }, []);
 
   return (
     <div id="items-shop">
-      {selectedItem.id ? (
-        <SingleItem selectedItem={selectedItem} />
-      ) : (
-        <Items items={items} selectItem={selectItem} />
-      )}
+      <Items items={items} />
     </div>
   );
 }

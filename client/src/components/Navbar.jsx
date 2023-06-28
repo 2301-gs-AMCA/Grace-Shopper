@@ -27,25 +27,25 @@ export default function Navbar() {
                 </button>
               </li>
               <li>
-                <button className="link" onClick={() => nav("/Login")}>
+                <button className="link" onClick={() => nav("/login")}>
                   Login/Register
                 </button>
               </li>
               <li>
                 <button
                   className="link"
-                  onClick={() => nav("/dashboard/Profile")}
+                  onClick={() => nav("/dashboard/profile")}
                 >
                   {user.username}
                 </button>
               </li>
               <li>
-                <button className="link" onClick={() => nav("/Shop")}>
+                <button className="link" onClick={() => nav("/shop")}>
                   Shop
                 </button>
               </li>
               <li>
-                <button className="link" onClick={() => nav("/Cart")}>
+                <button className="link" onClick={() => nav("/cart")}>
                   Cart
                 </button>
               </li>
@@ -57,7 +57,7 @@ export default function Navbar() {
         if (user.isadmin) {
           adminhtml = (
             <li>
-              <button className="link" onClick={() => nav("/Dashboard")}>
+              <button className="link" onClick={() => nav("/dashboard")}>
                 Dashboard
               </button>
             </li>
@@ -79,19 +79,19 @@ export default function Navbar() {
               <li>
                 <button
                   className="link"
-                  onClick={() => nav("/dashboard/Profile")}
+                  onClick={() => nav("/dashboard/profile")}
                 >
                   {user.username}
                 </button>
               </li>
               {adminhtml}
               <li>
-                <button className="link" onClick={() => nav("/Shop")}>
+                <button className="link" onClick={() => nav("/shop")}>
                   Shop
                 </button>
               </li>
               <li>
-                <button className="link" onClick={() => nav("/Cart")}>
+                <button className="link" onClick={() => nav("/cart")}>
                   Cart
                 </button>
               </li>
@@ -102,8 +102,8 @@ export default function Navbar() {
       return setNavButtons(html);
     }
     headerButtons(loggedIn);
-  }, [loggedIn,user]);
-console.log("current user:",user)
+  }, [loggedIn, user]);
+  console.log("current user:", user);
   return (
     <div className="navbar">
       <h1>A More Comfortable Area</h1>

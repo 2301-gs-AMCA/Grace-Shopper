@@ -1,11 +1,25 @@
-export default function SingleItem(props) {
+import { useParams } from "react-router-dom";
+import { fetchItem } from "../../api/items";
+import { useEffect, useState } from "react";
+
+export default function SingleItem() {
+  const { itemId } = useParams();
+  const [item, setItem] = useState({});
+
+  useEffect(() => {
+    async function getGetItemById() {
+      const result = await fetchItem(itemId);
+      console.log("result getItemById: ", result);
+      setItem(result.item);
+    }
+    getGetItemById();
+  }, []);
+
   return (
-    <div id="item-card">
-      <h3>
-        <span>{props.selectedItem.name}</span>
-        <span>{props.selectedItem.description}</span>
-        <span>{props.selectedItem.cost}</span>
-      </h3>
+    <div className="item-card">
+      <p>{item.name}</p>
+      <p>{item.description}</p>
+      <p>{item.cost}</p>
     </div>
   );
 }
