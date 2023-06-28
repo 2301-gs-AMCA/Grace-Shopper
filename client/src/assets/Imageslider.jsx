@@ -36,7 +36,7 @@ export default function Imageslider(){
           key={id}
           style={{ cursor: "pointer" }}
           onClick={() => {
-            nav(`/items/${slide.itemid}`);
+            nav(`/shop/items/${slide.itemid}`);
           }}
         >
           {id === pic && (
