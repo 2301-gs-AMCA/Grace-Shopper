@@ -1,10 +1,8 @@
 const itemsRouter = require("express").Router();
-const {
-  getAllItems,
-  createItem,
-  updateItem,
-  getItemById,
-} = require("../db/adapters/items");
+
+const { getItemByImage } = require("../db/adapters/assets");
+const { getAllItems, createItem, updateItem, getItemById } = require("../db/adapters/items");
+
 const { authRequired } = require("./utils");
 
 itemsRouter.use((req, res, next) => {
@@ -21,6 +19,33 @@ itemsRouter.get("/", async (req, res) => {
     message: "Got Items",
     items,
   });
+});
+
+//GET /api/items/:itemId
+itemsRouter.get("/:itemId", async (req, res) => {
+  const {itemId} = req.params;
+  const item = await getItemById(itemId);
+console.log("item route",item)
+  res.send({
+    success: true,
+    message: "Got Item",
+    item,
+  });
+  
+});
+
+//GET /api/items/:imageurl
+itemsRouter.get("/:imageurl",async (req,res)=>{
+  const itemImg = req.params;
+  const item = await getItemByImage(itemImg);
+
+  res.send({
+    success: true,
+    message: "gotItem",
+    item,
+  })
+
+
 });
 
 //POST /api/items
@@ -101,16 +126,6 @@ itemsRouter.patch("/:itemId", authRequired, async (req, res, next) => {
   }
 });
 
-//GET /api/items/:itemId
-itemsRouter.get("/:itemId", async (req, res, next) => {
-  const { itemId } = req.params;
-  const item = await getItemById(itemId);
 
-  res.send({
-    success: true,
-    message: "got item",
-    item,
-  });
-});
 
 module.exports = itemsRouter;

@@ -1,9 +1,10 @@
 const client = require("./client");
-const { users, items } = require("./seedData");
+const { users, items,images } = require("./seedData");
 const { createUser, getAllUsers, getUser, getUserById,getUserByUsername} = require("./adapters/users");
 const { createItem, getAllItems, getItemById, updateItem} = require("./adapters/items");
 const { createOrder, getOrderById, updateOrder,getAllUsersOrders,getAllOrdersByUsername} = require("./adapters/order");
 const { getOrderItemById, addItemToOrder, getOrderItemsByOrderId,updateOrderItem,destroyOrderItem} = require("./adapters/order_items");
+const {createImagesTable,getAllImages,getImagesByItemId} = require("./adapters/assets");
 const bcrypt = require("bcrypt");
 const SALT_ROUNDS = 10;
 async function dropTables() {
@@ -11,6 +12,8 @@ async function dropTables() {
   try {
     await client.query(`
     DROP TABLE IF EXISTS order_items;
+    DROP TABLE IF EXISTS items_images_throughtable;
+    DROP TABLE IF EXISTS items_imgs;
     DROP TABLE IF EXISTS items;
     DROP TABLE IF EXISTS orders;
     DROP TABLE IF EXISTS users;
@@ -33,23 +36,37 @@ async function createTables() {
       password varchar(255) NOT NULL
   );`);
 
-  //changed order to cart because the word order is used in SQL,
-  //and it was causing errors building the tables and dropping.-cb
+
     await client.query(`CREATE TABLE orders (
     id SERIAL PRIMARY KEY,
     userId INTEGER REFERENCES users("id"),
     totalPrice INTEGER
   );`);
 
-  //using varchar for cost because of the '$' in the value
-  //maybe switch to just numbers to make it easier to exstract?-cb
+  //changed cost to INTEGER -cb
     await client.query(`CREATE TABLE items (
     id SERIAL PRIMARY KEY,
     name varchar(255) UNIQUE NOT NULL,
     description text NOT NULL,
-    cost varchar(255),
+    cost INTEGER,
     isAvailable BOOLEAN DEFAULT true
   );`);
+
+  //images for items
+
+  await client.query(`CREATE TABLE items_imgs (
+    id SERIAL PRIMARY KEY,
+    itemId INTEGER REFERENCES items(id),
+    image varchar(255)
+  )`);
+
+  await client.query(`CREATE TABLE items_images_throughtable (
+    id SERIAL PRIMARY KEY,
+    itemId INTEGER REFERENCES items(id),
+    imageId INTEGER REFERENCES items_imgs(id) UNIQUE NOT NULL
+  )`)
+
+
     await client.query(`CREATE TABLE order_items (
     id SERIAL PRIMARY KEY,
     orderId INTEGER REFERENCES orders(id),
@@ -73,6 +90,10 @@ async function populateTables() {
     for (const item of items) {
       await createItem(item);
     }
+
+    for(const img of images){
+      await createImagesTable(img)
+    }
     console.log("Tables populated!");
   } catch (error) {
     console.error("Error at populate Tables",error);
@@ -85,9 +106,11 @@ async function rebuildDb() {
     await createTables();
     await populateTables();
     console.log("<----testing database----->");
-    console.log("<----Users adapters----->");
+   
     ///////////////////////////////////////////
-    const allUsersResults = await getAllUsers();
+    async function userAdapterTests(){
+      console.log("<----Users adapters----->");
+      const allUsersResults = await getAllUsers();
     console.log("All Users:", allUsersResults);
     //
     const getUserResult = await getUser('Ced','ric');
@@ -98,25 +121,34 @@ async function rebuildDb() {
     //
     const getUserByUsernameResult = await getUserByUsername('BigJoe');
     console.log("getUserByUsername:",getUserByUsernameResult);
+    };
     
-
-    console.log("<----testing items adapters----->");
+ 
     ////////////////////////////////////////////////
-    const allItemsResults = await getAllItems();
-    console.log("All Itesm:", allItemsResults);
-    //
-    const getItemByIdResult = await getItemById(2);
-    console.log("getItemById:",getItemByIdResult);
-    //
-    const updateItemResult = await updateItem(2,'10 gallon hat','a big ol hat','30',true);
-    console.log("updateItem:",updateItemResult)
-    //
-    const getItemByIdResult2 = await getItemById(2);
-    console.log("getItemById after update:",getItemByIdResult2);
-    
-    console.log("<----testing Orders adapter----->");
+    async function itemAdapterTests(){
+      console.log("<----testing items adapters----->");
+      const allItemsResults = await getAllItems();
+      console.log("All Itesm:", allItemsResults);
+      //
+      const getItemByIdResult = await getItemById(2);
+      console.log("getItemById:",getItemByIdResult);
+      //
+      // const updateItemResult = await updateItem(2);
+      // console.log("updateItem:",updateItemResult)
+      // //
+      const getItemByIdResult2 = await getItemById(2);
+      console.log("getItemById after update:",getItemByIdResult2);
+      // 
+      const getImages = await getAllImages();
+      console.log("getAllImages", getImages)
+      
+    };
+   
+   
     ////////////////////////////////////////////////
-    let result = await createOrder(6,100)
+    async function ordersAdapterTest(){
+      console.log("<----testing Orders adapter----->");
+      let result = await createOrder(6,100)
     console.log("createOrder:",result);
     //
     result = await getOrderById(1);
@@ -160,9 +192,14 @@ async function rebuildDb() {
     result = await getOrderItemsByOrderId(1)
     console.log("getOrderItemByOrderId to test after destroy:",result);
     //
+    };
+  
     //////////////////////////////////////////////////////////////////
     // builds a small list of orders and joins them to the order_items table on user 2,Matt R
-    let cost = 20;
+    async function jointableTestsandpopulation(){
+      console.log("<----testing joins and populating----->");
+      let cost = 20;
+    let result ="";
     for(let i = 0;i<11;i++){
       
       result = await createOrder(2,cost)
@@ -181,10 +218,22 @@ async function rebuildDb() {
     result = await getAllOrdersByUsername("Matt R");
     console.log("getAllOrdersByUsername:",result);
     //
+    result = await getImagesByItemId(2);
+    console.log("getImageByItemId",result);
+   
+    };
+    
   /////////////////////////////////////////////////////////////////////////
+  /// calling functions
+    await userAdapterTests();
+    await itemAdapterTests();
+    await ordersAdapterTest();
+    await jointableTestsandpopulation();
+  ////////////////////////////////////////////////////////////////////////
+  console.log("<----creating admin----->");
   const hashedPassword = await bcrypt.hash("password", SALT_ROUNDS);
-  result = await createUser({username: "admin",password: hashedPassword,isAdmin:true,loggedIn:true})
-
+  let result = await createUser({username: "admin",password: hashedPassword,isAdmin:true,loggedIn:true})
+    console.log(result);
   } catch (error) {
     console.error(error);
   } finally {

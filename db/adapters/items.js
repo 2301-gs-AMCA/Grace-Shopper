@@ -1,12 +1,26 @@
 const client = require("../client");
 
 async function getItemById(itemId) {
+  console.log(itemId)
   try {
     const {
       rows: [item],
     } = await client.query(
-      `
-        SELECT * FROM items WHERE id =$1;`,
+      ` SELECT itms.id,itms.name,itms.description,itms.cost,itms.isavailable , CASE WHEN it_imgs.itemId IS NULL THEN '[]'::json
+      ELSE
+      JSON_AGG(
+        JSON_BUILD_OBJECT(
+          'id',it_imgs.id,
+          'image',it_imgs.image
+        )
+      )END AS imagereel
+      FROM items itms
+      JOIN items_imgs it_imgs 
+      ON itms.id = it_imgs.itemId
+      WHERE itms.id = $1
+      GROUP BY it_imgs.itemid,itms.id
+      ORDER BY itms.id;
+        `,
       [itemId]
     );
     if (!item) {
@@ -21,8 +35,19 @@ async function getItemById(itemId) {
 async function getAllItems() {
   try {
     const { rows } = await client.query(`
-      SELECT * FROM items
-      ORDER BY id;`);
+    SELECT itms.id,itms.name,itms.description,itms.cost,itms.isavailable , CASE WHEN it_imgs.itemId IS NULL THEN '[]'::json
+    ELSE
+    JSON_AGG(
+      JSON_BUILD_OBJECT(
+        'id',it_imgs.id,
+        'image',it_imgs.image
+      )
+    )END AS imagereel
+    FROM items itms
+    JOIN items_imgs it_imgs 
+    ON itms.id = it_imgs.itemId
+    GROUP BY it_imgs.itemid,itms.id
+    ORDER BY itms.id;`);
     return rows;
   } catch (error) {
     throw error;
@@ -30,7 +55,7 @@ async function getAllItems() {
 }
 
 async function createItem(itemObj) {
-  console.log("createItem:", itemObj);
+ 
   try {
     const {
       rows: [item],

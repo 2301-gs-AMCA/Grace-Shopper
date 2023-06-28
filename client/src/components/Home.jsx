@@ -1,7 +1,9 @@
 // import React from "react";
-import { Imageslider } from "../assets/Imageslider";
-import { SliderData } from "../assets/SliderData";
+import  Imageslider  from "../assets/Imageslider";
+
 import useAuth from "../hooks/useAuth";
+import { Link } from "react-router-dom";
+import "../App.css";
 
 export default function Home() {
   const { user, loggedIn, isLoggedIn } = useAuth();
@@ -9,8 +11,10 @@ export default function Home() {
     <div className="home-page">
       <h1 className="home-header">Welcome to AMCA</h1>
       <h2 className="home-sub-header">Where comfy meets cozy</h2>
-      <figure className="figure">
-        <Imageslider slides={SliderData} />
+
+      <figure>
+        <Imageslider/>
+
       </figure>
       <div className="home-description">
         If you have found yourself visiting this website, then you are about to
@@ -23,19 +27,15 @@ export default function Home() {
         <br></br>
         {loggedIn === false && (
           <p>
-            <a link="login" href="/login">
+            <Link to="/login">
               {" "}
               <u>Login</u>
-            </a>
+            </Link>
             {""} or
-            <a
-              link="register"
-              href="/register"
-              style={{ textDecoration: "underline" }}
-            >
+            <Link to="/register">
               {" "}
-              Register Here
-            </a>
+              <u>Register Here</u>
+            </Link>
           </p>
         )}
       </div>
