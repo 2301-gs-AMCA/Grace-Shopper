@@ -9,6 +9,7 @@ import Shop from "./components/Shop";
 import Cart from "./components/Cart";
 import AuthForm from "./components/AuthForm";
 import Dashboard from "./components/Dashboard";
+import ItemPage from "./components/ItemPage";
 import "./App.css";
 import { useEffect, useState } from "react";
 import useAuth from "./hooks/useAuth";
@@ -25,6 +26,7 @@ function App() {
         <Route path="/login" element={<AuthForm />} />
         <Route path="/register" element={<AuthForm />} />
         <Route path="/dashboard/Profile" element={<Profile />} />
+        <Route path="/items/:itemId" element={<ItemPage/>}/>
         <Route path="/Shop" element={<Shop />} />
         <Route path="/Cart" element={<Cart />} />
         <Route path="/Dashboard" element={<Dashboard />} />

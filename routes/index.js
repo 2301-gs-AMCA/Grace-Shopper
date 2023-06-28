@@ -18,6 +18,8 @@ const itemsRouter = require("./items");
 router.use("/items", itemsRouter);
 const authRouter = require("./auth");
 router.use("/auth", authRouter);
+const imgRouter = require("./assets");
+router.use("/assets",imgRouter);
 
 router.use((error, req, res, next) => {
   res.send({
