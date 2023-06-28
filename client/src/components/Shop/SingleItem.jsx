@@ -16,10 +16,12 @@ export default function SingleItem() {
   }, []);
 
   return (
-    <div className="item-card">
-      <p>{item.name}</p>
-      <p>{item.description}</p>
-      <p>{item.cost}</p>
+    <div className="app">
+      <div className="item-card">
+        <p>{item.name}</p>
+        <p>{item.description}</p>
+        <p>{item.cost}</p>
+      </div>
     </div>
   );
 }
