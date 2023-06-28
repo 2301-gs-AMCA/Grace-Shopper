@@ -1,24 +1,22 @@
+export async function fetchItem(category, itemId) {
+  try {
+    const response = await fetch(`/api/items/${category}/${itemId}`);
 
-
-export async function fetchItem(itemId){
-    try{
-const response = await fetch(`/api/items/${itemId}`);
-
-const item = await response.json();
-return item;
-    }catch(error){
-        console.error(error)
-    }
+    const item = await response.json();
+    return item;
+  } catch (error) {
+    console.error(error);
+  }
 }
 
-export async function fetchItemByImg(img){
-    try {
-        const response = await fetch(`/api/items/${img}`);
-        const {item} = await response.json();
-        return item;
-    } catch (error) {
-        throw error;
-    }
+export async function fetchItemByImg(img) {
+  try {
+    const response = await fetch(`/api/items/${img}`);
+    const { item } = await response.json();
+    return item;
+  } catch (error) {
+    throw error;
+  }
 }
 
 export async function fetchAllItems() {
@@ -29,6 +27,16 @@ export async function fetchAllItems() {
     return items;
   } catch (err) {
     console.error(err);
+  }
+}
+
+export async function fetchItemsByCategory(category) {
+  try {
+    const response = await fetch(`/api/items/${category}`);
+    const items = await response.json();
+    return items;
+  } catch (error) {
+    console.error(error);
   }
 }
 
@@ -57,7 +65,7 @@ export async function postItem(name, description, cost) {
 
 export async function patchItem(itemId, name, description, cost) {
   try {
-    const response = await fetch(`/api/items/${itemId}`, {
+    const response = await fetch(`/api/items/${category}/${itemId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
