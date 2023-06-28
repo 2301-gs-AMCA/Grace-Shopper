@@ -35,29 +35,31 @@ export default function Navbar() {
                 </button>
               </li>
               <li>
-                <button className="link" onClick={() => nav("/Login")}>
+                <button className="link" onClick={() => nav("/login")}>
                   Login/Register
                 </button>
               </li>
               <li>
                 <button
                   className="link"
-                  onClick={() => nav("/dashboard/Profile")}
+                  onClick={() => nav("/dashboard/profile")}
                 >
                   {user.username}
                 </button>
               </li>
               <li>
-                <button className="link" onClick={() => nav("/Shop")}>
+                <button className="link" onClick={() => nav("/shop")}>
                   Shop
                 </button>
               </li>
               <li>
-                <button className="link" onClick={() => nav("/Cart")}>
+
+                <button className="link" onClick={() => nav("/cart")}>
                   <img
                     src="https://em-content.zobj.net/source/microsoft-teams/363/shopping-cart_1f6d2.png"
                     style={{ width: "45px", height: "60px" }}
                   />
+
                 </button>
               </li>
             </ul>
@@ -68,7 +70,7 @@ export default function Navbar() {
         if (user.isadmin) {
           adminhtml = (
             <li>
-              <button className="link" onClick={() => nav("/Dashboard")}>
+              <button className="link" onClick={() => nav("/dashboard")}>
                 Dashboard
               </button>
             </li>
@@ -90,23 +92,25 @@ export default function Navbar() {
               <li>
                 <button
                   className="link"
-                  onClick={() => nav("/dashboard/Profile")}
+                  onClick={() => nav("/dashboard/profile")}
                 >
                   {user.username}
                 </button>
               </li>
               {adminhtml}
               <li>
-                <button className="link" onClick={() => nav("/Shop")}>
+                <button className="link" onClick={() => nav("/shop")}>
                   Shop
                 </button>
               </li>
               <li>
-                <button className="link" onClick={() => nav("/Cart")}>
+
+                <button className="link" onClick={() => nav("/cart")}>
                   <img
                     src="https://em-content.zobj.net/source/microsoft-teams/363/shopping-cart_1f6d2.png"
                     style={{ width: "45px", height: "60px" }}
                   />
+
                 </button>
               </li>
             </ul>

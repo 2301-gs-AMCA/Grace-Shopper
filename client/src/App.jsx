@@ -5,12 +5,17 @@ import Home from "./components/Home";
 import Footer from "./components/Footer";
 // import Logout from "./components/Logout";
 import Profile from "./components/Profile";
-import Shop from "./components/Shop";
+import Shop from "./components/Shop/Shop";
 import Cart from "./components/Cart";
 import AuthForm from "./components/AuthForm";
 import Dashboard from "./components/Dashboard";
+
+import Items from "./components/Shop/Items";
+import SingleItem from "./components/Shop/SingleItem";
+
 import ItemPage from "./components/ItemPage";
 import "./App.css";
+
 import { useEffect, useState } from "react";
 import useAuth from "./hooks/useAuth";
 
@@ -25,11 +30,14 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<AuthForm />} />
         <Route path="/register" element={<AuthForm />} />
-        <Route path="/dashboard/Profile" element={<Profile />} />
-        <Route path="/items/:itemId" element={<ItemPage/>}/>
-        <Route path="/Shop" element={<Shop />} />
-        <Route path="/Cart" element={<Cart />} />
-        <Route path="/Dashboard" element={<Dashboard />} />
+
+        <Route path="/dashboard/profile" element={<Profile />} />
+        <Route path="/shop" element={<Shop />} />
+        
+        <Route path="/shop/items/:itemId" element={<SingleItem />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+
       </Routes>
       <Footer />
     </div>

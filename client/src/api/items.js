@@ -1,4 +1,5 @@
 
+
 export async function fetchItem(itemId){
     try{
 const response = await fetch(`/api/items/${itemId}`);
@@ -9,6 +10,7 @@ return item;
         console.error(error)
     }
 }
+
 export async function fetchItemByImg(img){
     try {
         const response = await fetch(`/api/items/${img}`);
