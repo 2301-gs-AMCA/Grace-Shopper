@@ -35,6 +35,36 @@ async function getOrderById(orderId) {
   }
 }
 
+async function getAllOrders() {
+  try {
+    const { rows: orders } = await client.query(
+      `
+      SELECT ords.id, ords.userId, ords.totalPrice,
+      CASE WHEN orditms.orderId IS NULL THEN '[]'::json
+      ELSE
+      JSON_AGG(
+          JSON_BUILD_OBJECT (
+              'id', itms.id,
+              'name', itms.name,
+              'description', itms.description,
+              'cost', itms.cost,
+              'isAvailable', itms.isAvailable
+          )
+      ) END AS items
+      FROM orders ords
+      FULL OUTER JOIN order_items orditms
+          ON ords.id = orditms.orderId
+      FULL OUTER JOIN items itms
+          ON orditms.itemId = itms.id
+      GROUP BY ords.id, orditms.orderId;
+      `
+    );
+    return orders;
+  } catch (error) {
+    throw error;
+  }
+}
+
 async function getAllUsersOrders(userId) {
   try {
     const { rows: orders } = await client.query(
@@ -127,6 +157,7 @@ module.exports = {
   createOrder,
   getAllUsersOrders,
   getAllOrdersByUsername,
+  getAllOrders,
   getOrderById,
   updateOrder,
 };

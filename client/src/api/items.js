@@ -1,3 +1,4 @@
+
 export async function fetchItem(itemId){
     try{
 const response = await fetch(`/api/items/${itemId}`);
@@ -18,13 +19,59 @@ export async function fetchItemByImg(img){
     }
 }
 
-export async function fetchAllItems(){
-try {
-    const response = await fetch('/api/items');
+export async function fetchAllItems() {
+  try {
+    const response = await fetch("/api/items");
     const items = await response.json();
 
     return items;
-} catch (err) {
-    console.error(err)
+  } catch (err) {
+    console.error(err);
+  }
 }
+
+export async function postItem(name, description, cost) {
+  try {
+    const response = await fetch(`/api/items`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        item: {
+          name,
+          description,
+          cost,
+        },
+      }),
+    });
+    const result = await response.json();
+    console.log("Result from postItem: ", result);
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function patchItem(itemId, name, description, cost) {
+  try {
+    const response = await fetch(`/api/items/${itemId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        item: {
+          name,
+          description,
+          cost,
+        },
+      }),
+    });
+    const result = await response.json();
+    console.log("result from patchItem: ", result);
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
 }

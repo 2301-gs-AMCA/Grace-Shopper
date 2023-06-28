@@ -13,6 +13,14 @@ export default function Navbar() {
     setLoggedIn(!loggedIn);
     navigate("/");
   }
+  useEffect(() => {
+    function resetTop() {
+      if (nav) {
+        window.scroll(0, 0);
+      }
+    }
+    return resetTop();
+  });
 
   useEffect(() => {
     function headerButtons(loggedIn) {
@@ -46,7 +54,10 @@ export default function Navbar() {
               </li>
               <li>
                 <button className="link" onClick={() => nav("/Cart")}>
-                  Cart
+                  <img
+                    src="https://em-content.zobj.net/source/microsoft-teams/363/shopping-cart_1f6d2.png"
+                    style={{ width: "45px", height: "60px" }}
+                  />
                 </button>
               </li>
             </ul>
@@ -92,7 +103,10 @@ export default function Navbar() {
               </li>
               <li>
                 <button className="link" onClick={() => nav("/Cart")}>
-                  Cart
+                  <img
+                    src="https://em-content.zobj.net/source/microsoft-teams/363/shopping-cart_1f6d2.png"
+                    style={{ width: "45px", height: "60px" }}
+                  />
                 </button>
               </li>
             </ul>
@@ -102,8 +116,8 @@ export default function Navbar() {
       return setNavButtons(html);
     }
     headerButtons(loggedIn);
-  }, [loggedIn,user]);
-console.log("current user:",user)
+  }, [loggedIn, user]);
+  console.log("current user:", user);
   return (
     <div className="navbar">
       <h1>A More Comfortable Area</h1>

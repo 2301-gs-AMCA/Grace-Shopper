@@ -1,10 +1,8 @@
 import { Route, Routes } from "react-router-dom";
-
 // import Navbar from "./Components/Navbar";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import Footer from "./components/Footer";
-
 // import Logout from "./components/Logout";
 import Profile from "./components/Profile";
 import Shop from "./components/Shop";
@@ -15,7 +13,6 @@ import ItemPage from "./components/ItemPage";
 import "./App.css";
 import { useEffect, useState } from "react";
 import useAuth from "./hooks/useAuth";
-import "./App.css";
 
 function App() {
   const { user } = useAuth();

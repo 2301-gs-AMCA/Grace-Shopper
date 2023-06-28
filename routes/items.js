@@ -1,6 +1,8 @@
 const itemsRouter = require("express").Router();
+
 const { getItemByImage } = require("../db/adapters/assets");
 const { getAllItems, createItem, updateItem, getItemById } = require("../db/adapters/items");
+
 const { authRequired } = require("./utils");
 
 itemsRouter.use((req, res, next) => {
@@ -31,6 +33,8 @@ console.log("item route",item)
   });
   
 });
+
+//GET /api/items/:imageurl
 itemsRouter.get("/:imageurl",async (req,res)=>{
   const itemImg = req.params;
   const item = await getItemByImage(itemImg);
@@ -46,11 +50,9 @@ itemsRouter.get("/:imageurl",async (req,res)=>{
 
 //POST /api/items
 itemsRouter.post("/", authRequired, async (req, res, next) => {
-  if(req.user.isadmin != true){
-    res.send(
-      {message:"you are not an admin"}
-    )
-    return
+  if (req.user.isadmin != true) {
+    res.send({ message: "you are not an admin" });
+    return;
   }
   const { name, description, cost } = req.body;
   const itemsObj = {};
@@ -58,7 +60,7 @@ itemsRouter.post("/", authRequired, async (req, res, next) => {
     itemsObj.name = name;
     itemsObj.description = description;
     itemsObj.cost = cost;
-    
+
     const item = await createItem(itemsObj);
 
     if (item) {
@@ -81,7 +83,7 @@ itemsRouter.post("/", authRequired, async (req, res, next) => {
 //PATCH /api/items/:itemId
 itemsRouter.patch("/:itemId", authRequired, async (req, res, next) => {
   const { itemId } = req.params;
-  
+
   const { name, description, cost, isAvailable } = req.body;
   const updateItemsObj = {};
 
@@ -107,7 +109,7 @@ itemsRouter.patch("/:itemId", authRequired, async (req, res, next) => {
         cost,
         isAvailable
       );
-      console.log("updating item:",updatedItem)
+      console.log("updating item:", updatedItem);
       res.send({
         success: true,
         message: "Item updated",
@@ -124,15 +126,6 @@ itemsRouter.patch("/:itemId", authRequired, async (req, res, next) => {
   }
 });
 
-// itemsRouter.get("/:itemId", async (req,res,next)=>{
-//   const {itemId}= req.params;
-// const item = await getItemById(itemId);
 
-// res.send({
-//   success:true,
-//   message: "got item",
-//   item
-// })
-// });
 
 module.exports = itemsRouter;

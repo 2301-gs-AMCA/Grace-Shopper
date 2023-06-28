@@ -72,12 +72,16 @@
   align-items: center;
   z-index: 0;
 }
-
+.figure {
+  justify-content: center;
+  align-items: center;
+}
 .figcap {
   text-align: left;
   margin: 0 5rem 2rem 27rem;
 }
 .image {
+  display: flex;
   width: 560px;
   height: 500px;
   border-radius: 10px;
@@ -110,12 +114,13 @@
 .login {
   display: flex;
   justify-content: center;
+  align-items: center;
   min-height: 50vh;
 }
 .login-form {
   display: flex;
   flex-direction: column;
-  margin-top: 5rem;
+  margin-top: 2rem;
   margin-bottom: 15rem;
   padding: 8rem 8rem 8rem 8rem;
   border: 1px solid;
@@ -174,6 +179,9 @@ list-style: none;
 .item-card{
   text-align: center;
   padding: 10rem;
-  border: 2px dotted red;
+  border: 2px solid red;
   margin: 2rem;
+}
+.cart{
+  min-height: 99vh;
 }
