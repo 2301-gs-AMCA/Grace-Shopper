@@ -1,6 +1,6 @@
-export async function fetchItem(category, itemId) {
+export async function fetchItem(itemId) {
   try {
-    const response = await fetch(`/api/items/${category}/${itemId}`);
+    const response = await fetch(`/api/items/${itemId}`);
 
     const item = await response.json();
     return item;
@@ -65,7 +65,7 @@ export async function postItem(name, description, cost) {
 
 export async function patchItem(itemId, name, description, cost) {
   try {
-    const response = await fetch(`/api/items/${category}/${itemId}`, {
+    const response = await fetch(`/api/items/${itemId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

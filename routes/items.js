@@ -27,20 +27,7 @@ itemsRouter.get("/", async (req, res) => {
   });
 });
 
-/*
-//GET /api/items/:category
-itemsRouter.get("/:category", async (req, res) => {
-  const { category } = req.params;
-  const items = await getItemsByCategory(category);
-  res.send({
-    success: true,
-    message: "Got Category Items",
-    items,
-  });
-});
-*/
-
-//GET /api/items/:category/:itemId
+//GET /api/items/:itemId
 itemsRouter.get("/:itemId", async (req, res) => {
   const { itemId } = req.params;
   const item = await getItemById(itemId);
@@ -49,6 +36,17 @@ itemsRouter.get("/:itemId", async (req, res) => {
     success: true,
     message: "Got Item",
     item,
+  });
+});
+
+//GET /api/items/:category
+itemsRouter.get("/:category", async (req, res) => {
+  const { category } = req.params;
+  const items = await getItemsByCategory(category);
+  res.send({
+    success: true,
+    message: "Got Category Items",
+    items,
   });
 });
 
