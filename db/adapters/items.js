@@ -1,6 +1,7 @@
 const client = require("../client");
 
 async function getItemById(itemId) {
+ 
   try {
     const {
       rows: [item],

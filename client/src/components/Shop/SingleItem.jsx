@@ -37,10 +37,10 @@ export default function SingleItem() {
 
   return (
     <div className="item-card">
-      <p>{item.name}</p>
+      <h1>{item.name}</h1>
       <img src={image} alt="imageNotFound" />
-      <p>{item.description}</p>
-      <p>{item.cost}</p>
+      <p>Description: {item.description}</p>
+      <p>Price: ${item.cost}</p>
     </div>
   );
 }
