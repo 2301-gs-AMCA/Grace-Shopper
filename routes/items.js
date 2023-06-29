@@ -39,6 +39,7 @@ itemsRouter.get("/:itemId", async (req, res) => {
   });
 });
 
+/*
 //GET /api/items/:category
 itemsRouter.get("/:category", async (req, res) => {
   const { category } = req.params;
@@ -49,6 +50,7 @@ itemsRouter.get("/:category", async (req, res) => {
     items,
   });
 });
+*/
 
 //GET /api/items/:imageurl
 itemsRouter.get("/:imageurl", async (req, res) => {

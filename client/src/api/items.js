@@ -30,11 +30,27 @@ export async function fetchAllItems() {
   }
 }
 
-export async function fetchItemsByCategory(category) {
+/*export async function fetchItemsByCategory(category) {
   try {
     const response = await fetch(`/api/items/${category}`);
     const items = await response.json();
     return items;
+  } catch (error) {
+    console.error(error);
+  }
+}
+*/
+
+export async function fetchItemsByCategory(category) {
+  try {
+    const response = await fetch("/api/items");
+    const result = await response.json();
+    console.log("allItems itemsbycategory: ", result);
+    const categoryItems = result.items.filter(
+      (item) => item.category === category
+    );
+    console.log("result categoryItems: ", categoryItems);
+    return categoryItems;
   } catch (error) {
     console.error(error);
   }
