@@ -48,6 +48,7 @@ async function getAllOrders() {
               'name', itms.name,
               'description', itms.description,
               'cost', itms.cost,
+              'category', itms.category,
               'isAvailable', itms.isAvailable
           )
       ) END AS items
@@ -78,6 +79,7 @@ async function getAllUsersOrders(userId) {
                         'name', itms.name,
                         'description', itms.description,
                         'cost', itms.cost,
+                        'category', itms.category,
                         'isAvailable', itms.isAvailable
                     )
                 ) END AS items
@@ -112,6 +114,7 @@ async function getAllOrdersByUsername(username) {
                         'name', itms.name,
                         'description', itms.description,
                         'cost', itms.cost,
+                        'category', itms.category,
                         'isAvailable', itms.isAvailable
               
                     )

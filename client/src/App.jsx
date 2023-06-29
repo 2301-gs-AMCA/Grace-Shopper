@@ -18,6 +18,7 @@ import "./App.css";
 
 import { useEffect, useState } from "react";
 import useAuth from "./hooks/useAuth";
+import CategoryItems from "./components/Shop/CategoryItems";
 
 function App() {
   const { user } = useAuth();
@@ -33,11 +34,10 @@ function App() {
 
         <Route path="/dashboard/profile" element={<Profile />} />
         <Route path="/shop" element={<Shop />} />
-        
+        <Route path="/shop/:category" element={<CategoryItems />} />
         <Route path="/shop/items/:itemId" element={<SingleItem />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/dashboard" element={<Dashboard />} />
-
       </Routes>
       <Footer />
     </div>

@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
-import { fetchAllItems, fetchItem } from "../../api/items";
+import { fetchAllItems } from "../../api/items";
 import Items from "./Items";
-import SingleItem from "./SingleItem";
+import CategorySidebar from "./CategorySidebar";
 
 ("../../App.css");
 
 export default function Shop() {
   const [items, setItems] = useState([]);
-  const [selectedItem, setSelectedItem] = useState({});
 
   async function getItems() {
     try {
@@ -25,6 +24,7 @@ export default function Shop() {
 
   return (
     <div id="items-shop">
+      <CategorySidebar />
       <Items items={items} />
     </div>
   );
