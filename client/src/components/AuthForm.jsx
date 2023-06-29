@@ -11,6 +11,7 @@ export default function AuthForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -51,12 +52,30 @@ export default function AuthForm() {
           onChange={(e) => setUsername(e.target.value)}
         />
         <label>Password: </label>
-        <input
-          type="text"
-          placeholder="Password"
-          name="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        {showPassword ? (
+          <input
+            type="text"
+            placeholder="Password"
+            name="password"
+            id="typepass"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        ) : (
+          <input
+            type="password"
+            placeholder="Password"
+            name="password"
+            id="typepass"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        )}
+        <div>
+          <input
+            type="checkbox"
+            onChange={(e) => setShowPassword(!showPassword)}
+          />
+          Show Password
+        </div>
         <br></br>
         <button>Submit</button>
         <br></br>
