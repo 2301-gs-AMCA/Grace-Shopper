@@ -181,7 +181,12 @@ list-style: none;
   padding: 10rem;
   border: 2px solid red;
   margin: 2rem;
+  color: aliceblue;
 
+}
+.item-card img{
+   width:80%;
+   height:auto;
 }
 .cart{
   min-height: 99vh;
