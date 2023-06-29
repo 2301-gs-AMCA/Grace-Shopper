@@ -1,16 +1,12 @@
 import { useState, useEffect } from "react";
-import { fetchAllItems, fetchItem } from "../../api/items";
+import { fetchAllItems } from "../../api/items";
 import Items from "./Items";
-import SingleItem from "./SingleItem";
-import { Link } from "react-router-dom";
+import CategorySidebar from "./CategorySidebar";
 
 ("../../App.css");
 
 export default function Shop() {
   const [items, setItems] = useState([]);
-  const [theseItems, setTheseItems] = useState([]);
-
-  const categories = ["plush", "pets", "shoes", "accessories", "bedding"];
 
   async function getItems() {
     try {
@@ -28,6 +24,7 @@ export default function Shop() {
 
   return (
     <div id="items-shop">
+      <CategorySidebar />
       <Items items={items} />
     </div>
   );
