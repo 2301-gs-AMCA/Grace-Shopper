@@ -132,9 +132,9 @@ const images = [
 let temp=[];
 let reviews = users.forEach((user,index)=>{
   
-  temp.push({itemId:index,userId:index,title:`${items[index].name}`,rating:4,review:`I ${user.username},fully endorse ${items[index].name}`})
+  temp.push({itemId:index+1,userId:index+1,title:`${items[index].name}`,rating:4,review:`I ${user.username},fully endorse ${items[index].name}`})
   
 })
 reviews = temp;
 console.log("reviews for products",reviews)
-module.exports = { users, items, images };
+module.exports = { users, items, images,reviews};

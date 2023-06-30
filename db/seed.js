@@ -1,5 +1,5 @@
 const client = require("./client");
-const { users, items, images } = require("./seedData");
+const { users, items, images,reviews} = require("./seedData");
 const {
   createUser,
   getAllUsers,
@@ -8,6 +8,7 @@ const {
   getUserByUsername,
   updateUser
 } = require("./adapters/users");
+const {createReviewsTable}= require("./adapters/reviews")
 const {
   createItem,
   getAllItems,
@@ -140,6 +141,10 @@ async function populateTables() {
 
     for (const img of images) {
       await createImagesTable(img);
+    }
+    console.log("reviews list:",reviews)
+    for (const review of reviews){
+      await createReviewsTable(review)
     }
     console.log("Tables populated!");
   } catch (error) {
