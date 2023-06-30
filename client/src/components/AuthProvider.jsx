@@ -7,14 +7,19 @@ export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({ id: null, username: "Guest" });
   const [loggedIn, setLoggedIn] = useState(false);
+  const [cart, setCart] = useState({
+    id: null,
+    userId: user.id,
+    totalPrice: null,
+    items: [],
+  });
 
   useEffect(() => {
     async function getFetchMe() {
       try {
         const result = await fetchMe();
-        
+
         if (result.success) {
-          
           setLoggedIn(true);
           setUser(result.user);
         } else {
@@ -28,12 +33,14 @@ const AuthProvider = ({ children }) => {
     }
     getFetchMe();
   }, [loggedIn]);
-  
+
   const contextValue = {
     user,
     setUser,
     loggedIn,
     setLoggedIn,
+    cart,
+    setCart,
   };
 
   return (

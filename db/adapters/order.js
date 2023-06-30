@@ -22,10 +22,34 @@ async function getOrderById(orderId) {
   try {
     const {
       rows: [order],
-    } = await client.query(`
-            SELECT * from orders WHERE id=${orderId}
-            ORDER by id;
-        `);
+    } = await client.query(
+      `
+    SELECT ords.id, ords.userId, ords.totalPrice,
+    CASE WHEN orditms.orderId IS NULL THEN '[]'::json
+    ELSE
+    JSON_AGG(
+        JSON_BUILD_OBJECT (
+            'id', itms.id,
+            'name', itms.name,
+            'description', itms.description,
+            'cost', itms.cost,
+            'category', itms.category,
+            'isAvailable', itms.isAvailable,
+            'quantity', orditms.item_quantity
+        )
+    ) END AS items
+    FROM orders ords
+    FULL OUTER JOIN order_items orditms
+        ON ords.id = orditms.orderId
+    FULL OUTER JOIN items itms
+        ON orditms.itemId = itms.id
+    JOIN users us
+        ON us.id = ords.userId
+    WHERE ords.id = $1
+    GROUP BY ords.id, orditms.orderId;
+`,
+      [orderId]
+    );
     if (!order) {
       return null;
     }
@@ -49,7 +73,8 @@ async function getAllOrders() {
               'description', itms.description,
               'cost', itms.cost,
               'category', itms.category,
-              'isAvailable', itms.isAvailable
+              'isAvailable', itms.isAvailable,
+              'quantity', orditms.item_quantity
           )
       ) END AS items
       FROM orders ords
@@ -80,7 +105,8 @@ async function getAllUsersOrders(userId) {
                         'description', itms.description,
                         'cost', itms.cost,
                         'category', itms.category,
-                        'isAvailable', itms.isAvailable
+                        'isAvailable', itms.isAvailable,
+                        'quantity', orditms.item_quantity
                     )
                 ) END AS items
                 FROM orders ords
@@ -115,8 +141,8 @@ async function getAllOrdersByUsername(username) {
                         'description', itms.description,
                         'cost', itms.cost,
                         'category', itms.category,
-                        'isAvailable', itms.isAvailable
-              
+                        'isAvailable', itms.isAvailable,
+                        'quantity', orditms.item_quantity
                     )
                 ) END AS items
                 FROM orders ords
