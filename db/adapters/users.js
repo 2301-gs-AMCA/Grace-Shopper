@@ -20,6 +20,23 @@ async function createUser(userObj) {
   }
 }
 
+async function updateUser(userObj){
+  try {
+    const{rows:[user]} = await client.query(`
+    UPDATE Users 
+    SET 
+    username = COALESCE($2,username),
+    password = COALESCE($3,password), 
+    isAdmin = COALESCE($4,isAdmin)
+    WHERE id = $1
+    RETURNING *;
+    `,[userObj.id,userObj.username,userObj.password,userObj.isAdmin]);
+    return user
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 async function getAllUsers() {
   try {
     const { rows } = await client.query(`
@@ -100,4 +117,5 @@ module.exports = {
   getUser,
   getUserById,
   getUserByUsername,
+  updateUser
 };
