@@ -13,13 +13,13 @@ export default function Cart() {
 
   useEffect(() => {
     console.log(cart);
+    setCart(cart);
   }, [click]);
 
   //re-renders totalPrice and price
   function handleClick(e) {
     e.preventDefault();
     setClick(e.target.value);
-    setCart(cart);
   }
   return (
     <div className="cart">
