@@ -2,8 +2,8 @@ import useAuth from "../../hooks/useAuth";
 import { useState, useEffect } from "react";
 
 export default function AddToCart({ item }) {
-  const { cart, setCart } = useAuth();
-  const [quantity, setQuantity] = useState(1);
+  const { user, cart, setCart } = useAuth();
+  const [quantity, setQuantity] = useState(item.quantity || 1);
 
   useEffect(() => {
     item.quantity = quantity;
@@ -12,6 +12,9 @@ export default function AddToCart({ item }) {
 
   function handleSubmit(e) {
     e.preventDefault();
+    if (!user) {
+      cart.items.userId === 0;
+    }
     if (cart.items.includes(item)) {
       cart.totalPrice += item.subtotal;
       cart.items[item].quantity = quantity;

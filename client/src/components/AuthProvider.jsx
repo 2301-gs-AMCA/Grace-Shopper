@@ -9,7 +9,7 @@ const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [cart, setCart] = useState({
     id: null,
-    userId: user.id,
+    userId: 0,
     totalPrice: null,
     items: [],
   });

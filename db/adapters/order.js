@@ -35,7 +35,8 @@ async function getOrderById(orderId) {
             'cost', itms.cost,
             'category', itms.category,
             'isAvailable', itms.isAvailable,
-            'quantity', orditms.item_quantity
+            'quantity', orditms.item_quantity,
+            'price', orditms.price
         )
     ) END AS items
     FROM orders ords
@@ -74,7 +75,8 @@ async function getAllOrders() {
               'cost', itms.cost,
               'category', itms.category,
               'isAvailable', itms.isAvailable,
-              'quantity', orditms.item_quantity
+              'quantity', orditms.item_quantity,
+              'price', orditms.price
           )
       ) END AS items
       FROM orders ords
@@ -106,7 +108,8 @@ async function getAllUsersOrders(userId) {
                         'cost', itms.cost,
                         'category', itms.category,
                         'isAvailable', itms.isAvailable,
-                        'quantity', orditms.item_quantity
+                        'quantity', orditms.item_quantity,
+                        'price', orditms.price
                     )
                 ) END AS items
                 FROM orders ords
@@ -142,7 +145,8 @@ async function getAllOrdersByUsername(username) {
                         'cost', itms.cost,
                         'category', itms.category,
                         'isAvailable', itms.isAvailable,
-                        'quantity', orditms.item_quantity
+                        'quantity', orditms.item_quantity,
+                        'price', orditms.price
                     )
                 ) END AS items
                 FROM orders ords
