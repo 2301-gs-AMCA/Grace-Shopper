@@ -62,6 +62,11 @@ export default function AddToCart({ item, handleClick }) {
 
   return (
     <div>
+      {pathname === "/shop" && (
+        <form onSubmit={handleSubmit}>
+          <button>Quick Add</button>
+        </form>
+      )}
       {pathname === `/shop/items/${itemId}` && (
         <form onSubmit={handleSubmit}>
           <label>
