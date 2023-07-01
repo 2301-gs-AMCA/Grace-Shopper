@@ -6,30 +6,48 @@ export default function SingleItem() {
   const { itemId } = useParams();
   const [item, setItem] = useState({});
   const [image,setImage] = useState("");
+  const [reviews,setReviews] = useState("")
 
   useEffect(() => {
-     async function getGetItemById() {
+     async function getItemById() {
       const result =  await fetchItem(itemId);
       console.log("result getItemById: ", result);
       setItem(result.item);
-      console.log("call 1")
+      console.log("call 1",result.item)
       await fetchImg(result.item);
     }
-    async function nextFunc(item){
+    async function nextFunc(itm){
       console.log("call 3")
-      return item.imagereel[0].image;
+      return itm.imagereel[0].image;
     }
 
-    async function fetchImg(item){
+    async function fetchImg(itm){
       console.log("call 2")
-      let img = await nextFunc(item)
-      console.log(img)
-      
+      let img = await nextFunc(itm)
+      console.log(img);
       setImage(img);
-      
+      await fetchReviews(itm);
     }
 
-    getGetItemById();
+    async function fetchReviews(itm){
+    console.log("call4");
+    console.log("review item",itm)
+    let revHtml =  await itm.reviewlist.map((review)=>{
+      console.log("review",review)
+      return(
+      <div className="review-card">
+      <p>author:{review.username}</p>
+      <h3>{review.title}</h3>
+      <p>rating: {review.rating} out of 5</p>
+      <p>{review.review}</p>
+      </div>
+      )
+      
+    })
+    console.log(revHtml)
+    setReviews(revHtml)
+    } 
+    getItemById();
     
     
   }, [setItem]);
@@ -41,6 +59,13 @@ export default function SingleItem() {
       <img src={image} alt="imageNotFound" />
       <p>Description: {item.description}</p>
       <p>Price: ${item.cost}</p>
+      <br />
+      <br />
+      <br />
+      <div>
+        <h2>Reviews:</h2>
+       {reviews}
+      </div>
     </div>
   );
 }
