@@ -1,13 +1,29 @@
 import useAuth from "../../hooks/useAuth";
 import { useState, useEffect } from "react";
+import { useLocation, useParams } from "react-router-dom";
 
-export default function AddToCart({ item }) {
+export default function AddToCart({ item, handleClick }) {
+  const { pathname } = useLocation();
+  const { itemId } = useParams();
   const { user, cart, setCart } = useAuth();
   const [quantity, setQuantity] = useState(item.quantity || 1);
 
   useEffect(() => {
     item.quantity = quantity;
     item.subtotal = item.cost * quantity;
+
+    if (pathname === "/cart") {
+      setCart(cart);
+      if (!user) {
+        cart.items.userId === 0;
+      }
+      cart.totalPrice = 0;
+      cart.totalPrice += item.subtotal;
+      item.quantity = quantity;
+
+      console.log(cart);
+    }
+    setCart(cart);
   }, [quantity]);
 
   function handleSubmit(e) {
@@ -26,22 +42,48 @@ export default function AddToCart({ item }) {
     }
   }
 
+  function handleChange(e) {
+    e.preventDefault();
+    setQuantity(Number(e.target.value));
+
+    setCart(cart);
+  }
+
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        quantity:
-        <input
-          type="number"
-          max="100"
-          min="0"
-          value={quantity}
-          onChange={(e) => {
-            setQuantity(Number(e.target.value));
-          }}
-        />
-      </label>
-      <br></br>
-      <button>Add To Cart</button>
-    </form>
+    <div>
+      {pathname === `/shop/items/${itemId}` && (
+        <form onSubmit={handleSubmit}>
+          <label>
+            quantity:
+            <input
+              type="number"
+              max="100"
+              min="0"
+              value={quantity}
+              onChange={(e) => {
+                setQuantity(Number(e.target.value));
+              }}
+            />
+          </label>
+          <br></br>
+          <button>Add To Cart</button>
+        </form>
+      )}
+      {pathname === "/cart" && (
+        <form>
+          <label>
+            quantity:
+            <input
+              type="number"
+              max={100}
+              min={0}
+              value={quantity}
+              onChange={handleChange}
+              onClick={handleClick}
+            />
+          </label>
+        </form>
+      )}
+    </div>
   );
 }
