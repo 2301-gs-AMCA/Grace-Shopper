@@ -10,7 +10,7 @@ let cartImg =
 
 export default function Cart() {
   const { cart, setCart } = useAuth();
-  const [item, setItem] = useState({});
+
   const [click, setClick] = useState();
 
   useEffect(() => {
@@ -26,6 +26,34 @@ export default function Cart() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    try {
+      console.log("cart UserId: ", cart.userId);
+      console.log("cart totalPrice: ", cart.totalPrice);
+      const result = await postOrder(cart.userId, cart.totalPrice);
+
+      console.log("postOrder: ", result);
+
+      for (let item of cart.items) {
+        async function postPostOrderItem() {
+          try {
+            const orderItem = await postOrderItem(
+              result.order.id,
+              item.id,
+              item.quantity,
+              item.subtotal
+            );
+            return orderItem;
+          } catch (error) {
+            console.error(error);
+          }
+        }
+        postPostOrderItem();
+      }
+
+      return result;
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
@@ -35,10 +63,10 @@ export default function Cart() {
       <div>
         {cart.items.map((item) => {
           return (
-            <div key={item.id} className="item-card">
+            <div className="item-card">
               <p>Item: {item.name}</p>
               <p>Price: ${item.subtotal}</p>
-              <AddToCart item={item} handleClick={handleClick} />
+              <AddToCart key={item.id} item={item} handleClick={handleClick} />
             </div>
           );
         })}

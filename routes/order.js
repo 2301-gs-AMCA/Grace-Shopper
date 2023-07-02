@@ -53,12 +53,10 @@ orderRouter.get("/:userId", authRequired, async (req, res, next) => {
 });
 
 //POST /order
-orderRouter.post("/", authRequired, async (req, res, next) => {
-  const { totalPrice } = req.body;
-  const { id } = req.user;
+orderRouter.post("/", async (req, res, next) => {
+  const { userId, totalPrice } = req.body;
 
   try {
-    let userId = id;
     const order = await createOrder(userId, totalPrice);
 
     res.send({

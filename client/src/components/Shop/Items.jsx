@@ -12,7 +12,7 @@ export default function Items({ items }) {
           return (
             <div className="item-card">
               <Link key={item.id} to={`/shop/items/${item.id}`}>
-                <ItemRow key={item.id} item={item} />
+                <ItemRow item={item} />
               </Link>
               <AddToCart item={item} />
             </div>

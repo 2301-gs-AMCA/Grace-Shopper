@@ -53,13 +53,11 @@ export default function Navbar() {
                 </button>
               </li>
               <li>
-
                 <button className="link" onClick={() => nav("/cart")}>
                   <img
                     src="https://em-content.zobj.net/source/microsoft-teams/363/shopping-cart_1f6d2.png"
                     style={{ width: "45px", height: "60px" }}
                   />
-
                 </button>
               </li>
             </ul>
@@ -104,13 +102,11 @@ export default function Navbar() {
                 </button>
               </li>
               <li>
-
                 <button className="link" onClick={() => nav("/cart")}>
                   <img
                     src="https://em-content.zobj.net/source/microsoft-teams/363/shopping-cart_1f6d2.png"
                     style={{ width: "45px", height: "60px" }}
                   />
-
                 </button>
               </li>
             </ul>

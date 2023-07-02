@@ -43,7 +43,7 @@ export async function getUsersOrders(userId) {
 
 export async function postOrder(userId, totalPrice) {
   try {
-    const response = await fetch(`api/orders`, {
+    const response = await fetch(`api/order`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
