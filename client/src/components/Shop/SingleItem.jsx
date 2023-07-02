@@ -24,16 +24,16 @@ export default function SingleItem() {
     async function fetchImg(itm){
       console.log("call 2")
       let img = await nextFunc(itm)
-      console.log(img);
+     
       setImage(img);
       await fetchReviews(itm);
     }
 
     async function fetchReviews(itm){
     console.log("call4");
-    console.log("review item",itm)
+   
     let revHtml =  await itm.reviewlist.map((review)=>{
-      console.log("review",review)
+      
       return(
       <div className="review-card">
       <p>author:{review.username}</p>
@@ -44,14 +44,14 @@ export default function SingleItem() {
       )
       
     })
-    console.log(revHtml)
+   
     setReviews(revHtml)
     } 
     getItemById();
     
     
   }, [setItem]);
-  console.log("useState image",image);
+
 
   return (
     <div className="item-card">
