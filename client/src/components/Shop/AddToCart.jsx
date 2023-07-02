@@ -18,7 +18,10 @@ export default function AddToCart({ item, handleClick }) {
         cart.items.userId === 0;
       }
       cart.totalPrice = 0;
-      cart.totalPrice += item.subtotal;
+      for (let thisItem of cart.items) {
+        cart.totalPrice += thisItem.subtotal;
+      }
+
       item.quantity = quantity;
 
       console.log(cart);
@@ -34,7 +37,6 @@ export default function AddToCart({ item, handleClick }) {
 
     for (let thatItem of cart.items) {
       if (item.id === thatItem.id) {
-        cart.totalPrice = 0;
         cart.totalPrice += item.subtotal;
         item.quantity = thatItem.quantity + quantity;
         cart.items.pop(thatItem);

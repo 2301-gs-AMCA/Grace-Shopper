@@ -41,17 +41,6 @@ export async function getUsersOrders(userId) {
   }
 }
 
-export async function getOrder(orderId) {
-  try {
-    const response = await fetch(`/api/orders/${orderId}`);
-    const result = await response.json();
-
-    return result;
-  } catch (error) {
-    console.error(error);
-  }
-}
-
 export async function postOrder(userId, totalPrice) {
   try {
     const response = await fetch(`api/orders`, {

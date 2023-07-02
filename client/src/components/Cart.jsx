@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import "../App.css";
 import useAuth from "../hooks/useAuth";
 import AddToCart from "./Shop/AddToCart";
+import { postOrder } from "../api/orders";
+import { postOrderItem } from "../api/order_items";
 
 let cartImg =
   "https://em-content.zobj.net/source/microsoft-teams/363/shopping-cart_1f6d2.png";
@@ -21,11 +23,16 @@ export default function Cart() {
     e.preventDefault();
     setClick(e.target.value);
   }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+  }
+
   return (
     <div className="cart">
       <h1>Cart</h1>
       <h2> Total Price: ${cart.totalPrice}</h2>
-      <div className="items-container">
+      <div>
         {cart.items.map((item) => {
           return (
             <div key={item.id} className="item-card">
@@ -36,6 +43,9 @@ export default function Cart() {
           );
         })}
       </div>
+      <form onSubmit={handleSubmit}>
+        <button>Complete Order</button>
+      </form>
     </div>
   );
 }
