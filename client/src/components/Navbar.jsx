@@ -65,6 +65,7 @@ export default function Navbar() {
         );
       } else {
         let adminhtml = "";
+        //builds the DASHBOARD button for Admin in nav 
         if (user.isadmin) {
           adminhtml = (
             <li>
@@ -92,10 +93,10 @@ export default function Navbar() {
                   className="link"
                   onClick={() => nav("/dashboard/profile")}
                 >
-                  {user.username}
+                  {user.username} {/*profile*/}
                 </button>
               </li>
-              {adminhtml}
+              {adminhtml} {/*Dashboard*/}
               <li>
                 <button className="link" onClick={() => nav("/shop")}>
                   Shop

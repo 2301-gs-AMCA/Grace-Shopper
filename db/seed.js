@@ -1,12 +1,14 @@
 const client = require("./client");
-const { users, items, images } = require("./seedData");
+const { users, items, images,reviews} = require("./seedData");
 const {
   createUser,
   getAllUsers,
   getUser,
   getUserById,
   getUserByUsername,
+  updateUser
 } = require("./adapters/users");
+const {createReviewsTable}= require("./adapters/reviews")
 const {
   createItem,
   getAllItems,
@@ -38,6 +40,8 @@ async function dropTables() {
   console.log("Dropping tables...");
   try {
     await client.query(`
+    DROP TABLE IF EXISTS reviews;
+    DROP TABLE IF EXISTS review_imgs;
     DROP TABLE IF EXISTS order_items;
     DROP TABLE IF EXISTS items_images_throughtable;
     DROP TABLE IF EXISTS items_imgs;
@@ -88,6 +92,12 @@ async function createTables() {
     image varchar(255)
   )`);
 
+  await client.query(`CREATE TABLE review_imgs (
+    id SERIAL PRIMARY KEY,
+    itemId INTEGER REFERENCES items(id),
+    image varchar(255)
+  )`);
+
     await client.query(`CREATE TABLE items_images_throughtable (
     id SERIAL PRIMARY KEY,
     itemId INTEGER REFERENCES items(id),
@@ -100,6 +110,17 @@ async function createTables() {
     itemId INTEGER REFERENCES items(id),
     item_quantity INTEGER,
     price INTEGER
+  )`);
+
+  await client.query(`CREATE TABLE reviews(
+    id SERIAL PRIMARY KEY,
+    itemId INTEGER REFERENCES items(id) UNIQUE NOT NULL,
+    userId INTEGER REFERENCES users(id) UNIQUE NOT NULL,
+    title varchar(255),
+    rating int2 NOT NULL CHECK(rating between 1 and 5),
+    review varchar(255)
+    
+    
   )`);
   } catch (error) {
     console.log("Error creating tables...");
@@ -120,6 +141,10 @@ async function populateTables() {
 
     for (const img of images) {
       await createImagesTable(img);
+    }
+    console.log("reviews list:",reviews)
+    for (const review of reviews){
+      await createReviewsTable(review)
     }
     console.log("Tables populated!");
   } catch (error) {
@@ -148,6 +173,9 @@ async function rebuildDb() {
       //
       const getUserByUsernameResult = await getUserByUsername("BigJoe");
       console.log("getUserByUsername:", getUserByUsernameResult);
+
+      const result = await updateUser({id:4,username:"chungus"});
+      console.log("UpdateUser:",result);
     }
 
     ////////////////////////////////////////////////
@@ -252,6 +280,13 @@ async function rebuildDb() {
     await ordersAdapterTest();
     await jointableTestsandpopulation();
     ////////////////////////////////////////////////////////////////////////
+    console.log("<-------hashing Passwords------>")
+for(let i = 0;i<users.length;i++){
+  const hashedpassword = await bcrypt.hash(users[i].password, SALT_ROUNDS);
+  let updatedUser = await updateUser({id:i+1,password:hashedpassword})
+console.log("updated user:",updatedUser);
+}
+
     console.log("<----creating admin----->");
     const hashedPassword = await bcrypt.hash("password", SALT_ROUNDS);
     let result = await createUser({

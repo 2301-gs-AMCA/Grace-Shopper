@@ -6,32 +6,60 @@ import AddToCart from "./AddToCart";
 export default function SingleItem() {
   const { itemId } = useParams();
   const [item, setItem] = useState({});
-  const [image, setImage] = useState("");
+  const [image,setImage] = useState("");
+  const [reviews,setReviews] = useState("");
 
+  //runs when setItem is ran
   useEffect(() => {
-    async function getGetItemById() {
-      const result = await fetchItem(itemId);
+
+    //gets the item
+     async function getItemById() {
+      const result =  await fetchItem(itemId);
       console.log("result getItemById: ", result);
       setItem(result.item);
-      console.log("call 1");
+      console.log("call 1",result.item)
       await fetchImg(result.item);
     }
-    async function nextFunc(item) {
-      console.log("call 3");
-      return item.imagereel[0].image;
+    //the function that fetches the first image off the image reel
+    async function nextFunc(itm){
+      console.log("call 3")
+      return itm.imagereel[0].image;
     }
-
-    async function fetchImg(item) {
-      console.log("call 2");
-      let img = await nextFunc(item);
-      console.log(img);
-
+    //fetches image because image needs to be awaited to load with 
+    //page, for some reason.
+    //may replace with the imagereel as a whole reel instead.if we have time
+    async function fetchImg(itm){
+      console.log("call 2")
+      let img = await nextFunc(itm)
+     
       setImage(img);
+      await fetchReviews(itm);
     }
-
-    getGetItemById();
+    // pulls reviews for item
+    async function fetchReviews(itm){
+    console.log("call4");
+   
+    let revHtml =  await itm.reviewlist.map((review)=>{
+      
+      return(
+      <div className="review-card">
+      <p>author:{review.username}</p>
+      <h3>{review.title}</h3>
+      <p>rating: {review.rating} out of 5</p>
+      <p>{review.review}</p>
+      </div>
+      )
+      
+    })
+   
+    setReviews(revHtml)
+    } 
+    getItemById();
+    
+    
   }, [setItem]);
-  console.log("useState image", image);
+
+
 
   return (
     <div className="item-card">
@@ -40,7 +68,17 @@ export default function SingleItem() {
       <p>Description: {item.description}</p>
       <p>Price: ${item.cost}</p>
 
+
       <AddToCart item={item} />
+
+      <br />
+      <br />
+      <br />
+      <div>
+        <h2>Reviews:</h2>
+       {reviews}
+      </div>
+
     </div>
   );
 }

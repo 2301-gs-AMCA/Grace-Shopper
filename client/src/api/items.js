@@ -1,3 +1,4 @@
+///Get a item
 export async function fetchItem(itemId) {
   try {
     const response = await fetch(`/api/items/${itemId}`);
@@ -8,7 +9,7 @@ export async function fetchItem(itemId) {
     console.error(error);
   }
 }
-
+/// GET a item by img html, Not used Yet
 export async function fetchItemByImg(img) {
   try {
     const response = await fetch(`/api/items/${img}`);
@@ -18,7 +19,7 @@ export async function fetchItemByImg(img) {
     throw error;
   }
 }
-
+///GET all items
 export async function fetchAllItems() {
   try {
     const response = await fetch("/api/items");
@@ -30,17 +31,8 @@ export async function fetchAllItems() {
   }
 }
 
-/*export async function fetchItemsByCategory(category) {
-  try {
-    const response = await fetch(`/api/items/${category}`);
-    const items = await response.json();
-    return items;
-  } catch (error) {
-    console.error(error);
-  }
-}
-*/
 
+/// GET item by category
 export async function fetchItemsByCategory(category) {
   try {
     const response = await fetch("/api/items");
@@ -55,7 +47,7 @@ export async function fetchItemsByCategory(category) {
     console.error(error);
   }
 }
-
+/// POST an item, haven't used yet 
 export async function postItem(name, description, cost) {
   try {
     const response = await fetch(`/api/items`, {
@@ -78,7 +70,7 @@ export async function postItem(name, description, cost) {
     console.error(error);
   }
 }
-
+/// PATCH an item
 export async function patchItem(itemId, name, description, cost) {
   try {
     const response = await fetch(`/api/items/${itemId}`, {

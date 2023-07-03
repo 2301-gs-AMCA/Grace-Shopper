@@ -5,21 +5,48 @@ async function getItemById(itemId) {
     const {
       rows: [item],
     } = await client.query(
-      ` SELECT itms.id,itms.name,itms.description,itms.cost,itms.category,itms.isavailable,
-        CASE WHEN it_imgs.itemId IS NULL THEN '[]'::json
-        ELSE
-        JSON_AGG(
+      ` SELECT
+      itms.id,
+      itms.name,
+      itms.description,
+      itms.cost,
+      itms.category,
+      itms.isavailable,
+      CASE
+        WHEN it_imgs.id IS NULL THEN '[]'::json
+        ELSE JSON_AGG(
           JSON_BUILD_OBJECT(
-            'id',it_imgs.id,
-            'image',it_imgs.image
+            'id', it_imgs.id,
+            'image', it_imgs.image
           )
-        )END AS imagereel
-        FROM items itms
-        JOIN items_imgs it_imgs 
-        ON itms.id = it_imgs.itemId
-        WHERE itms.id = $1
-        GROUP BY it_imgs.itemid,itms.id
-        ORDER BY itms.id;
+        )
+      END AS imagereel,
+      CASE
+        WHEN rvws.id IS NULL THEN '[]'::json
+        ELSE JSON_AGG(
+          JSON_BUILD_OBJECT(
+            'id', rvws.id,
+            'username', usrs.username,
+            'title', rvws.title,
+            'rating', rvws.rating,
+            'review', rvws.review
+          )
+        )
+      END AS reviewlist
+    FROM
+      items itms
+    LEFT JOIN
+      items_imgs it_imgs ON itms.id = it_imgs.itemId
+    LEFT JOIN
+      reviews rvws ON itms.id = rvws.itemId
+    LEFT JOIN
+      users usrs ON rvws.userId = usrs.id
+    WHERE
+      itms.id = $1
+    GROUP BY
+      itms.id, it_imgs.id, rvws.id
+    ORDER BY
+      itms.id;
         `,
       [itemId]
     );
@@ -35,7 +62,8 @@ async function getItemById(itemId) {
 async function getItemsByCategory(itemCategory) {
   try {
     const { items } = await client.query(
-      ` SELECT itms.id,itms.name,itms.description,itms.cost,itms.category,itms.isavailable , CASE WHEN it_imgs.itemId IS NULL THEN '[]'::json
+      ` SELECT itms.id,itms.name,itms.description,itms.cost,itms.category,itms.isavailable , 
+      CASE WHEN it_imgs.itemId IS NULL THEN '[]'::json
       ELSE
       JSON_AGG(
         JSON_BUILD_OBJECT(

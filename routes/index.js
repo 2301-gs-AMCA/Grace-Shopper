@@ -20,6 +20,10 @@ const authRouter = require("./auth");
 router.use("/auth", authRouter);
 const imgRouter = require("./assets");
 router.use("/assets",imgRouter);
+const reviewRouter = require("./reviews")
+router.use("/reviews",reviewRouter);
+
+    
 
 router.use((error, req, res, next) => {
   res.send({
