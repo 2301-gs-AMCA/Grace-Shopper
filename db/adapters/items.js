@@ -1,7 +1,6 @@
 const client = require("../client");
 
 async function getItemById(itemId) {
- 
   try {
     const {
       rows: [item],
@@ -48,8 +47,6 @@ async function getItemById(itemId) {
       itms.id, it_imgs.id, rvws.id
     ORDER BY
       itms.id;
-      
-    
         `,
       [itemId]
     );
@@ -120,7 +117,7 @@ async function createItem(itemObj) {
       rows: [item],
     } = await client.query(
       `
-            INSERT INTO Items(name, description, cost, category) 
+            INSERT INTO items(name, description, cost, category) 
             VALUES($1, $2, $3, $4) 
             ON CONFLICT (name) DO NOTHING 
             RETURNING *;

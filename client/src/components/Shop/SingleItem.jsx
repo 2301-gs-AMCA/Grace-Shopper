@@ -1,15 +1,17 @@
 import { useParams } from "react-router-dom";
 import { fetchItem } from "../../api/items";
 import { useEffect, useState } from "react";
+import AddToCart from "./AddToCart";
 
 export default function SingleItem() {
   const { itemId } = useParams();
   const [item, setItem] = useState({});
   const [image,setImage] = useState("");
-  const [reviews,setReviews] = useState("")
+  const [reviews,setReviews] = useState("");
 
   //runs when setItem is ran
   useEffect(() => {
+
     //gets the item
      async function getItemById() {
       const result =  await fetchItem(itemId);
@@ -58,12 +60,17 @@ export default function SingleItem() {
   }, [setItem]);
 
 
+
   return (
     <div className="item-card">
       <h1>{item.name}</h1>
       <img src={image} alt="imageNotFound" />
       <p>Description: {item.description}</p>
       <p>Price: ${item.cost}</p>
+
+
+      <AddToCart item={item} />
+
       <br />
       <br />
       <br />
@@ -71,6 +78,7 @@ export default function SingleItem() {
         <h2>Reviews:</h2>
        {reviews}
       </div>
+
     </div>
   );
 }

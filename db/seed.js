@@ -69,7 +69,7 @@ async function createTables() {
 
     await client.query(`CREATE TABLE orders (
     id SERIAL PRIMARY KEY,
-    userId INTEGER REFERENCES users("id"),
+    userId INTEGER REFERENCES users(id),
     totalPrice INTEGER
   );`);
 

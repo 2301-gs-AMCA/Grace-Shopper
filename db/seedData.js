@@ -2,7 +2,7 @@
 const bcrypt = require("bcrypt");
 const SALT_ROUNDS = 10;
 const users = [
-  { username: "Andrew C", password: "noway", isAdmin: false, loggedIn: false },
+  { username: "Guest", password: "guest", isAdmin: false, loggedIn: false },
   { username: "Matt R", password: "yesway", isAdmin: false, loggedIn: false },
   { username: "BigJoe", password: "toemeat", isAdmin: false, loggedIn: false },
   { username: "mother", password: "quesswho", isAdmin: false, loggedIn: false },
