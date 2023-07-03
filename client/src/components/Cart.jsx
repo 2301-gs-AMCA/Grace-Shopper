@@ -11,7 +11,7 @@ let cartImg =
 export default function Cart() {
   const { cart, setCart } = useAuth();
 
-  const [click, setClick] = useState();
+  const [click, setClick] = useState(false);
 
   useEffect(() => {
     console.log(cart);
@@ -50,6 +50,11 @@ export default function Cart() {
         postPostOrderItem();
       }
 
+      cart.items = [];
+      cart.totalPrice = 0;
+      setCart(cart);
+
+      setClick(e.target.value);
       return result;
     } catch (error) {
       console.error(error);
