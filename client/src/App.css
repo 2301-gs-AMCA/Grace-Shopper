@@ -146,6 +146,14 @@
   border: 1px solid;
   
 }
+.reviews{
+margin:auto;
+min-width: 68vw;
+min-height: 43vh;
+max-width:40%;
+border: 2px solid;
+
+}
 .itemsULike{
 float: left;
 min-width: 68vw;
@@ -190,4 +198,26 @@ list-style: none;
 }
 .cart{
   min-height: 99vh;
+}
+.popup-container{
+  background-color: #542ec5;
+  outline: solid white 2px;
+  padding: 5%;
+  min-width:500px;
+}
+.popup-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.popup-container label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.popup-container label input,
+.popup-container label textarea {
+  margin-top: 5px;
+  
 }

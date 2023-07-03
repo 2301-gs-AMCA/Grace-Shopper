@@ -9,6 +9,7 @@ import Shop from "./components/Shop/Shop";
 import Cart from "./components/Cart";
 import AuthForm from "./components/AuthForm";
 import Dashboard from "./components/Dashboard";
+import Reviews from "./components/Reviews"
 
 import Items from "./components/Shop/Items";
 import SingleItem from "./components/Shop/SingleItem";
@@ -38,6 +39,7 @@ function App() {
         <Route path="/shop/items/:itemId" element={<SingleItem />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard/reviews/:userId" element={<Reviews/>}/>
       </Routes>
       <Footer />
     </div>

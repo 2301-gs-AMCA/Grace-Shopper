@@ -11,6 +11,7 @@ function requireUser(req, res, next) {
 }
 
 const authRequired = (req, res, next) => {
+  
   try {
     const token = req.signedCookies.token;
     req.user = jwt.verify(token, process.env.JWT_SECRET);

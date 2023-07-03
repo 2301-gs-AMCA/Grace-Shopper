@@ -1,5 +1,5 @@
 const client = require("./client");
-const { users, items, images } = require("./seedData");
+const { users, items, images,reviews} = require("./seedData");
 const {
   createUser,
   getAllUsers,
@@ -8,6 +8,7 @@ const {
   getUserByUsername,
   updateUser
 } = require("./adapters/users");
+const {createReviewsTable}= require("./adapters/reviews")
 const {
   createItem,
   getAllItems,
@@ -111,15 +112,16 @@ async function createTables() {
     price INTEGER
   )`);
 
-  // await client.query(`CREATE TABLE reviews(
-  //   id SERIAL PRIMARY KEY,
-  //   itemId INTEGER REFERENCES items(id),UNIQUE NOT NULL,
-  //   userId INTEGER REFERENCE users(id),UNIQUE NOT NULL,
-  //   title varchar(255),
-  //   rating int2 NOT NULL CHECK(rating between 1 and 5),
-  //   review varchar(255)
+  await client.query(`CREATE TABLE reviews(
+    id SERIAL PRIMARY KEY,
+    itemId INTEGER REFERENCES items(id) UNIQUE NOT NULL,
+    userId INTEGER REFERENCES users(id) UNIQUE NOT NULL,
+    title varchar(255),
+    rating int2 NOT NULL CHECK(rating between 1 and 5),
+    review varchar(255)
     
-  // )`);
+    
+  )`);
   } catch (error) {
     console.log("Error creating tables...");
     throw error;
@@ -139,6 +141,10 @@ async function populateTables() {
 
     for (const img of images) {
       await createImagesTable(img);
+    }
+    console.log("reviews list:",reviews)
+    for (const review of reviews){
+      await createReviewsTable(review)
     }
     console.log("Tables populated!");
   } catch (error) {
