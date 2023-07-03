@@ -10,9 +10,9 @@ export default function Items({ items }) {
       <div className="items-container">
         {items.map((item) => {
           return (
-            <div className="item-card">
+            <div key={item.id} className="item-card">
               <Link key={item.id} to={`/shop/items/${item.id}`}>
-                <ItemRow item={item} />
+                <ItemRow key={item.id} item={item} />
               </Link>
               <AddToCart item={item} />
             </div>
