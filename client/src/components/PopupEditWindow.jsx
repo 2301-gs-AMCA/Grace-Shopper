@@ -1,7 +1,7 @@
 
 import { updateReview } from "../api/reviews"
 import { useState,useEffect} from "react"
-
+/// A popup window to input the update info for review
 export default function pupupEditWindow(props){
     const [update,setUpdate] = useState({});
     const [title,setTitle] = useState("");
@@ -10,9 +10,10 @@ export default function pupupEditWindow(props){
     const rvw = props.review;
     const postId = rvw.id;
 
-    console.log("testing refresh",props)
     
     useEffect(()=>{
+        /// when submit is clicked and the update state 
+        ///isnt null, then it will run the PATCH
         if(update !={}){
         async function postUpdate(){
         
@@ -34,6 +35,7 @@ export default function pupupEditWindow(props){
     }
     },[update])
     function handleSubmit(e){
+        ///starts PATCH,sends refresh for parent, removes popup
         setUpdate({id:postId,title:title,rating:rating,review:review});
         const popUp = document.getElementById("popup-root")
         props.setRefresh(true);

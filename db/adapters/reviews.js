@@ -1,5 +1,5 @@
 const client = require('../client');
-
+//CREATES athe reviews table
 async function createReviewsTable(Objreview){
    
     try {
@@ -14,7 +14,7 @@ async function createReviewsTable(Objreview){
         throw error;
     }
 }
-
+//GET all Reviews from a user
 async function getAllReviewsByUserId (id){
     console.log(id)
     try {
@@ -27,7 +27,8 @@ async function getAllReviewsByUserId (id){
             throw err;
     }
 }
-
+//update review fileds, supposed to keep original if null or empty using
+//COALESCE
 async function updateReviews(revObj){
     
     try {

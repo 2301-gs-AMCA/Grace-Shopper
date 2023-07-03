@@ -8,7 +8,9 @@ export default function SingleItem() {
   const [image,setImage] = useState("");
   const [reviews,setReviews] = useState("")
 
+  //runs when setItem is ran
   useEffect(() => {
+    //gets the item
      async function getItemById() {
       const result =  await fetchItem(itemId);
       console.log("result getItemById: ", result);
@@ -16,11 +18,14 @@ export default function SingleItem() {
       console.log("call 1",result.item)
       await fetchImg(result.item);
     }
+    //the function that fetches the first image off the image reel
     async function nextFunc(itm){
       console.log("call 3")
       return itm.imagereel[0].image;
     }
-
+    //fetches image because image needs to be awaited to load with 
+    //page, for some reason.
+    //may replace with the imagereel as a whole reel instead.if we have time
     async function fetchImg(itm){
       console.log("call 2")
       let img = await nextFunc(itm)
@@ -28,7 +33,7 @@ export default function SingleItem() {
       setImage(img);
       await fetchReviews(itm);
     }
-
+    // pulls reviews for item
     async function fetchReviews(itm){
     console.log("call4");
    

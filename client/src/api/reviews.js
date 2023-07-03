@@ -1,4 +1,4 @@
-
+///GET all user Reviews
 export async function fetchUserReviews(userId){
     try{
     const response = await fetch(`/api/reviews/${userId}`);
@@ -10,7 +10,7 @@ export async function fetchUserReviews(userId){
 }
     
 }
-
+///PATCH an review 
 export async function updateReview(editedReview){
     
     try {

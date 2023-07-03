@@ -26,7 +26,7 @@ reviewRouter.get("/:userId",authRequired,async (req,res,next)=>{
 
 //PATCH /api/reviews/update
 reviewRouter.patch("/update", authRequired, async (req, res, next) => {
-  //console.log("request from postUpdate", req);
+  
   console.log("body", req.body);
   try {
     const editedReview = req.body;

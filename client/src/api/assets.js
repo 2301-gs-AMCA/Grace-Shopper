@@ -1,3 +1,4 @@
+//GET image by item ID
 export async function fetchImageByItemId(itemId) {
     
     const URL = `/api/assets/img/${itemId}`
