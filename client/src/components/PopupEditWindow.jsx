@@ -2,14 +2,18 @@
 import { updateReview } from "../api/reviews"
 import { useState,useEffect} from "react"
 
-export default function pupupEditWindow({props}){
+export default function pupupEditWindow(props){
     const [update,setUpdate] = useState({});
     const [title,setTitle] = useState("");
-    const [rating,setRating] = useState("");
+    const [rating,setRating] = useState(1);
     const [review,setReview] = useState("");
-    const postId = props.id;
+    const rvw = props.review;
+    const postId = rvw.id;
+
+    console.log("testing refresh",props)
     
     useEffect(()=>{
+        if(update !={}){
         async function postUpdate(){
         
             console.log(title,rating,review)
@@ -25,30 +29,34 @@ export default function pupupEditWindow({props}){
             }
             
         }
+        
         postUpdate();
+    }
     },[update])
-    function handleSubmit(){
+    function handleSubmit(e){
         setUpdate({id:postId,title:title,rating:rating,review:review});
-
+        const popUp = document.getElementById("popup-root")
+        props.setRefresh(true);
+        popUp.remove();
     }
     
-    console.log(props)
     return(
      <div className="popup-container">
         <form action="">
             <label htmlFor="">Title
-            <input type="text" placeholder={props.title} onChange={(e)=>{setTitle(e.target.value)}}/>
+            <input type="text" placeholder={rvw.title} onChange={(e)=>{setTitle(e.target.value)}}/>
             </label>
             <label htmlFor="">rating
-            <input type="Number" min="1" max="5" placeholder={props.rating } onChange={(e)=>{setRating(e.target.value)}}/>
+            <input type="Number" min="1" max="5" placeholder={rvw.rating } onChange={(e)=>{setRating(e.target.value)}}/>
             out of 5
             </label>
             <label htmlFor="">body
-            <textarea type="text" placeholder={props.review} onChange={(e)=>{setReview(e.target.value)}}/>
+            <textarea type="text" placeholder={rvw.review} onChange={(e)=>{setReview(e.target.value)}}/>
             </label>
         </form>
-        <button onClick={()=>{
-                handleSubmit();
+        <button onClick={(e)=>{
+                handleSubmit(e);
+                console.log(e.target)
         }}>SUBMIT</button>
      </div>   
     )

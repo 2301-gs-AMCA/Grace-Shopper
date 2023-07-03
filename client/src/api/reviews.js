@@ -19,7 +19,7 @@ export async function updateReview(editedReview){
             headers: {
               'Content-Type': 'application/json'
             },
-            body: editedReview
+            body: JSON.stringify(editedReview)
           }); 
           console.log("updateReview:",response)
           const result = await response.json();
