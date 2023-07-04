@@ -11,12 +11,10 @@ let cartImg =
 export default function Cart() {
   const { cart, setCart } = useAuth();
   const [click, setClick] = useState();
-  const [totalPrice, setTotalPrice] = useState(cart.totalPrice);
   const [thisCart, setThisCart] = useState(cart);
   const [thisQuantity, setThisQuantity] = useState();
 
   useEffect(() => {
-    setTotalPrice(cart.totalPrice);
     console.log("cart useEffect", cart);
     setThisCart(cart);
   }, [click]);
