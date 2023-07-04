@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Items from "./Items";
 import { fetchItemsByCategory } from "../../api/items";
-
 export default function CategoryItems() {
   const { category } = useParams();
   const [items, setItems] = useState([]);

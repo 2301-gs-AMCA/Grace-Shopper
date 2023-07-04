@@ -10,7 +10,7 @@ export default function Navbar() {
 
   async function handleLogout() {
     await logout();
-
+    setUser({ id: 1, username: "Guest", iat: null });
     console.log("user", user);
     setLoggedIn(!loggedIn);
     nav("/");
@@ -22,7 +22,7 @@ export default function Navbar() {
       }
     }
     return resetTop();
-  }, [nav]);
+  }, []);
 
   useEffect(() => {
     function headerButtons(loggedIn) {
