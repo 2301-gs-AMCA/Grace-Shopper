@@ -1,14 +1,14 @@
 const client = require("./client");
-const { users, items, images,reviews} = require("./seedData");
+const { users, items, images, reviews } = require("./seedData");
 const {
   createUser,
   getAllUsers,
   getUser,
   getUserById,
   getUserByUsername,
-  updateUser
+  updateUser,
 } = require("./adapters/users");
-const {createReviewsTable}= require("./adapters/reviews")
+const { createReviewsTable } = require("./adapters/reviews");
 const {
   createItem,
   getAllItems,
@@ -34,6 +34,14 @@ const {
   getAllImages,
   getImagesByItemId,
 } = require("./adapters/assets");
+const {
+  createCart,
+  getUsersCart,
+  getAllCarts,
+  getCartById,
+  updateCart,
+  destroyCart,
+} = require("./adapters/cart");
 const bcrypt = require("bcrypt");
 const SALT_ROUNDS = 10;
 async function dropTables() {
@@ -43,10 +51,12 @@ async function dropTables() {
     DROP TABLE IF EXISTS reviews;
     DROP TABLE IF EXISTS review_imgs;
     DROP TABLE IF EXISTS order_items;
+    DROP TABLE IF EXISTS cart_items;
     DROP TABLE IF EXISTS items_images_throughtable;
     DROP TABLE IF EXISTS items_imgs;
     DROP TABLE IF EXISTS items;
     DROP TABLE IF EXISTS orders;
+    DROP TABLE IF EXISTS cart;
     DROP TABLE IF EXISTS users;
     `);
     console.log("Finished dropping Tables!");
@@ -73,6 +83,12 @@ async function createTables() {
     totalPrice INTEGER
   );`);
 
+    await client.query(`CREATE TABLE cart (
+      id SERIAL PRIMARY KEY,
+      userId INTEGER REFERENCES users(id),
+      totalPrice INTEGER
+    );`);
+
     //changed cost to INTEGER -cb
     //added category -ac
     await client.query(`CREATE TABLE items (
@@ -90,19 +106,19 @@ async function createTables() {
     id SERIAL PRIMARY KEY,
     itemId INTEGER REFERENCES items(id),
     image varchar(255)
-  )`);
+  );`);
 
-  await client.query(`CREATE TABLE review_imgs (
+    await client.query(`CREATE TABLE review_imgs (
     id SERIAL PRIMARY KEY,
     itemId INTEGER REFERENCES items(id),
     image varchar(255)
-  )`);
+  );`);
 
     await client.query(`CREATE TABLE items_images_throughtable (
     id SERIAL PRIMARY KEY,
     itemId INTEGER REFERENCES items(id),
     imageId INTEGER REFERENCES items_imgs(id) UNIQUE NOT NULL
-  )`);
+  );`);
 
     await client.query(`CREATE TABLE order_items (
     id SERIAL PRIMARY KEY,
@@ -110,9 +126,17 @@ async function createTables() {
     itemId INTEGER REFERENCES items(id),
     item_quantity INTEGER,
     price INTEGER
-  )`);
+  );`);
 
-  await client.query(`CREATE TABLE reviews(
+    await client.query(`CREATE TABLE cart_items (
+      id SERIAL PRIMARY KEY,
+      cartId INTEGER REFERENCES cart(id),
+      itemId INTEGER REFERENCES items(id),
+      item_quantity INTEGER,
+      price INTEGER
+    );`);
+
+    await client.query(`CREATE TABLE reviews(
     id SERIAL PRIMARY KEY,
     itemId INTEGER REFERENCES items(id) UNIQUE NOT NULL,
     userId INTEGER REFERENCES users(id) UNIQUE NOT NULL,
@@ -121,7 +145,7 @@ async function createTables() {
     review varchar(255)
     
     
-  )`);
+  );`);
   } catch (error) {
     console.log("Error creating tables...");
     throw error;
@@ -142,9 +166,9 @@ async function populateTables() {
     for (const img of images) {
       await createImagesTable(img);
     }
-    console.log("reviews list:",reviews)
-    for (const review of reviews){
-      await createReviewsTable(review)
+    console.log("reviews list:", reviews);
+    for (const review of reviews) {
+      await createReviewsTable(review);
     }
     console.log("Tables populated!");
   } catch (error) {
@@ -174,8 +198,8 @@ async function rebuildDb() {
       const getUserByUsernameResult = await getUserByUsername("BigJoe");
       console.log("getUserByUsername:", getUserByUsernameResult);
 
-      const result = await updateUser({id:4,username:"chungus"});
-      console.log("UpdateUser:",result);
+      const result = await updateUser({ id: 4, username: "chungus" });
+      console.log("UpdateUser:", result);
     }
 
     ////////////////////////////////////////////////
@@ -280,12 +304,15 @@ async function rebuildDb() {
     await ordersAdapterTest();
     await jointableTestsandpopulation();
     ////////////////////////////////////////////////////////////////////////
-    console.log("<-------hashing Passwords------>")
-for(let i = 0;i<users.length;i++){
-  const hashedpassword = await bcrypt.hash(users[i].password, SALT_ROUNDS);
-  let updatedUser = await updateUser({id:i+1,password:hashedpassword})
-console.log("updated user:",updatedUser);
-}
+    console.log("<-------hashing Passwords------>");
+    for (let i = 0; i < users.length; i++) {
+      const hashedpassword = await bcrypt.hash(users[i].password, SALT_ROUNDS);
+      let updatedUser = await updateUser({
+        id: i + 1,
+        password: hashedpassword,
+      });
+      console.log("updated user:", updatedUser);
+    }
 
     console.log("<----creating admin----->");
     const hashedPassword = await bcrypt.hash("password", SALT_ROUNDS);

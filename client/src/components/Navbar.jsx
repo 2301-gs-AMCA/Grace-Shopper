@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 
 export default function Navbar() {
   const nav = useNavigate();
-  const { user, setUser, loggedIn, setLoggedIn } = useAuth();
+  const { cart, user, setUser, loggedIn, setLoggedIn } = useAuth();
   const [navButtons, setNavButtons] = useState("");
 
   async function handleLogout() {
@@ -121,6 +121,7 @@ export default function Navbar() {
     headerButtons(loggedIn);
   }, [loggedIn, user]);
   console.log("current user:", user);
+  console.log("cart", cart);
   return (
     <div className="navbar">
       <h1>A More Comfortable Area</h1>

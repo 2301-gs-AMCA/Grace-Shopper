@@ -11,18 +11,28 @@ let cartImg =
 export default function Cart() {
   const { cart, setCart } = useAuth();
   const [click, setClick] = useState();
-  const [thisCart, setThisCart] = useState(cart);
   const [thisQuantity, setThisQuantity] = useState();
 
   useEffect(() => {
-    setThisCart(cart);
+    async function getCart() {
+      let thatCart = JSON.parse(localStorage.getItem("cart"));
+      if (thatCart !== null) {
+        await setCart(thatCart);
+      } else {
+        await setCart(cart);
+      }
+    }
+    getCart();
+    if (!cart) {
+      cart.userId === 1;
+      cart.totalPrice === 0;
+    }
   }, [click]);
 
   //re-renders totalPrice and price
   function handleClick(e) {
     e.preventDefault();
     setClick(e.target.value);
-    setThisCart(cart);
   }
 
   async function handleSubmit(e) {
@@ -51,7 +61,10 @@ export default function Cart() {
       cart.totalPrice = 0;
       setCart(cart);
 
-      setClick(e.target.value);
+      localStorage.removeItem("cart");
+
+      setClick(!click);
+
       return result;
     } catch (error) {
       console.error(error);
@@ -61,9 +74,9 @@ export default function Cart() {
   return (
     <div className="cart">
       <h1>Cart</h1>
-      <h2> Total Price: $ {thisCart.totalPrice}</h2>
+      <h2> Total Price: $ {cart.totalPrice ? cart.totalPrice : 0}</h2>
       <div>
-        {thisCart.items.map((item) => {
+        {cart.items.map((item) => {
           return (
             <div key={item.id} className="item-card">
               <p>Item: {item.name}</p>
