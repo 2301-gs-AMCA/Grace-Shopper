@@ -5,13 +5,15 @@ import { useState, useEffect } from "react";
 
 export default function Navbar() {
   const nav = useNavigate();
-  const { user, loggedIn, setLoggedIn } = useAuth();
+  const { user, setUser, loggedIn, setLoggedIn } = useAuth();
   const [navButtons, setNavButtons] = useState("");
 
   async function handleLogout() {
     await logout();
+
+    console.log("user", user);
     setLoggedIn(!loggedIn);
-    navigate("/");
+    nav("/");
   }
   useEffect(() => {
     function resetTop() {
@@ -20,7 +22,7 @@ export default function Navbar() {
       }
     }
     return resetTop();
-  });
+  }, [nav]);
 
   useEffect(() => {
     function headerButtons(loggedIn) {
@@ -65,7 +67,7 @@ export default function Navbar() {
         );
       } else {
         let adminhtml = "";
-        //builds the DASHBOARD button for Admin in nav 
+        //builds the DASHBOARD button for Admin in nav
         if (user.isadmin) {
           adminhtml = (
             <li>

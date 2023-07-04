@@ -2,18 +2,19 @@ import useAuth from "../../hooks/useAuth";
 import { useState, useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 
-export default function AddToCart({ item, handleClick }) {
+export default function AddToCart({ item, handleClick, setThisQuantity }) {
   const { pathname } = useLocation();
-  const { itemId } = useParams();
+  const { itemId, category } = useParams();
   const { user, cart, setCart } = useAuth();
   const [quantity, setQuantity] = useState(item.quantity || 1);
 
   useEffect(() => {
     item.quantity = quantity;
     item.subtotal = item.cost * quantity;
+    setCart(cart);
 
+    ////////////////////////////////////////////
     if (pathname === "/cart") {
-      setCart(cart);
       if (!user) {
         cart.items.userId === 0;
       }
@@ -22,11 +23,10 @@ export default function AddToCart({ item, handleClick }) {
         cart.totalPrice += thisItem.subtotal;
       }
 
-      item.quantity = quantity;
-
-      console.log(cart);
+      setThisQuantity(Number(quantity));
+      setCart(cart);
     }
-    setCart(cart);
+    ///////////////////////////////////////////////
   }, [quantity]);
 
   function handleSubmit(e) {
@@ -35,36 +35,36 @@ export default function AddToCart({ item, handleClick }) {
       cart.items.userId === 0;
     }
 
-    for (let thatItem of cart.items) {
-      if (item.id === thatItem.id) {
-        cart.totalPrice += item.subtotal;
-        item.quantity = thatItem.quantity + quantity;
-        cart.items.pop(thatItem);
-        setCart(cart);
+    if (cart.items.length === 0) {
+      cart.items.push(item);
+      cart.totalPrice = cart.totalPrice;
+      setCart(cart);
+      return;
+    }
+
+    let found = cart.items.find((thisItem) => thisItem.id === item.id);
+    if (found) {
+      for (let thatItem of cart.items) {
+        if (item.id === thatItem.id) {
+          cart.totalPrice += item.subtotal;
+          thatItem.quantity += quantity;
+          thatItem.subtotal += item.subtotal;
+          setCart(cart);
+          return;
+        }
       }
     }
-
-    if (cart.items.includes(item)) {
-      cart.totalPrice += item.subtotal;
-      cart.items[item].quantity = quantity;
-      setCart(cart);
-    } else {
-      cart.items.push(item);
-      cart.totalPrice += item.subtotal;
-      setCart(cart);
-    }
+    cart.items.push(item);
   }
-
+  setCart(cart);
   function handleChange(e) {
     e.preventDefault();
     setQuantity(Number(e.target.value));
-
-    setCart(cart);
   }
 
   return (
     <div>
-      {pathname === "/shop" && (
+      {(pathname === "/shop" || pathname === `/shop/${category}`) && (
         <form onSubmit={handleSubmit}>
           <button>Quick Add</button>
         </form>

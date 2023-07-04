@@ -1,15 +1,15 @@
 import { Route, Routes } from "react-router-dom";
 // import Navbar from "./Components/Navbar";
-import Navbar from "./components/Navbar";
+import Navbar from "./Components/Navbar";
 import Home from "./components/Home";
 import Footer from "./components/Footer";
 // import Logout from "./components/Logout";
 import Profile from "./components/Profile";
 import Shop from "./components/Shop/Shop";
 import Cart from "./components/Cart";
-import AuthForm from "./components/AuthForm";
+import AuthForm from "./Components/AuthForm";
 import Dashboard from "./components/Dashboard";
-import Reviews from "./components/Reviews"
+import Reviews from "./components/Reviews";
 
 import Items from "./components/Shop/Items";
 import SingleItem from "./components/Shop/SingleItem";
@@ -39,7 +39,7 @@ function App() {
         <Route path="/shop/items/:itemId" element={<SingleItem />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/dashboard/reviews/:userId" element={<Reviews/>}/>
+        <Route path="/dashboard/reviews/:userId" element={<Reviews />} />
       </Routes>
       <Footer />
     </div>

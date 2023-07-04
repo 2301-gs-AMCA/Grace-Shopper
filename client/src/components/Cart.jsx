@@ -10,28 +10,25 @@ let cartImg =
 
 export default function Cart() {
   const { cart, setCart } = useAuth();
-
-  const [click, setClick] = useState(false);
+  const [click, setClick] = useState();
+  const [thisCart, setThisCart] = useState(cart);
+  const [thisQuantity, setThisQuantity] = useState();
 
   useEffect(() => {
-    console.log(cart);
-    setCart(cart);
+    setThisCart(cart);
   }, [click]);
 
   //re-renders totalPrice and price
   function handleClick(e) {
     e.preventDefault();
     setClick(e.target.value);
+    setThisCart(cart);
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      console.log("cart UserId: ", cart.userId);
-      console.log("cart totalPrice: ", cart.totalPrice);
       const result = await postOrder(cart.userId, cart.totalPrice);
-
-      console.log("postOrder: ", result);
 
       for (let item of cart.items) {
         async function postPostOrderItem() {
@@ -64,14 +61,18 @@ export default function Cart() {
   return (
     <div className="cart">
       <h1>Cart</h1>
-      <h2> Total Price: ${cart.totalPrice}</h2>
+      <h2> Total Price: $ {thisCart.totalPrice}</h2>
       <div>
-        {cart.items.map((item) => {
+        {thisCart.items.map((item) => {
           return (
-            <div className="item-card">
+            <div key={item.id} className="item-card">
               <p>Item: {item.name}</p>
               <p>Price: ${item.subtotal}</p>
-              <AddToCart key={item.id} item={item} handleClick={handleClick} />
+              <AddToCart
+                item={item}
+                handleClick={handleClick}
+                setThisQuantity={setThisQuantity}
+              />
             </div>
           );
         })}
