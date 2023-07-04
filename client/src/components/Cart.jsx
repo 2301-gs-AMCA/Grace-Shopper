@@ -31,11 +31,7 @@ export default function Cart() {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      console.log("cart UserId: ", cart.userId);
-      console.log("cart totalPrice: ", cart.totalPrice);
       const result = await postOrder(cart.userId, cart.totalPrice);
-
-      console.log("postOrder: ", result);
 
       for (let item of cart.items) {
         async function postPostOrderItem() {
