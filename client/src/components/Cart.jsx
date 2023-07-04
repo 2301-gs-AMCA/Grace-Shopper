@@ -15,7 +15,6 @@ export default function Cart() {
   const [thisQuantity, setThisQuantity] = useState();
 
   useEffect(() => {
-    console.log("cart useEffect", cart);
     setThisCart(cart);
   }, [click]);
 

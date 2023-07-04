@@ -4,7 +4,7 @@ import { useLocation, useParams } from "react-router-dom";
 
 export default function AddToCart({ item, handleClick, setThisQuantity }) {
   const { pathname } = useLocation();
-  const { itemId } = useParams();
+  const { itemId, category } = useParams();
   const { user, cart, setCart } = useAuth();
   const [quantity, setQuantity] = useState(item.quantity || 1);
 
@@ -64,7 +64,7 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
 
   return (
     <div>
-      {pathname === "/shop" && (
+      {(pathname === "/shop" || pathname === `/shop/${category}`) && (
         <form onSubmit={handleSubmit}>
           <button>Quick Add</button>
         </form>
