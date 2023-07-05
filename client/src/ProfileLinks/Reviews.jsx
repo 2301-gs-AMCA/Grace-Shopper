@@ -19,14 +19,16 @@ export default function Reviews() {
           console.log("review", review);
           ///needs imag and item name, maybe try making more functions for this specifically in the api?
           return (
-            <div className="review-card">
-              <h3>{review.title}</h3>
-              <p>rating: {review.rating} out of 5</p>
-              <p>{review.review}</p>
-              <Popup trigger={<button> Edit</button>} position="center">
-                <PopupEditWindow review={review} setRefresh={setRefresh} />
-              </Popup>
-              <button>delete</button>
+            <div className="reviews">
+              <div className="review-card">
+                <h3>{review.title}</h3>
+                <p>rating: {review.rating} out of 5</p>
+                <p>{review.review}</p>
+                <Popup trigger={<button> Edit</button>} position="center">
+                  <PopupEditWindow review={review} setRefresh={setRefresh} />
+                </Popup>
+                <button>delete</button>
+              </div>
             </div>
           );
         });

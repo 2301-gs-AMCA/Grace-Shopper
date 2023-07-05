@@ -1,5 +1,6 @@
 import React from "react";
+import "../App.css";
 
 export default function Settings() {
-  return <div>Settings</div>;
+  return <div className="settings">Settings</div>;
 }

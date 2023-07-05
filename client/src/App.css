@@ -218,6 +218,14 @@ list-style: none;
 
 .popup-container label input,
 .popup-container label textarea {
-  margin-top: 5px;
-  
+  margin-top: 5px; 
+}
+.settings{
+  min-height: 99vh;
+}
+.security{
+  min-height: 99vh;
+}
+.reviews{
+  min-height: 99vh;
 }
