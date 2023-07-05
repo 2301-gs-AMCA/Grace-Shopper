@@ -84,6 +84,7 @@ orderRouter.get("/:orderId", async (req, res, next) => {
 });
 
 // PATCH /order/:orderId
+// Don't store total price, compute the total price then
 orderRouter.patch("/:orderId", authRequired, async (req, res, next) => {
   const { orderId } = req.params;
   const { totalPrice } = req.body;
@@ -95,8 +96,9 @@ orderRouter.patch("/:orderId", authRequired, async (req, res, next) => {
 
   try {
     const originalOrder = await getOrderById(orderId);
-
+    // User id can come from req.user
     if (originalOrder.userid === req.user.id || req.user.isadmin) {
+      // Total price not needed
       const updatedOrder = await updateOrder(orderId, totalPrice);
       res.send({
         success: true,

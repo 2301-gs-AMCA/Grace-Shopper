@@ -16,6 +16,7 @@ orderRouter.use((req, res, next) => {
 });
 
 //GET /carts
+// Admin Only
 cartRouter.get("/", async (req, res, next) => {
   try {
     const carts = await getAllCarts();

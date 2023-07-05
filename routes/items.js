@@ -52,19 +52,8 @@ itemsRouter.get("/:category", async (req, res) => {
 });
 */
 
-//GET /api/items/:imageurl
-itemsRouter.get("/:imageurl", async (req, res) => {
-  const itemImg = req.params;
-  const item = await getItemByImage(itemImg);
-
-  res.send({
-    success: true,
-    message: "gotItem",
-    item,
-  });
-});
-
 //POST /api/items
+// check for admin in helper function
 itemsRouter.post("/", authRequired, async (req, res, next) => {
   if (req.user.isadmin != true) {
     res.send({ message: "you are not an admin" });

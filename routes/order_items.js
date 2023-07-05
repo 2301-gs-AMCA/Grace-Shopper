@@ -16,8 +16,18 @@ order_itemsRouter.use((req, res, next) => {
 });
 
 //POST api/order_items
+// Make sure user is logged in
+// Make sure the user is the correct user associated w the order
+// Do not take price in from user
 order_itemsRouter.post("/", async (req, res, next) => {
-  const { orderId, itemId, item_quantity, price } = req.body;
+  const {
+    orderId,
+    itemId,
+    item_quantity /** price, don't trust price from req.body */,
+  } = req.body;
+  // Read item from the db, and read the data from DB for price
+  // const {rows: [item]} = await getItembyId(itemId)
+  // const price = item.price;
   const ordItmData = {};
 
   try {
@@ -54,7 +64,10 @@ order_itemsRouter.patch(
   authRequired,
   async (req, res, next) => {
     const { orderItemId } = req.params;
+    // Watch price here again
     const { item_quantity, price } = req.body;
+    // Check to make sure quanitity is vaild / make sense
+
     const updateOrderItemObj = {};
 
     if (item_quantity) {
@@ -97,9 +110,9 @@ order_itemsRouter.delete(
       const item = await getItemById(orderItem.itemid);
       if (orderItem && (order.userid === req.user.id || req.user.isadmin)) {
         const deletedOrderItem = await destroyOrderItem(orderItemId);
-        res.send({ 
-          message: `${item.name} is deleted from order ${order.id}`
-          });
+        res.send({
+          message: `${item.name} is deleted from order ${order.id}`,
+        });
       } else {
         next(
           orderItem

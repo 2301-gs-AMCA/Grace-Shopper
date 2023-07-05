@@ -69,20 +69,24 @@ async function dropTables() {
 async function createTables() {
   console.log("Creating tables...");
   try {
+    // Guest => Passwordless user. With random generated name stored in DB
     await client.query(`CREATE TABLE users (
       id SERIAL Primary Key,
+      isGuest BOOLEAN NOT NULL,
       isAdmin BOOLEAN DEFAULT false,
-      loggedIn BOOLEAN DEFAULT false,
       username varchar(255) UNIQUE NOT NULL,
       password varchar(255) NOT NULL
   );`);
 
+    // A cart is an order where isCart is TRUE
     await client.query(`CREATE TABLE orders (
-    id SERIAL PRIMARY KEY,
-    userId INTEGER REFERENCES users(id),
-    totalPrice INTEGER
+      id SERIAL PRIMARY KEY,
+      userId INTEGER REFERENCES users(id),
+      totalPrice INTEGER
+      isCart BOOLEAN DEFAULT TRUE
   );`);
 
+    // Not needed
     await client.query(`CREATE TABLE cart (
       id SERIAL PRIMARY KEY,
       userId INTEGER REFERENCES users(id),
@@ -92,12 +96,12 @@ async function createTables() {
     //changed cost to INTEGER -cb
     //added category -ac
     await client.query(`CREATE TABLE items (
-    id SERIAL PRIMARY KEY,
-    name varchar(255) UNIQUE NOT NULL,
-    description text NOT NULL,
-    cost INTEGER,
-    category varchar(255) NOT NULL,
-    isAvailable BOOLEAN DEFAULT true
+      id SERIAL PRIMARY KEY,
+      name varchar(255) UNIQUE NOT NULL,
+      description text NOT NULL,
+      cost INTEGER,
+      category varchar(255) NOT NULL,
+      isAvailable BOOLEAN DEFAULT true
   );`);
 
     //images for items
@@ -114,6 +118,7 @@ async function createTables() {
     image varchar(255)
   );`);
 
+    // Delete if not used
     await client.query(`CREATE TABLE items_images_throughtable (
     id SERIAL PRIMARY KEY,
     itemId INTEGER REFERENCES items(id),
@@ -128,14 +133,6 @@ async function createTables() {
     price INTEGER
   );`);
 
-    await client.query(`CREATE TABLE cart_items (
-      id SERIAL PRIMARY KEY,
-      cartId INTEGER REFERENCES cart(id),
-      itemId INTEGER REFERENCES items(id),
-      item_quantity INTEGER,
-      price INTEGER
-    );`);
-
     await client.query(`CREATE TABLE reviews(
     id SERIAL PRIMARY KEY,
     itemId INTEGER REFERENCES items(id) UNIQUE NOT NULL,
@@ -143,7 +140,6 @@ async function createTables() {
     title varchar(255),
     rating int2 NOT NULL CHECK(rating between 1 and 5),
     review varchar(255)
-    
     
   );`);
   } catch (error) {
