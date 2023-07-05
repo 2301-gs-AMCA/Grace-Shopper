@@ -95,10 +95,10 @@ export default function Navbar() {
                   className="link"
                   onClick={() => nav("/dashboard/profile")}
                 >
-                  {user.username} {/*profile*/}
+                  Profile
                 </button>
               </li>
-              {adminhtml} {/*Dashboard*/}
+              {/* Dashboard */}
               <li>
                 <button className="link" onClick={() => nav("/shop")}>
                   Shop
