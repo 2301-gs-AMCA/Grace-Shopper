@@ -11,9 +11,9 @@ const AuthProvider = ({ children }) => {
   });
   const [loggedIn, setLoggedIn] = useState(false);
   const [cart, setCart] = useState({
-    id: null,
+    id: 1,
     userId: 1,
-    totalPrice: null,
+    totalPrice: 0,
     items: [],
   });
 
@@ -33,6 +33,12 @@ const AuthProvider = ({ children }) => {
       }
     }
     getFetchMe();
+    let thisCart = JSON.parse(localStorage.getItem("cart"));
+    if (thisCart !== null) {
+      setCart(thisCart);
+    } else {
+      setCart(cart);
+    }
   }, [loggedIn]);
 
   const contextValue = {

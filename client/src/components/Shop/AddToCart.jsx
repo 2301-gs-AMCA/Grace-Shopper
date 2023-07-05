@@ -25,6 +25,7 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
 
       setThisQuantity(Number(quantity));
       setCart(cart);
+      localStorage.setItem("cart", JSON.stringify(cart));
     }
     ///////////////////////////////////////////////
   }, [quantity]);
@@ -39,6 +40,7 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
       cart.items.push(item);
       cart.totalPrice = cart.totalPrice;
       setCart(cart);
+      localStorage.setItem("cart", JSON.stringify(cart));
       return;
     }
 
@@ -50,17 +52,19 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
           thatItem.quantity += quantity;
           thatItem.subtotal += item.subtotal;
           setCart(cart);
+          localStorage.setItem("cart", JSON.stringify(cart));
           return;
         }
       }
     }
     cart.items.push(item);
   }
-  setCart(cart);
   function handleChange(e) {
     e.preventDefault();
     setQuantity(Number(e.target.value));
   }
+  setCart(cart);
+  localStorage.setItem("cart", JSON.stringify(cart));
 
   return (
     <div>
