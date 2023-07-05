@@ -28,6 +28,8 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
       localStorage.setItem("cart", JSON.stringify(cart));
     }
     ///////////////////////////////////////////////
+    setCart(cart);
+    localStorage.setItem("cart", JSON.stringify(cart));
   }, [quantity]);
 
   function handleSubmit(e) {
@@ -63,8 +65,6 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
     e.preventDefault();
     setQuantity(Number(e.target.value));
   }
-  setCart(cart);
-  localStorage.setItem("cart", JSON.stringify(cart));
 
   return (
     <div>
