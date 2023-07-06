@@ -1,6 +1,6 @@
 // import React from "react";
-import  Imageslider  from "../assets/Imageslider";
-
+import Imageslider from "../assets/Imageslider";
+import { motion as m } from "framer-motion";
 import useAuth from "../hooks/useAuth";
 import { Link } from "react-router-dom";
 import "../App.css";
@@ -8,13 +8,17 @@ import "../App.css";
 export default function Home() {
   const { user, loggedIn, isLoggedIn } = useAuth();
   return (
-    <div className="home-page">
+    <m.div
+      className="home-page"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1, ease: "easeIn" }}
+    >
       <h1 className="home-header">Welcome to AMCA</h1>
       <h2 className="home-sub-header">Where comfy meets cozy</h2>
 
       <figure>
-        <Imageslider/>
-
+        <Imageslider />
       </figure>
       <div className="home-description">
         If you have found yourself visiting this website, then you are about to
@@ -39,6 +43,6 @@ export default function Home() {
           </p>
         )}
       </div>
-    </div>
+    </m.div>
   );
 }

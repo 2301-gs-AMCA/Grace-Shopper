@@ -8,11 +8,12 @@
   flex-direction: column;
   min-height: 100vh;
   text-align: center;
-  font-family: "Poppins";
+  font-family: "Fira_Sans";
+  color: #222823;
 }
 .navbar {
   display: flex;
-  background-color: #141451;
+  background-color:#a2cde1;
   padding: 1rem;
   position: sticky;
   top: 0;
@@ -22,6 +23,7 @@
   border-radius: 6px;
   z-index: 1;
   margin-bottom: 2rem;
+  font-style: italic;
 }
 .navlinks {
   display: flex;
@@ -35,15 +37,17 @@
 }
 .home-header {
   text-align: center;
-  font-size: 3rem;
+  font-size: 2.5rem;
+  text-decoration: underline;
 }
 .home-sub-header {
   font-style: italic;
-  text-decoration: underline;
+
 }
 .home-description {
   font-size: 22px;
   padding: 2rem 2rem 5rem 2rem;
+  margin: 0 5rem 0 5rem;
 }
 
 .footer {
@@ -51,7 +55,7 @@
   padding: 1rem;
   position: sticky;
   bottom: 0;
-  background-color: #141451;
+  background-color:#a2cde1;
   justify-content: center;
   box-shadow: 1px 1px 1px 2px;
   border-radius: 6px;
@@ -82,7 +86,9 @@
 }
 .image {
   display: flex;
-  width: 560px;
+  justify-content: center;
+  align-items: center;
+  width: 460px;
   height: 500px;
   border-radius: 10px;
 }
@@ -144,7 +150,6 @@
   font-size: 24px;
   width: 25vw;
   border: 1px solid;
-  
 }
 .reviews{
 margin:auto;
@@ -189,7 +194,7 @@ list-style: none;
   padding: 10rem;
   border: 2px solid red;
   margin: 2rem;
-  color: aliceblue;
+  color:  #222823;
 
 }
 .item-card img{

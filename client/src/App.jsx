@@ -24,12 +24,13 @@ import { useEffect, useState } from "react";
 import useAuth from "./hooks/useAuth";
 import CategoryItems from "./components/Shop/CategoryItems";
 
+import { motion as m } from "framer-motion";
 function App() {
   const { user } = useAuth();
   const [err, setErr] = useState(null);
 
   return (
-    <div className="app">
+    <m.div>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -47,7 +48,7 @@ function App() {
         <Route path="/dashboard/security/:userId" element={<Security />} />
       </Routes>
       <Footer />
-    </div>
+    </m.div>
   );
 }
 
