@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { fetchAllItems } from "../../api/items";
 import Items from "./Items";
 import CategorySidebar from "./CategorySidebar";
-
+import { motion as m } from "framer-motion";
 ("../../App.css");
 
 export default function Shop() {
@@ -23,9 +23,14 @@ export default function Shop() {
   }, []);
 
   return (
-    <div id="items-shop">
+    <m.div
+      id="items-shop"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5, ease: "easeIn" }}
+    >
       <CategorySidebar />
       <Items items={items} />
-    </div>
+    </m.div>
   );
 }

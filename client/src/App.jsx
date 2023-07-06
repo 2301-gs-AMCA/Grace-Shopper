@@ -25,12 +25,13 @@ import useAuth from "./hooks/useAuth";
 import CategoryItems from "./components/Shop/CategoryItems";
 import ConfirmationPage from "./components/ConfirmationPage";
 
+import { motion as m } from "framer-motion";
 function App() {
   const { user } = useAuth();
   const [err, setErr] = useState(null);
 
   return (
-    <div className="app">
+    <m.div>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -49,7 +50,7 @@ function App() {
         <Route path="/confirmation" element={<ConfirmationPage />} />
       </Routes>
       <Footer />
-    </div>
+    </m.div>
   );
 }
 

@@ -18,11 +18,11 @@ export default function Navbar() {
   useEffect(() => {
     function resetTop() {
       if (nav) {
-        window.scroll(0, 0);
+        window.scrollTo(0, 0);
       }
     }
     return resetTop();
-  }, []);
+  }, [nav]);
 
   useEffect(() => {
     function headerButtons(loggedIn) {
