@@ -23,6 +23,7 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import useAuth from "./hooks/useAuth";
 import CategoryItems from "./components/Shop/CategoryItems";
+import ConfirmationPage from "./components/ConfirmationPage";
 
 function App() {
   const { user } = useAuth();
@@ -45,6 +46,7 @@ function App() {
         <Route path="/dashboard/reviews/:userId" element={<Reviews />} />
         <Route path="/dashboard/settings/:userId" element={<Settings />} />
         <Route path="/dashboard/security/:userId" element={<Security />} />
+        <Route path="/confirmation" element={<ConfirmationPage />} />
       </Routes>
       <Footer />
     </div>
