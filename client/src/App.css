@@ -168,6 +168,24 @@ max-width:40%;
 border: 2px solid;
 
 }
+#submit-review-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#submit-review-container label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+#submit-review-container input,
+#submit-review-container textarea {
+  width: 200px;
+}
+
 .itemsULike{
 float: left;
 min-width: 68vw;

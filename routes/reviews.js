@@ -1,5 +1,5 @@
 const reviewRouter = require("express").Router();
-const { getAllReviewsByUserId, updateReviews } = require("../db/adapters/reviews");
+const { getAllReviewsByUserId, updateReviews, deleteReview,postReview} = require("../db/adapters/reviews");
 const {authRequired} = require("./utils");
 
 
@@ -24,15 +24,34 @@ reviewRouter.get("/:userId",authRequired,async (req,res,next)=>{
     
 })
 
+//POST 
+reviewRouter.post("/:itemId",authRequired,async (req,res,next)=>{
+  //const {itemId} = req.params;
+  try{
+  const review = await postReview(req.body)
+
+  if(res.ok){
+    res.send({
+      success:true,
+      message:"Review Submitted",
+      review
+    })
+  }
+ 
+}catch(error){
+  throw error
+}
+})
+
 //PATCH /api/reviews/update
 reviewRouter.patch("/update", authRequired, async (req, res, next) => {
   
-  console.log("body", req.body);
+  console.log("reviewupdate input body", req.body);
   try {
     const editedReview = req.body;
 
     const review = await updateReviews(editedReview);
-    console.log("review", review);
+    console.log("reviewupdate return", review);
     res.send({
       success: true,
       message: "post updated",
@@ -42,5 +61,21 @@ reviewRouter.patch("/update", authRequired, async (req, res, next) => {
     throw error;
   }
 });
+
+reviewRouter.delete("/delete/:id", authRequired, async(req,res,next)=>{
+  const {id} = req.params;
+  console.log("review being deleted ", id)
+  try {
+    const response = await deleteReview(id)
+    res.send({
+      success: true,
+      message: "post deleted",
+      response
+    });
+  } catch (error) {
+    throw error;
+  }
+
+})
 
 module.exports = reviewRouter

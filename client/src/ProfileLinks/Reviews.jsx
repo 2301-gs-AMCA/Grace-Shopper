@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import useAuth from "../hooks/useAuth";
-import { fetchUserReviews } from "../api/reviews";
+import { deleteReviewApi, fetchUserReviews } from "../api/reviews";
 import Popup from "reactjs-popup";
 import PopupEditWindow from "../components/PopupEditWindow";
 import { fetchImageByItemId } from "../api/assets";
@@ -14,8 +14,19 @@ export default function Reviews() {
   useEffect(() => {
     ///page loads initially and if refresh is triggered as true then rerender
     if (refresh === true) {
+      async function handleDelete(id){
+        try {
+          console.log("triggered");
+          const response = await deleteReviewApi(id)
+          alert("post delted!");
+        } catch (error) {
+          throw error
+        }
+      } 
       async function fetchreviews() {
-        const { reviews } = await fetchUserReviews(user.id); 
+        const { reviews } = await fetchUserReviews(user.id);
+        
+      
         let html = await reviews.map((review) => {
           console.log("review", review.imagereel[0].image);
           ///needs imag and item name, maybe try making more functions for this specifically in the api?
@@ -29,7 +40,7 @@ export default function Reviews() {
                 <Popup trigger={<button> Edit</button>} position="center">
                   <PopupEditWindow review={review} setRefresh={setRefresh} />
                 </Popup>
-                <button>delete</button>
+                <button onClick={()=>{handleDelete(review.id)}}>delete</button>
               </div>
             </div>
           );

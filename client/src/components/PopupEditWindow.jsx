@@ -49,7 +49,7 @@ export default function pupupEditWindow(props){
             <input type="text" placeholder={rvw.title} onChange={(e)=>{setTitle(e.target.value)}}/>
             </label>
             <label htmlFor="">rating
-            <input type="Number" min="1" max="5" placeholder={rvw.rating } onChange={(e)=>{setRating(e.target.value)}}/>
+            <input type="Number" min="1" max="5" placeholder={rvw.rating } style={{width: '50px'}} onChange={(e)=>{setRating(e.target.value)}}/>
             out of 5
             </label>
             <label htmlFor="">body

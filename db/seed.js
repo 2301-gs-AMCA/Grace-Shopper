@@ -108,13 +108,13 @@ async function createTables() {
     image varchar(255)
   );`);
 
-    await client.query(`CREATE TABLE review_imgs (
-    id SERIAL PRIMARY KEY,
-    reviewId INTEGER REFERENCES reviews(id),
-    imageId INTEGER REFERENCES items_imgs(itemId),
-    
-    image varchar(255)
-  );`);
+  //   await client.query(`CREATE TABLE review_imgs (
+  //   id SERIAL PRIMARY KEY,
+  //   reviewId INTEGER REFERENCES reviews(id),
+  //   imageId INTEGER REFERENCES items_imgs(itemId),
+
+  //   image varchar(255)
+  // );`);
 
     await client.query(`CREATE TABLE items_images_throughtable (
     id SERIAL PRIMARY KEY,
@@ -140,11 +140,11 @@ async function createTables() {
 
     await client.query(`CREATE TABLE reviews(
     id SERIAL PRIMARY KEY,
-    itemId INTEGER REFERENCES items(id) UNIQUE NOT NULL,
-    userId INTEGER REFERENCES users(id) UNIQUE NOT NULL,
+    itemId INTEGER REFERENCES items(id),
+    userId INTEGER REFERENCES users(id),
     title varchar(255),
     rating int2 NOT NULL CHECK(rating between 1 and 5),
-    review TEXT,
+    review TEXT
    
     
     

@@ -21,6 +21,22 @@ async function createReviewsTable(Objreview) {
     throw error;
   }
 }
+
+async function postReview(revObj) {
+    try {
+      const { rows: rvw } = await client.query(
+        `
+          INSERT INTO reviews(itemId,userId,title,rating,review)
+          VALUES($1,$2,$3,$4,$5)
+          RETURNING *;
+          `,
+        [revObj.itemid, revObj.userid, revObj.title, revObj.rating, revObj.review]
+      );
+      return rvw;
+    } catch (error) {
+      console.error(error);
+    }
+  }
 //GET all Reviews from a user
 async function getAllReviewsByUserId(id) {
   console.log(id);
@@ -53,9 +69,9 @@ async function updateReviews(revObj) {
       `
         UPDATE reviews 
         SET 
-        title = COALESCE($2,title),
+        title = COALESCE(NULLIF($2, ''),title),
         rating = COALESCE($3,rating),
-        review = COALESCE($4,review)
+        review = COALESCE(NULLIF($4, ''),review)
         WHERE id = $1
         RETURNING *;
         `,
@@ -67,4 +83,18 @@ async function updateReviews(revObj) {
   }
 }
 
-module.exports = { createReviewsTable, getAllReviewsByUserId, updateReviews };
+
+
+async function deleteReview(id){
+    try{
+    const {rows:rvw} = await client.query(`
+    DELETE FROM reviews
+    Where id = $1;
+    `,[id]);
+    return rvw
+    }catch(err){
+        throw err
+    }
+}
+
+module.exports = { createReviewsTable, getAllReviewsByUserId, updateReviews, deleteReview,postReview};
