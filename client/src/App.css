@@ -63,6 +63,15 @@
 .footlinks {
   display: flex;
 }
+.thumbnail {
+  position: relative;
+  width: 50%;
+  aspect-ratio: 16/9;
+  margin : 1rem;
+  border: #222823 .2rem solid;
+}
+
+
 
 .footlink {
   padding: 6px;

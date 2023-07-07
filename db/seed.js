@@ -110,7 +110,9 @@ async function createTables() {
 
     await client.query(`CREATE TABLE review_imgs (
     id SERIAL PRIMARY KEY,
-    itemId INTEGER REFERENCES items(id),
+    reviewId INTEGER REFERENCES reviews(id),
+    imageId INTEGER REFERENCES items_imgs(itemId),
+    
     image varchar(255)
   );`);
 
@@ -142,7 +144,8 @@ async function createTables() {
     userId INTEGER REFERENCES users(id) UNIQUE NOT NULL,
     title varchar(255),
     rating int2 NOT NULL CHECK(rating between 1 and 5),
-    review varchar(255)
+    review TEXT,
+   
     
     
   );`);
