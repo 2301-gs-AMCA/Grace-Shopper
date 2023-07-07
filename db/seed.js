@@ -140,8 +140,8 @@ async function createTables() {
 
     await client.query(`CREATE TABLE reviews(
     id SERIAL PRIMARY KEY,
-    itemId INTEGER REFERENCES items(id),
-    userId INTEGER REFERENCES users(id),
+    itemId INTEGER REFERENCES items(id) UNIQUE NOT NULL,
+    userId INTEGER REFERENCES users(id) UNIQUE NOT NULL,
     title varchar(255),
     rating int2 NOT NULL CHECK(rating between 1 and 5),
     review TEXT

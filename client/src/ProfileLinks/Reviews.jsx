@@ -18,7 +18,8 @@ export default function Reviews() {
         try {
           console.log("triggered");
           const response = await deleteReviewApi(id)
-          alert("post delted!");
+          alert("post deleted!");
+          location.reload()
         } catch (error) {
           throw error
         }
