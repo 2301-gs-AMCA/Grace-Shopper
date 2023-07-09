@@ -89,7 +89,7 @@ async function getItemsByCategory(itemCategory) {
 async function getAllItems() {
   try {
     const { rows } = await client.query(`
-    SELECT itms.id,itms.name,itms.description,itms.cost,itms.category,itms.isavailable , CASE WHEN it_imgs.itemId IS NULL THEN '[]'::json
+    SELECT itms.id,itms.name,itms.description,itms.cost,itms.category,itms.isavailable,itms.inventory_qty , CASE WHEN it_imgs.itemId IS NULL THEN '[]'::json
     ELSE
     JSON_AGG(
       JSON_BUILD_OBJECT(
@@ -98,7 +98,7 @@ async function getAllItems() {
       )
     )END AS imagereel
     FROM items itms
-    JOIN items_imgs it_imgs 
+    FULL OUTER JOIN items_imgs it_imgs 
     ON itms.id = it_imgs.itemId
     GROUP BY it_imgs.itemid,itms.id
     ORDER BY itms.id;`);
@@ -114,12 +114,12 @@ async function createItem(itemObj) {
       rows: [item],
     } = await client.query(
       `
-            INSERT INTO items(name, description, cost, category) 
-            VALUES($1, $2, $3, $4) 
+            INSERT INTO items(name, description, cost, category, inventory_qty, isAvailable) 
+            VALUES($1, $2, $3, $4, $5, $6) 
             ON CONFLICT (name) DO NOTHING 
             RETURNING *;
           `,
-      [itemObj.name, itemObj.description, itemObj.cost, itemObj.category]
+      [itemObj.itemName, itemObj.itemDescription, itemObj.itemCost, itemObj.itemCategory, itemObj.inventory_qty, itemObj.isAvailable]
     );
 
     return item;
@@ -128,18 +128,24 @@ async function createItem(itemObj) {
   }
 }
 
-async function updateItem(itemId, name, description, cost, isAvailable) {
+async function updateItem(itemObj) {
   try {
     const {
       rows: [item],
     } = await client.query(
       `
         UPDATE items
-        SET name=$2, description=$3, cost=$4, isAvailable=$5
+        SET 
+        name = COALESCE(NULLIF($2, ''),name), 
+        description = COALESCE(NULLIF($3, ''),description), 
+        cost = COALESCE(NULLIF($4,0),cost),
+        category = COALESCE(NULLIF($5, ''),category),
+        isAvailable = COALESCE($6,isAvailable),
+        inventory_qty = COALESCE($7,inventory_qty)
         WHERE id = $1
         RETURNING *;
       `,
-      [itemId, name, description, cost, isAvailable]
+      [itemObj.id, itemObj.name, itemObj.description, itemObj.cost, itemObj.category, itemObj.isavailable, itemObj.inventory_qty]
     );
     return item;
   } catch (error) {

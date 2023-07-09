@@ -52,17 +52,7 @@ itemsRouter.get("/:category", async (req, res) => {
 });
 */
 
-//GET /api/items/:imageurl
-itemsRouter.get("/:imageurl", async (req, res) => {
-  const itemImg = req.params;
-  const item = await getItemByImage(itemImg);
 
-  res.send({
-    success: true,
-    message: "gotItem",
-    item,
-  });
-});
 
 //POST /api/items
 itemsRouter.post("/", authRequired, async (req, res, next) => {
@@ -70,19 +60,15 @@ itemsRouter.post("/", authRequired, async (req, res, next) => {
     res.send({ message: "you are not an admin" });
     return;
   }
-  const { name, description, cost } = req.body;
-  const itemsObj = {};
+  const {itemObj} = req.body
+  console.log("newItem Obj:",itemObj)
   try {
-    itemsObj.name = name;
-    itemsObj.description = description;
-    itemsObj.cost = cost;
-
-    const item = await createItem(itemsObj);
+    const item = await createItem(itemObj);
 
     if (item) {
       res.send({
         success: true,
-        message: "Item created",
+        message: `${item.name} is added to shop`,
         item,
       });
     } else {
@@ -98,33 +84,16 @@ itemsRouter.post("/", authRequired, async (req, res, next) => {
 
 //PATCH /api/items/:itemId
 itemsRouter.patch("/:itemId", authRequired, async (req, res, next) => {
+  if (req.user.isadmin != true) {
+    res.send({ message: "you are not an admin" });
+    return;
+  }
   const { itemId } = req.params;
-
-  const { name, description, cost, isAvailable } = req.body;
-  const updateItemsObj = {};
-
-  if (name) {
-    updateItemsObj.name = name;
-  }
-  if (description) {
-    updateItemsObj.description = description;
-  }
-  if (cost) {
-    updateItemsObj.cost = cost;
-  }
-  if (!null) {
-    updateItemsObj.isAvailable = isAvailable;
-  }
-
+  const {itemObj} =  req.body;
+ 
   try {
     if (req.user.isadmin) {
-      const updatedItem = await updateItem(
-        itemId,
-        name,
-        description,
-        cost,
-        isAvailable
-      );
+      const updatedItem = await updateItem(itemObj);
       console.log("updating item:", updatedItem);
       res.send({
         success: true,

@@ -70,7 +70,15 @@
   margin : 1rem;
   border: #222823 .2rem solid;
 }
+.item-table {
+  border-collapse: collapse;
+}
 
+.item-table th,
+.item-table td {
+  border: 1px solid #000;
+  padding: 8px;
+}
 
 
 .footlink {

@@ -48,20 +48,14 @@ export async function fetchItemsByCategory(category) {
   }
 }
 /// POST an item, haven't used yet 
-export async function postItem(name, description, cost) {
+export async function postItem(itemObj) {
   try {
     const response = await fetch(`/api/items`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        item: {
-          name,
-          description,
-          cost,
-        },
-      }),
+      body: JSON.stringify({itemObj}),
     });
     const result = await response.json();
     console.log("Result from postItem: ", result);
@@ -71,20 +65,16 @@ export async function postItem(name, description, cost) {
   }
 }
 /// PATCH an item
-export async function patchItem(itemId, name, description, cost) {
+export async function patchItem(itemObj) {
+  console.log("itemPatch Obj",itemObj)
+  const itemId = itemObj.id;
   try {
     const response = await fetch(`/api/items/${itemId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        item: {
-          name,
-          description,
-          cost,
-        },
-      }),
+      body: JSON.stringify({itemObj}),
     });
     const result = await response.json();
     console.log("result from patchItem: ", result);

@@ -17,6 +17,7 @@ const items = [
     cost: "15",
     description: "a soft bunny friend.",
     category: "plush",
+    inventory_qty:50
   },
   {
     name: "stich plush",
@@ -25,6 +26,7 @@ const items = [
     description:
       "a plush of your favorite blue trouble maker.Disney please don't sue.",
     category: "plush",
+    inventory_qty:50
   },
   {
     name: "cat eared cat bed",
@@ -32,6 +34,7 @@ const items = [
     cost: "50",
     description: "keeps your little guy cozy; in style.",
     category: "pets",
+    inventory_qty:50
   },
   {
     name: "thicksole slippers",
@@ -39,6 +42,7 @@ const items = [
     cost: "20",
     description: "soft an dcomfortable.best to wear on a staycation.",
     category: "shoes",
+    inventory_qty:50
   },
   {
     name: "toe aid",
@@ -47,6 +51,7 @@ const items = [
     description:
       "ever stubbed your toe and now you fell like its a bit off? this will help straighten and support your big toe",
     category: "accessories",
+    inventory_qty:50
   },
   {
     name: "green leaf blanket",
@@ -55,6 +60,7 @@ const items = [
     description:
       "from Gloriosum, this will be a perfect blanket for a chill night watching netflix",
     category: "bedding",
+    inventory_qty:50
   },
   {
     name: "soft cat bed",
@@ -62,6 +68,7 @@ const items = [
     cost: "50",
     description: "a soft bed for your soft ,sometimes hostile, buddy",
     category: "pets",
+    inventory_qty:50
   },
   {
     name: "tarot card blanket",
@@ -70,6 +77,7 @@ const items = [
     description:
       "a blanket that can also tell your future. its a comfortable one",
     category: "bedding",
+    inventory_qty:50
   },
   {
     name: "cosmic psyonic toad in tub, No.5",
@@ -78,6 +86,7 @@ const items = [
     description:
       "omniptent being under the stress of the bad vibes of the cosmos.help him out by getting yourself confy with this blanket or another of our great products!",
     category: "accessories",
+    inventory_qty:50
   },
 ];
 

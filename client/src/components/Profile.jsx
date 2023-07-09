@@ -6,6 +6,18 @@ export default function Profile() {
   const { user } = useAuth();
   const navigate = useNavigate();
   console.log(user);
+  let adminhtml = ""
+
+  if (user.isadmin) {
+    adminhtml = (
+      <Link
+         to={"/dashboard"}
+         style={{ cursor: "pointer" }}
+         >
+          Dashboard
+        </Link>
+    );
+  }
 
   return (
     <m.div
@@ -38,6 +50,9 @@ export default function Profile() {
         >
           Reviews
         </Link>
+        <br></br>
+        {adminhtml}
+        
       </div>
       {/*//SUGGESTION TABLE///*/}
       <div className="itemsULike">
