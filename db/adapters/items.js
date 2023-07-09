@@ -11,7 +11,7 @@ async function getItemById(itemId) {
       itms.description,
       itms.cost,
       itms.category,
-      itms.isavailable,
+      itms."isAvailable",
       CASE
         WHEN it_imgs.id IS NULL THEN '[]'::json
         ELSE JSON_AGG(
@@ -62,7 +62,7 @@ async function getItemById(itemId) {
 async function getItemsByCategory(itemCategory) {
   try {
     const { items } = await client.query(
-      ` SELECT itms.id,itms.name,itms.description,itms.cost,itms.category,itms.isavailable , 
+      ` SELECT itms.id,itms.name,itms.description,itms.cost,itms.category,itms."isAvailable" , 
       CASE WHEN it_imgs.itemId IS NULL THEN '[]'::json
       ELSE
       JSON_AGG(
@@ -92,7 +92,7 @@ async function getItemsByCategory(itemCategory) {
 async function getAllItems() {
   try {
     const { rows } = await client.query(`
-    SELECT itms.id,itms.name,itms.description,itms.cost,itms.category,itms.isavailable , CASE WHEN it_imgs.itemId IS NULL THEN '[]'::json
+    SELECT itms.id,itms.name,itms.description,itms.cost,itms.category,itms."isAvailable" , CASE WHEN it_imgs.itemId IS NULL THEN '[]'::json
     ELSE
     JSON_AGG(
       JSON_BUILD_OBJECT(
@@ -138,7 +138,7 @@ async function updateItem(itemId, name, description, cost, isAvailable) {
     } = await client.query(
       `
         UPDATE items
-        SET name=$2, description=$3, cost=$4, isAvailable=$5
+        SET name=$2, description=$3, cost=$4, "isAvailable"=$5
         WHERE id = $1
         RETURNING *;
       `,

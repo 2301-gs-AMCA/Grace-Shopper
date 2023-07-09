@@ -1,4 +1,5 @@
 const orderRouter = require("express").Router();
+const jwt = require("jsonwebtoken");
 const {
   createOrder,
   getOrderById,
@@ -6,6 +7,7 @@ const {
   getAllOrders,
   getAllOrdersByUsername,
   updateOrder,
+  getUsersLastOrder,
 } = require("../db/adapters/order");
 const { authRequired } = require("./utils");
 
@@ -38,10 +40,23 @@ orderRouter.get("/myOrders", authRequired, async (req, res, next) => {
   }
 });
 
+orderRouter.get("/lastOrder", authRequired, async (req, res, next) => {
+  try {
+    user = req.user;
+    const order = await getUsersLastOrder(user.id);
+    if (order.isCart) {
+      res.cookie("order", order);
+      res.send({ success: true, message: "Is Cart", order });
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
 //GET /orders/userOrders
 orderRouter.get("/:userId", authRequired, async (req, res, next) => {
   try {
-    const orders = await getAllUsersOrders(req.params.userid);
+    const orders = await getAllUsersOrders(req.params.userId);
     res.send({
       success: true,
       message: "Found orders",
@@ -53,11 +68,29 @@ orderRouter.get("/:userId", authRequired, async (req, res, next) => {
 });
 
 //POST /order
-orderRouter.post("/", async (req, res, next) => {
-  const { userId, totalPrice } = req.body;
-
+orderRouter.post("/", authRequired, async (req, res, next) => {
   try {
-    const order = await createOrder(userId, totalPrice);
+    const { userId } = req.body;
+    const _orders = await getAllUsersOrders(userId);
+    const _order = _orders[_orders.length - 1];
+    console.log(_order);
+    if (_orders.length && _order.isCart) {
+      res.send({
+        success: false,
+        error: {
+          message: "You already have a cart",
+          name: "Cart Error",
+        },
+      });
+      return;
+    }
+
+    const order = await createOrder(userId);
+
+    res.cookie("order", order, {
+      sameSite: "strict",
+      httpOnly: true,
+    });
 
     res.send({
       success: true,
@@ -73,6 +106,7 @@ orderRouter.post("/", async (req, res, next) => {
 orderRouter.get("/:orderId", async (req, res, next) => {
   try {
     const order = await getOrderById(req.params.orderId);
+
     res.send({
       success: true,
       message: "Found Order",
@@ -86,7 +120,6 @@ orderRouter.get("/:orderId", async (req, res, next) => {
 // PATCH /order/:orderId
 orderRouter.patch("/:orderId", authRequired, async (req, res, next) => {
   const { orderId } = req.params;
-  const { totalPrice } = req.body;
   const updateOrderObj = {};
 
   if (totalPrice) {
@@ -96,8 +129,18 @@ orderRouter.patch("/:orderId", authRequired, async (req, res, next) => {
   try {
     const originalOrder = await getOrderById(orderId);
 
-    if (originalOrder.userid === req.user.id || req.user.isadmin) {
-      const updatedOrder = await updateOrder(orderId, totalPrice);
+    if (originalOrder.userId === req.user.id || req.user.isAdmin) {
+      const modifiedOrder = await updateOrder(orderId);
+
+      const orderCookie = req.cookies.order;
+
+      const updatedOrder = { ...orderCookie, ...modifiedOrder };
+
+      res.cookie("order", updatedOrder, {
+        sameSite: "strict",
+        httpOnly: true,
+      });
+
       res.send({
         success: true,
         message: "Order Updated",

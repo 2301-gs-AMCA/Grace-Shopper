@@ -16,21 +16,16 @@ order_itemsRouter.use((req, res, next) => {
 });
 
 //POST api/order_items
-order_itemsRouter.post("/", async (req, res, next) => {
-  const { orderId, itemId, item_quantity, price } = req.body;
+order_itemsRouter.post("/", authRequired, async (req, res, next) => {
+  const { orderId, itemId, item_quantity } = req.body;
   const ordItmData = {};
 
   try {
     ordItmData.orderId = orderId;
     ordItmData.itemId = itemId;
     ordItmData.item_quantity = item_quantity;
-    ordItmData.price = price;
-    const orderItem = await addItemToOrder(
-      orderId,
-      itemId,
-      item_quantity,
-      price
-    );
+
+    const orderItem = await addItemToOrder(orderId, itemId, item_quantity);
 
     if (orderItem) {
       res.send({
@@ -48,30 +43,41 @@ order_itemsRouter.post("/", async (req, res, next) => {
     next({ name, message });
   }
 });
+
+order_itemsRouter.get("/:orderId", async (req, res, next) => {
+  try {
+    const order_items = await getOrderItemsByOrderId(req.params.orderId);
+    res.send({
+      success: true,
+      message: "Order Items",
+      order_items,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 //PATCH api/order_items/:orderItemid
 order_itemsRouter.patch(
   "/:orderItemId",
   authRequired,
   async (req, res, next) => {
     const { orderItemId } = req.params;
-    const { item_quantity, price } = req.body;
+    const { item_quantity } = req.body;
     const updateOrderItemObj = {};
 
     if (item_quantity) {
       updateOrderItemObj.item_quantity = item_quantity;
     }
-    if (price) {
-      updateOrderItemObj.price = price;
-    }
 
     try {
       const originalOrderItem = await getOrderItemById(orderItemId);
-      const order = await getOrderById(originalOrderItem.orderid);
-      if (order.userid === req.user.id || req.user.isadmin) {
+      const order = await getOrderById(originalOrderItem.orderId);
+      console.log("getOrderById in patch order_items", order);
+      if (order.userId === req.user.id || req.user.isAdmin) {
         const updatedOrderItem = await updateOrderItem(
           orderItemId,
-          item_quantity,
-          price
+          item_quantity
         );
         res.send({ order_item: updatedOrderItem });
       } else {
@@ -95,11 +101,11 @@ order_itemsRouter.delete(
       const orderItem = await getOrderItemById(orderItemId);
       const order = await getOrderById(orderItem.orderid);
       const item = await getItemById(orderItem.itemid);
-      if (orderItem && (order.userid === req.user.id || req.user.isadmin)) {
+      if (orderItem && (order.userId === req.user.id || req.user.isAdmin)) {
         const deletedOrderItem = await destroyOrderItem(orderItemId);
-        res.send({ 
-          message: `${item.name} is deleted from order ${order.id}`
-          });
+        res.send({
+          message: `${item.name} is deleted from order ${order.id}`,
+        });
       } else {
         next(
           orderItem

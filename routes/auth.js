@@ -4,6 +4,12 @@ const bcrypt = require("bcrypt");
 const SALT_ROUNDS = 10;
 const { createUser, getUserByUsername } = require("../db/adapters/users");
 const { authRequired } = require("./utils");
+const {
+  createOrder,
+  getAllUsersOrders,
+  getAllOrdersByUsername,
+  getUsersLastOrder,
+} = require("../db/adapters/order");
 
 //GET /api/auth
 authRouter.get("/", async (req, res, next) => {
@@ -35,7 +41,7 @@ authRouter.post("/register", async (req, res, next) => {
       username,
       password: hashedPassword,
       isAdmin: false,
-      loggedIn: false,
+      isGuest: false,
     });
     console.log("user:", user);
     delete user.password;
@@ -50,6 +56,43 @@ authRouter.post("/register", async (req, res, next) => {
     res.send({
       success: true,
       message: "Thank You for signing up!",
+      user: user,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+authRouter.post("/guest", async (req, res, next) => {
+  try {
+    let randomNum = Math.floor(Math.random() * 9000) + 1000; // Generates a random 4-digit number
+    let username = "guest" + randomNum;
+    const characters =
+      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
+    let password = "";
+    for (var i = 0; i < 8; i++) {
+      password += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
+    }
+
+    const user = await createUser({
+      username,
+      password,
+      isAdmin: false,
+      isGuest: true,
+    });
+    delete user.password;
+    const token = jwt.sign(user, process.env.JWT_SECRET);
+
+    res.cookie("token", token, {
+      sameSite: "strict",
+      httpOnly: true,
+      signed: true,
+    });
+    res.send({
+      success: true,
+      message: "You are a guest!",
       user: user,
     });
   } catch (error) {
@@ -145,6 +188,29 @@ authRouter.get("/me", authRequired, (req, res, next) => {
     message: "you are authorized",
     user: req.user,
   });
+});
+
+//GET /orders/myOrders
+authRouter.get("/myCart", authRequired, async (req, res, next) => {
+  try {
+    const order = await getUsersLastOrder(req.user.id);
+    console.log("get last order: ", order);
+    if (order && order.isCart) {
+      res.cookie("order", order);
+      res.send({
+        success: true,
+        message: "Here's your cart",
+        order: order,
+      });
+    } else {
+      res.send({
+        success: false,
+        message: "No cart",
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = authRouter;

@@ -34,14 +34,7 @@ const {
   getAllImages,
   getImagesByItemId,
 } = require("./adapters/assets");
-const {
-  createCart,
-  getUsersCart,
-  getAllCarts,
-  getCartById,
-  updateCart,
-  destroyCart,
-} = require("./adapters/cart");
+
 const bcrypt = require("bcrypt");
 const SALT_ROUNDS = 10;
 async function dropTables() {
@@ -51,12 +44,10 @@ async function dropTables() {
     DROP TABLE IF EXISTS reviews;
     DROP TABLE IF EXISTS review_imgs;
     DROP TABLE IF EXISTS order_items;
-    DROP TABLE IF EXISTS cart_items;
     DROP TABLE IF EXISTS items_images_throughtable;
     DROP TABLE IF EXISTS items_imgs;
     DROP TABLE IF EXISTS items;
     DROP TABLE IF EXISTS orders;
-    DROP TABLE IF EXISTS cart;
     DROP TABLE IF EXISTS users;
     `);
     console.log("Finished dropping Tables!");
@@ -71,23 +62,19 @@ async function createTables() {
   try {
     await client.query(`CREATE TABLE users (
       id SERIAL Primary Key,
-      isAdmin BOOLEAN DEFAULT false,
-      loggedIn BOOLEAN DEFAULT false,
+      "isAdmin" BOOLEAN DEFAULT false,
+      "isGuest" BOOLEAN DEFAULT true,
       username varchar(255) UNIQUE NOT NULL,
       password varchar(255) NOT NULL
   );`);
 
     await client.query(`CREATE TABLE orders (
     id SERIAL PRIMARY KEY,
-    userId INTEGER REFERENCES users(id),
-    totalPrice INTEGER
+    "userId" INTEGER REFERENCES users(id),
+    order_date TIMESTAMP DEFAULT current_timestamp,
+    "isCart" BOOLEAN DEFAULT true,
+    "isComplete" BOOLEAN DEFAULT false 
   );`);
-
-    await client.query(`CREATE TABLE cart (
-      id SERIAL PRIMARY KEY,
-      userId INTEGER REFERENCES users(id),
-      totalPrice INTEGER
-    );`);
 
     //changed cost to INTEGER -cb
     //added category -ac
@@ -97,7 +84,7 @@ async function createTables() {
     description text NOT NULL,
     cost INTEGER,
     category varchar(255) NOT NULL,
-    isAvailable BOOLEAN DEFAULT true
+    "isAvailable" BOOLEAN DEFAULT true
   );`);
 
     //images for items
@@ -122,19 +109,10 @@ async function createTables() {
 
     await client.query(`CREATE TABLE order_items (
     id SERIAL PRIMARY KEY,
-    orderId INTEGER REFERENCES orders(id),
-    itemId INTEGER REFERENCES items(id),
-    item_quantity INTEGER,
-    price INTEGER
+    "orderId" INTEGER REFERENCES orders(id),
+    "itemId" INTEGER REFERENCES items(id),
+    item_quantity INTEGER 
   );`);
-
-    await client.query(`CREATE TABLE cart_items (
-      id SERIAL PRIMARY KEY,
-      cartId INTEGER REFERENCES cart(id),
-      itemId INTEGER REFERENCES items(id),
-      item_quantity INTEGER,
-      price INTEGER
-    );`);
 
     await client.query(`CREATE TABLE reviews(
     id SERIAL PRIMARY KEY,
@@ -320,7 +298,7 @@ async function rebuildDb() {
       username: "admin",
       password: hashedPassword,
       isAdmin: true,
-      loggedIn: true,
+      isGuest: false,
     });
     console.log(result);
   } catch (error) {

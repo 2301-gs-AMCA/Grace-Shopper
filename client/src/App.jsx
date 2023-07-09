@@ -7,7 +7,7 @@ import Footer from "./components/Footer";
 
 import Profile from "./components/Profile";
 import Shop from "./components/Shop/Shop";
-import Cart from "./components/Cart";
+import Cart from "./components/Cart/Cart";
 import AuthForm from "./components/AuthForm";
 import Dashboard from "./components/Dashboard";
 import Reviews from "./ProfileLinks/Reviews";

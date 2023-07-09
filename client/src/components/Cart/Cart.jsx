@@ -1,19 +1,22 @@
-import { useEffect, useState } from "react";
-import "../App.css";
-import useAuth from "../hooks/useAuth";
-import AddToCart from "./Shop/AddToCart";
-import { postOrder } from "../api/orders";
-import { postOrderItem } from "../api/order_items";
+import { useCallback, useEffect, useState } from "react";
+import "../../App.css";
+import useAuth from "../../hooks/useAuth";
+import useCart from "../../hooks/useCart";
+import AddToCart from "../Shop/AddToCart";
+import { postOrder } from "../../api/orders";
+import { postOrderItem } from "../../api/order_items";
 
 let cartImg =
   "https://em-content.zobj.net/source/microsoft-teams/363/shopping-cart_1f6d2.png";
 
 export default function Cart() {
-  const { cart, setCart } = useAuth();
+  const { user, setUser } = useAuth();
+  const { cart, setCart } = useCart();
   const [click, setClick] = useState();
   const [thisQuantity, setThisQuantity] = useState();
 
   useEffect(() => {
+    cart.userId = user.id;
     async function getCart() {
       let thatCart = JSON.parse(localStorage.getItem("cart"));
       if (thatCart !== null) {
@@ -21,12 +24,10 @@ export default function Cart() {
       } else {
         await setCart(cart);
       }
+      setCart(cart);
     }
     getCart();
-    if (!cart) {
-      cart.userId === 1;
-      cart.totalPrice === 0;
-    }
+    console.log("cart", cart);
   }, [click]);
 
   //re-renders totalPrice and price
@@ -38,30 +39,15 @@ export default function Cart() {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const result = await postOrder(cart.userId, cart.totalPrice);
+      cart.isCart === false;
+      cart.isComplete === true;
+      const result = await patchOrder(cart);
 
-      for (let item of cart.items) {
-        async function postPostOrderItem() {
-          try {
-            const orderItem = await postOrderItem(
-              result.order.id,
-              item.id,
-              item.quantity,
-              item.subtotal
-            );
-            return orderItem;
-          } catch (error) {
-            console.error(error);
-          }
-        }
-        postPostOrderItem();
-      }
+      //cart.items = [];
+      //cart.totalPrice = 0;
+      //setCart(cart);
 
-      cart.items = [];
-      cart.totalPrice = 0;
-      setCart(cart);
-
-      localStorage.removeItem("cart");
+      //localStorage.removeItem("cart");
 
       setClick(!click);
 
