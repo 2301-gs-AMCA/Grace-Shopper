@@ -63,6 +63,15 @@
 .footlinks {
   display: flex;
 }
+.thumbnail {
+  position: relative;
+  width: 50%;
+  aspect-ratio: 16/9;
+  margin : 1rem;
+  border: #222823 .2rem solid;
+}
+
+
 
 .footlink {
   padding: 6px;
@@ -159,6 +168,24 @@ max-width:40%;
 border: 2px solid;
 
 }
+#submit-review-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#submit-review-container label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+#submit-review-container input,
+#submit-review-container textarea {
+  width: 200px;
+}
+
 .itemsULike{
 float: left;
 min-width: 68vw;
@@ -231,6 +258,6 @@ list-style: none;
 .security{
   min-height: 99vh;
 }
-.reviews{
+/* .reviews{
   min-height: 99vh;
-}
+} */

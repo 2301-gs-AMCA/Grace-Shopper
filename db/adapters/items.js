@@ -5,7 +5,7 @@ async function getItemById(itemId) {
     const {
       rows: [item],
     } = await client.query(
-      ` SELECT
+      `SELECT
       itms.id,
       itms.name,
       itms.description,
@@ -21,18 +21,15 @@ async function getItemById(itemId) {
           )
         )
       END AS imagereel,
-      CASE
-        WHEN rvws.id IS NULL THEN '[]'::json
-        ELSE JSON_AGG(
-          JSON_BUILD_OBJECT(
-            'id', rvws.id,
-            'username', usrs.username,
-            'title', rvws.title,
-            'rating', rvws.rating,
-            'review', rvws.review
-          )
+      ARRAY_AGG(
+        JSON_BUILD_OBJECT(
+          'id', rvws.id,
+          'username', usrs.username,
+          'title', rvws.title,
+          'rating', rvws.rating,
+          'review', rvws.review
         )
-      END AS reviewlist
+      ) AS reviewlist
     FROM
       items itms
     LEFT JOIN
@@ -44,7 +41,7 @@ async function getItemById(itemId) {
     WHERE
       itms.id = $1
     GROUP BY
-      itms.id, it_imgs.id, rvws.id
+      itms.id, itms.name, itms.description, itms.cost, itms.category, itms.isavailable, it_imgs.id
     ORDER BY
       itms.id;
         `,
