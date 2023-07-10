@@ -1,48 +1,100 @@
 import useAuth from "../../hooks/useAuth";
+import useCart from "../../hooks/useCart";
 import { useState, useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
+import { postOrder } from "../../api/orders";
+import { patchOrderItem, postOrderItem } from "../../api/order_items";
+import { fetchMyCart } from "../../api/auth";
 
 export default function AddToCart({ item, handleClick, setThisQuantity }) {
   const { pathname } = useLocation();
   const { itemId, category } = useParams();
-  const { user, cart, setCart } = useAuth();
+  const { user, setUser } = useAuth();
+  const { cart, setCart, orderId, setOrderId } = useCart();
   const [quantity, setQuantity] = useState(item.quantity || 1);
 
+  function addNewCart() {
+    if (!cart.id) {
+      async function postNewOrder() {
+        const result = await postOrder(user.id);
+        setOrderId(result.order.id);
+        console.log(orderId);
+        cart.id === result.order.id;
+        setCart(cart);
+        if (cart.items.length === 0) {
+          async function postNewOrderItem() {
+            const result2 = await postOrderItem(
+              result.order.id,
+              item.id,
+              item.quantity
+            );
+            return result2;
+          }
+          postNewOrderItem();
+          cart.items.push(item);
+          cart.totalPrice = cart.totalPrice;
+          updateCart();
+        }
+        return result;
+      }
+      postNewOrder();
+    }
+  }
+  /////////////////////////////////////////////////////////////////
+  function updateItems() {
+    console.log("item update", item);
+    console.log("cart update", cart);
+    async function updateOrderItem() {
+      const result = await patchOrderItem(
+        item.order_item_id,
+        cart.id,
+        item.id,
+        item.quantity
+      );
+      return result;
+    }
+    updateOrderItem();
+  }
+  //////////////////////////////////////////////////////////
+  function addNewItems() {
+    async function addOrderItem() {
+      const result = await postOrderItem(cart.id, item.id, item.quantity);
+      return result;
+    }
+    addOrderItem();
+  }
+  ////////////////////////////////////////////////////////
+  function updateCart() {
+    setCart(cart);
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }
+  ///////////////////////////////////////////////////
   useEffect(() => {
+    cart.userId = user.id;
     item.quantity = quantity;
     item.subtotal = item.cost * quantity;
-    setCart(cart);
-
-    ////////////////////////////////////////////
     if (pathname === "/cart") {
       if (!user) {
-        cart.items.userId === 0;
+        setUser();
       }
       cart.totalPrice = 0;
       for (let thisItem of cart.items) {
         cart.totalPrice += thisItem.subtotal;
       }
-
       setThisQuantity(Number(quantity));
-      setCart(cart);
       localStorage.setItem("cart", JSON.stringify(cart));
+      updateItems();
     }
-    ///////////////////////////////////////////////
-    setCart(cart);
-    localStorage.setItem("cart", JSON.stringify(cart));
+    updateCart();
   }, [quantity]);
-
+  ///////////////////////////////////////////////////
   function handleSubmit(e) {
     e.preventDefault();
-    if (!user) {
+    /*if (!user) {
       cart.items.userId === 0;
-    }
-
-    if (cart.items.length === 0) {
-      cart.items.push(item);
-      cart.totalPrice = cart.totalPrice;
-      setCart(cart);
-      localStorage.setItem("cart", JSON.stringify(cart));
+    }*/
+    if (!cart.id) {
+      addNewCart();
       return;
     }
 
@@ -53,13 +105,15 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
           cart.totalPrice += item.subtotal;
           thatItem.quantity += quantity;
           thatItem.subtotal += item.subtotal;
-          setCart(cart);
-          localStorage.setItem("cart", JSON.stringify(cart));
+          updateItems();
+          updateCart();
           return;
         }
       }
     }
+
     cart.items.push(item);
+    addNewItems();
   }
   function handleChange(e) {
     e.preventDefault();

@@ -66,7 +66,7 @@ itemsRouter.get("/:imageurl", async (req, res) => {
 
 //POST /api/items
 itemsRouter.post("/", authRequired, async (req, res, next) => {
-  if (req.user.isadmin != true) {
+  if (req.user.isAdmin != true) {
     res.send({ message: "you are not an admin" });
     return;
   }
@@ -117,7 +117,7 @@ itemsRouter.patch("/:itemId", authRequired, async (req, res, next) => {
   }
 
   try {
-    if (req.user.isadmin) {
+    if (req.user.isAdmin) {
       const updatedItem = await updateItem(
         itemId,
         name,

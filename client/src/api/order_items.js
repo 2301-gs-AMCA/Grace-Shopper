@@ -1,4 +1,15 @@
-export async function postOrderItem(orderId, itemId, item_quantity, price) {
+export async function getOrderItems(orderId) {
+  try {
+    const response = await fetch(`/api/order_items/${orderId}`);
+    const result = await response.json();
+    console.log("result from getOrder");
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function postOrderItem(orderId, itemId, item_quantity) {
   try {
     const response = await fetch(`/api/order_items`, {
       method: "POST",
@@ -9,7 +20,6 @@ export async function postOrderItem(orderId, itemId, item_quantity, price) {
         orderId,
         itemId,
         item_quantity,
-        price,
       }),
     });
     const result = await response.json();
@@ -24,8 +34,7 @@ export async function patchOrderItem(
   orderItemId,
   orderId,
   itemId,
-  item_quantity,
-  price
+  item_quantity
 ) {
   try {
     const response = await fetch(`api/order_items/${orderItemId}`, {
@@ -37,7 +46,6 @@ export async function patchOrderItem(
         orderId,
         itemId,
         item_quantity,
-        price,
       }),
     });
     const result = await response.json();

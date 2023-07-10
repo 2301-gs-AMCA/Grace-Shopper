@@ -1,18 +1,21 @@
 import { useNavigate } from "react-router";
 import { logout } from "../api/auth";
 import useAuth from "../hooks/useAuth";
+import useCart from "../hooks/useCart";
 import { useState, useEffect } from "react";
 
 export default function Navbar() {
   const nav = useNavigate();
-  const { cart, user, setUser, loggedIn, setLoggedIn } = useAuth();
+  const { user, setUser, loggedIn, setLoggedIn } = useAuth();
+  const { setCart, cart } = useCart();
+
   const [navButtons, setNavButtons] = useState("");
 
   async function handleLogout() {
     await logout();
-    setUser({ id: 1, username: "Guest", iat: null });
-    console.log("user", user);
-    setLoggedIn(!loggedIn);
+    //setUser({ id: 1, username: "Guest", iat: null });
+    setCart(cart);
+    setLoggedIn(false);
     nav("/");
   }
   useEffect(() => {
@@ -27,7 +30,8 @@ export default function Navbar() {
   useEffect(() => {
     function headerButtons(loggedIn) {
       let html = "";
-      if (!loggedIn) {
+
+      if (!loggedIn && user.isGuest) {
         html = (
           <div>
             <ul className="navlinks">
@@ -46,7 +50,7 @@ export default function Navbar() {
                   className="link"
                   onClick={() => nav("/dashboard/profile")}
                 >
-                  {user.username}
+                  Profile
                 </button>
               </li>
               <li>
@@ -68,7 +72,7 @@ export default function Navbar() {
       } else {
         let adminhtml = "";
         //builds the DASHBOARD button for Admin in nav
-        if (user.isadmin) {
+        if (user.isAdmin) {
           adminhtml = (
             <li>
               <button className="link" onClick={() => nav("/dashboard")}>
@@ -120,8 +124,7 @@ export default function Navbar() {
     }
     headerButtons(loggedIn);
   }, [loggedIn, user]);
-  console.log("current user:", user);
-  console.log("cart", cart);
+
   return (
     <div className="navbar">
       <h1>A More Comfortable Area</h1>
