@@ -41,7 +41,7 @@ async function getItemById(itemId) {
     WHERE
       itms.id = $1
     GROUP BY
-      itms.id, itms.name, itms.description, itms.cost, itms.category, itms.isavailable, it_imgs.id
+      itms.id, itms.name, itms.description, itms.cost, itms.category, itms."isAvailable", it_imgs.id
     ORDER BY
       itms.id;
         `,
@@ -89,7 +89,7 @@ async function getItemsByCategory(itemCategory) {
 async function getAllItems() {
   try {
     const { rows } = await client.query(`
-    SELECT itms.id,itms.name,itms.description,itms.cost,itms.category,itms.isavailable,itms.inventory_qty , CASE WHEN it_imgs.itemId IS NULL THEN '[]'::json
+    SELECT itms.id,itms.name,itms.description,itms.cost,itms.category,itms."isAvailable",itms.inventory_qty , CASE WHEN it_imgs.itemId IS NULL THEN '[]'::json
     ELSE
     JSON_AGG(
       JSON_BUILD_OBJECT(
@@ -114,12 +114,12 @@ async function createItem(itemObj) {
       rows: [item],
     } = await client.query(
       `
-            INSERT INTO items(name, description, cost, category, inventory_qty, isAvailable) 
+            INSERT INTO items(name, description, cost, category, inventory_qty, "isAvailable") 
             VALUES($1, $2, $3, $4, $5, $6) 
             ON CONFLICT (name) DO NOTHING 
             RETURNING *;
           `,
-      [itemObj.itemName, itemObj.itemDescription, itemObj.itemCost, itemObj.itemCategory, itemObj.inventory_qty, itemObj.isAvailable]
+      [itemObj.itemName, itemObj.itemDescription, itemObj.itemCost, itemObj.itemCategory, itemObj.inventory_qty, itemObj.isavailable]
     );
 
     return item;
@@ -140,7 +140,7 @@ async function updateItem(itemObj) {
         description = COALESCE(NULLIF($3, ''),description), 
         cost = COALESCE(NULLIF($4,0),cost),
         category = COALESCE(NULLIF($5, ''),category),
-        isAvailable = COALESCE($6,isAvailable),
+        "isAvailable" = COALESCE($6,"isAvailable"),
         inventory_qty = COALESCE($7,inventory_qty)
         WHERE id = $1
         RETURNING *;

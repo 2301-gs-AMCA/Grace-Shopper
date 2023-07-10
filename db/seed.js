@@ -84,7 +84,7 @@ async function createTables() {
     description text NOT NULL,
     cost INTEGER,
     category varchar(255) NOT NULL,
-    isAvailable BOOLEAN DEFAULT true,
+    "isAvailable" BOOLEAN DEFAULT true,
     inventory_qty INTEGER
   );`);
 
