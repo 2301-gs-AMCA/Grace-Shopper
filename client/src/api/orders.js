@@ -36,7 +36,7 @@ export async function getCurrentOrder() {
     const result = await response.json();
     console.log("result getCurrentOrder", result);
     if (result.success) {
-      const result2 = result.orders[0];
+      const result2 = result.orders[orders.length - 1];
       return result2;
     } else {
       return result;
@@ -59,7 +59,7 @@ export async function getUsersOrders(userId) {
 
 export async function postOrder(userId) {
   try {
-    const response = await fetch(`api/order`, {
+    const response = await fetch(`/api/order`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -78,7 +78,7 @@ export async function postOrder(userId) {
 
 export async function patchOrder(orderId, updatedOrder) {
   try {
-    const response = await fetch(`api/order/${orderId}`, {
+    const response = await fetch(`/api/order/${orderId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -87,6 +87,25 @@ export async function patchOrder(orderId, updatedOrder) {
     });
     const result = await response.json();
     console.log("result from patchOrder: ", result);
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function patchOrderUser(orderId, userId) {
+  try {
+    const response = await fetch(`/api/order/update`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        orderId,
+        userId,
+      }),
+    });
+    const result = await response.json();
     return result;
   } catch (error) {
     console.error(error);

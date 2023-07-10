@@ -11,7 +11,7 @@ import useAuth from "../../hooks/useAuth";
 export const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
-  const { user, loggedIn } = useAuth();
+  const { user, setUser, loggedIn } = useAuth();
   const [orderId, setOrderId] = useState(null);
   const [cart, setCart] = useState({
     id: null,

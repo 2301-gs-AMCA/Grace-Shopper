@@ -7,13 +7,14 @@ import { useState, useEffect } from "react";
 export default function Navbar() {
   const nav = useNavigate();
   const { user, setUser, loggedIn, setLoggedIn } = useAuth();
+  const { setCart, cart } = useCart();
 
   const [navButtons, setNavButtons] = useState("");
 
   async function handleLogout() {
     await logout();
     //setUser({ id: 1, username: "Guest", iat: null });
-
+    setCart(cart);
     setLoggedIn(false);
     nav("/");
   }

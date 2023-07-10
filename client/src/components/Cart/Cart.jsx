@@ -3,8 +3,7 @@ import "../../App.css";
 import useAuth from "../../hooks/useAuth";
 import useCart from "../../hooks/useCart";
 import AddToCart from "../Shop/AddToCart";
-import { postOrder, patchOrder } from "../../api/orders";
-import { postOrderItem } from "../../api/order_items";
+import { patchOrder } from "../../api/orders";
 
 let cartImg =
   "https://em-content.zobj.net/source/microsoft-teams/363/shopping-cart_1f6d2.png";

@@ -207,6 +207,25 @@ async function getAllOrdersByUsername(username) {
   }
 }
 
+async function updateOrdersUser(orderId, userId) {
+  try {
+    const {
+      rows: [order],
+    } = await client.query(
+      `
+                UPDATE orders
+                SET "UserId" = $2
+                WHERE id = $1
+                RETURNING *;
+            `,
+      [orderId, userId]
+    );
+    return order;
+  } catch (error) {
+    throw error;
+  }
+}
+
 async function updateOrder(orderId, ordObj) {
   try {
     const { rows: order } = await client.query(
@@ -235,4 +254,5 @@ module.exports = {
   getAllOrders,
   getOrderById,
   updateOrder,
+  updateOrdersUser,
 };

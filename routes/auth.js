@@ -28,10 +28,9 @@ authRouter.post("/register", async (req, res, next) => {
     if (_user) {
       res.send({
         success: false,
-        error: {
-          message: "That user already exists!",
-          name: "Auth Error",
-        },
+
+        message: "That user already exists!",
+        name: "Auth Error",
       });
       return;
     }
@@ -120,10 +119,9 @@ authRouter.post("/login", async (req, res, next) => {
       res.status(401);
       res.send({
         success: false,
-        error: {
-          message: "There is no user with that username!",
-          name: "Auth Error",
-        },
+
+        message: "There is no user with that username!",
+        name: "Auth Error",
       });
       return;
     }

@@ -9,7 +9,8 @@ const {
   updateOrder,
   getUsersLastOrder,
 } = require("../db/adapters/order");
-const { authRequired } = require("./utils");
+const { getUserById } = require("../db/adapters/users");
+const { authRequired, requireUser } = require("./utils");
 
 orderRouter.use((req, res, next) => {
   console.log("A request is being bade to /order");
@@ -117,6 +118,41 @@ orderRouter.get("/:orderId", async (req, res, next) => {
   }
 });
 
+orderRouter.patch("/update", async (req, res, next) => {
+  try {
+    const { orderId, userId } = req.body;
+    const originalOrder = await getOrderById(orderId);
+    console.log(originalOrder);
+    const originalUser = await getUserById(originalOrder.userId);
+    console.log("originalOrder", originalOrder.order);
+    if (originalUser.isGuest) {
+      const updatedOrder = await updateOrdersUser(orderId, userId);
+
+      //const orderCookie = req.cookies.order;
+
+      //const updatedOrder = { ...orderCookie, ...modifiedOrder };
+
+      res.cookie("order", updatedOrder, {
+        sameSite: "strict",
+        httpOnly: true,
+      });
+
+      res.send({
+        success: true,
+        message: "Order Updated",
+        order: updatedOrder,
+      });
+    } else {
+      next({
+        name: "UnauthorizedUserError",
+        message: "You cannot update this order",
+      });
+    }
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
+
 // PATCH /order/:orderId
 orderRouter.patch("/:orderId", authRequired, async (req, res, next) => {
   const { orderId } = req.params;
@@ -152,5 +188,7 @@ orderRouter.patch("/:orderId", authRequired, async (req, res, next) => {
     next({ name, message });
   }
 });
+
+// PATCH /order/update
 
 module.exports = orderRouter;
