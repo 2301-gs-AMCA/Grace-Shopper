@@ -23,14 +23,12 @@ export default function AuthForm() {
       let result;
       if (pathname === "/register") {
         result = await registerUser(username, password);
+        console.log("register result", result);
       } else {
         result = await login(username, password);
       }
 
-      let userId = result.user.id;
-      let orderId;
-      let thisCart = {};
-      result.success
+      result && result.success
         ? (alert(result.message),
           setLoggedIn(true),
           setUser(result.user),
@@ -38,7 +36,11 @@ export default function AuthForm() {
           setUsername(""),
           setPassword(""),
           navigate("/"))
-        : alert(result.message);
+        : alert(result.error.message);
+
+      let userId = result.user.id;
+      let orderId;
+      let thisCart = {};
 
       async function updateCart() {
         if (cart.id && cart.isCart) {
@@ -69,14 +71,14 @@ export default function AuthForm() {
                     async function updateOrderItem() {
                       console.log("thatItem", thatItem);
                       console.log("thisCart", thisCart);
-                      const result = await patchOrderItem(
+                      const result3 = await patchOrderItem(
                         thatItem.order_item_id,
                         thisCart.id,
                         thatItem.id,
                         thatItem.quantity
                       );
                       setOrderId(thisCart.id);
-                      return result;
+                      return result3;
                     }
                     updateOrderItem();
                     setCart(cart);
@@ -105,7 +107,7 @@ export default function AuthForm() {
         }
       }
     } catch (error) {
-      setError(result.message);
+      setError(result.error.message);
     }
   }
 
