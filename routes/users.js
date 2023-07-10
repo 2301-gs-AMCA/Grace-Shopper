@@ -1,6 +1,7 @@
 const usersRouter = require("express").Router();
 const { getAllUsers } = require("../db/adapters/users");
 const { getAllOrdersByUsername } = require("../db/adapters/order");
+const { authRequired } = require("./utils");
 
 // MAKING REQUEST TO /users
 usersRouter.use((req, res, next) => {
@@ -22,12 +23,16 @@ usersRouter.get("/", async (req, res, next) => {
 });
 
 //GET /api/users/:username/routines
-usersRouter.get("/:username/orders", async (req, res, next) => {
+usersRouter.get("/:username/orders", authRequired, async (req, res, next) => {
   const { username } = req.params;
   try {
     const orders = await getAllOrdersByUsername(username);
     if (orders) {
-      res.send(orders);
+      res.send({
+        success: true,
+        message: "your orders",
+        orders,
+      });
     } else {
       next({
         name: "NoOrderError",

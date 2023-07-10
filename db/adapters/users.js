@@ -6,12 +6,12 @@ async function createUser(userObj) {
       rows: [user],
     } = await client.query(
       `
-            INSERT INTO Users(username, password, isAdmin, loggedIn) 
+            INSERT INTO Users(username, password, "isAdmin", "isGuest") 
             VALUES($1, $2, $3, $4) 
             ON CONFLICT (username) DO NOTHING 
             RETURNING *;
           `,
-      [userObj.username, userObj.password, userObj.isAdmin, userObj.loggedIn]
+      [userObj.username, userObj.password, userObj.isAdmin, userObj.isGuest]
     );
 
     return user;
@@ -20,18 +20,30 @@ async function createUser(userObj) {
   }
 }
 
-async function updateUser(userObj){
+async function updateUser(userObj) {
   try {
-    const{rows:[user]} = await client.query(`
+    const {
+      rows: [user],
+    } = await client.query(
+      `
     UPDATE Users 
     SET 
     username = COALESCE($2,username),
     password = COALESCE($3,password), 
-    isAdmin = COALESCE($4,isAdmin)
+    "isAdmin" = COALESCE($4,"isAdmin"),
+    "isGuest" = COALESCE($5, "isGuest")
     WHERE id = $1
     RETURNING *;
-    `,[userObj.id,userObj.username,userObj.password,userObj.isAdmin]);
-    return user
+    `,
+      [
+        userObj.id,
+        userObj.username,
+        userObj.password,
+        userObj.isAdmin,
+        userObj.isGuest,
+      ]
+    );
+    return user;
   } catch (error) {
     console.error(error);
   }
@@ -93,7 +105,6 @@ async function getUserById(id) {
 
 async function getUserByUsername(username) {
   try {
-    
     const {
       rows: [user],
     } = await client.query(
@@ -117,5 +128,5 @@ module.exports = {
   getUser,
   getUserById,
   getUserByUsername,
-  updateUser
+  updateUser,
 };

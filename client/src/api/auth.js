@@ -18,6 +18,22 @@ export async function registerUser(username, password) {
   }
 }
 
+export async function fetchGuest() {
+  try {
+    const response = await fetch("/api/auth/guest", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const result = await response.json();
+    console.log("result fetchguest:", result);
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export async function login(username, password) {
   try {
     const response = await fetch(`/api/auth/login`, {
@@ -57,21 +73,52 @@ export async function fetchMe() {
     const response = await fetch("/api/auth/me");
     const result = await response.json();
     console.log("Result from fetchMe: ", result);
+
     return result;
   } catch (error) {
     console.error(error);
   }
 }
 
-export async function fetchUsersOrders(username) {
+export async function fetchMyCart() {
   try {
-    const response = await fetch(`/api/users/${username}/orders`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch("/api/auth/myCart");
     const result = await response.json();
-    console.log("Result from fetchUsersRoutine: ", result);
+    console.log("result fetchMyCart", result);
+
+    /*
+    if (result.order && result.order !== "undefined") {
+      "result from fetchMyCart (isCart: true)", result;
+      console.log("result fetchMyCart", result);
+      return result;
+    } else {
+      const response2 = await fetch(`api/order`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: req.user.id,
+          isCart,
+          isComplete,
+          totalPrice,
+        }),
+      });
+      const result2 = await response2.json();
+      console.log("result2 from fetchMyCart (isCart: false)", result2);
+      return result2;
+    }*/
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function fetchUsersOrders() {
+  try {
+    const response = await fetch(`/api/order/myOrders`);
+    const result = await response.json();
+    console.log("Result from fetchUsersOrders: ", result);
     return result;
   } catch (error) {
     console.error(error);

@@ -2,12 +2,12 @@
 const bcrypt = require("bcrypt");
 const SALT_ROUNDS = 10;
 const users = [
-  { username: "Guest", password: "guest", isAdmin: false, loggedIn: false },
-  { username: "Matt R", password: "yesway", isAdmin: false, loggedIn: false },
-  { username: "BigJoe", password: "toemeat", isAdmin: false, loggedIn: false },
-  { username: "mother", password: "quesswho", isAdmin: false, loggedIn: false },
-  { username: "Rara", password: "boug", isAdmin: false, loggedIn: false },
-  { username: "Ced", password: "ric", isAdmin: true, loggedIn: false },
+  { username: "Andrew", password: "andrew", isAdmin: false, isGuest: false },
+  { username: "Matt R", password: "yesway", isAdmin: false, isGuest: false },
+  { username: "BigJoe", password: "toemeat", isAdmin: false, isGuest: false },
+  { username: "mother", password: "quesswho", isAdmin: false, isGuest: false },
+  { username: "Rara", password: "boug", isAdmin: false, isGuest: false },
+  { username: "Ced", password: "ric", isAdmin: true, isGuest: false },
 ];
 
 const items = [
@@ -138,12 +138,16 @@ const images = [
 ];
 
 //let reviews =[{itemId:1,userId:2,tite:"time",rating:2,review:"this sucks"}];
-let temp=[];
-let reviews = users.forEach((user,index)=>{
-  
-  temp.push({itemId:index+1,userId:index+1,title:`${items[index].name}`,rating:4,review:`I ${user.username},fully endorse ${items[index].name}`})
-  
-})
+let temp = [];
+let reviews = users.forEach((user, index) => {
+  temp.push({
+    itemId: index + 1,
+    userId: index + 1,
+    title: `${items[index].name}`,
+    rating: 4,
+    review: `I ${user.username},fully endorse ${items[index].name}`,
+  });
+});
 reviews = temp;
-console.log("reviews for products",reviews)
-module.exports = { users, items, images,reviews};
+console.log("reviews for products", reviews);
+module.exports = { users, items, images, reviews };

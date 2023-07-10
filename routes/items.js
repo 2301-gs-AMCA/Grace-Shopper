@@ -56,7 +56,7 @@ itemsRouter.get("/:category", async (req, res) => {
 
 //POST /api/items
 itemsRouter.post("/", authRequired, async (req, res, next) => {
-  if (req.user.isadmin != true) {
+  if (req.user.isAdmin != true) {
     res.send({ message: "you are not an admin" });
     return;
   }
