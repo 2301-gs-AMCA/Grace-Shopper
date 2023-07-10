@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 
-import Navbar from "./components/Navbar";
+import Navbar from "./Components/Navbar";
 
 import Home from "./components/Home";
 import Footer from "./components/Footer";
@@ -8,7 +8,7 @@ import Footer from "./components/Footer";
 import Profile from "./components/Profile";
 import Shop from "./components/Shop/Shop";
 import Cart from "./components/Cart/Cart";
-import AuthForm from "./components/AuthForm";
+import AuthForm from "./Components/AuthForm";
 import Dashboard from "./components/Dashboard";
 import Reviews from "./ProfileLinks/Reviews";
 import Settings from "./ProfileLinks/Settings";
