@@ -13,11 +13,10 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
   const { cart, setCart, orderId, setOrderId } = useCart();
   const [quantity, setQuantity] = useState(item.quantity || 1);
 
-  function handleNewCart() {
+  function addNewCart() {
     if (!cart.id) {
       async function postNewOrder() {
         const result = await postOrder(user.id);
-
         setOrderId(result.order.id);
         console.log(orderId);
         cart.id === result.order.id;
@@ -41,8 +40,10 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
       postNewOrder();
     }
   }
-
+  /////////////////////////////////////////////////////////////////
   function updateItems() {
+    console.log("item update", item);
+    console.log("cart update", cart);
     async function updateOrderItem() {
       const result = await patchOrderItem(
         item.order_item_id,
@@ -54,7 +55,7 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
     }
     updateOrderItem();
   }
-
+  //////////////////////////////////////////////////////////
   function addNewItems() {
     async function addOrderItem() {
       const result = await postOrderItem(cart.id, item.id, item.quantity);
@@ -62,18 +63,16 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
     }
     addOrderItem();
   }
-
+  ////////////////////////////////////////////////////////
   function updateCart() {
     setCart(cart);
-    //localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem("cart", JSON.stringify(cart));
   }
-
+  ///////////////////////////////////////////////////
   useEffect(() => {
     cart.userId = user.id;
     item.quantity = quantity;
     item.subtotal = item.cost * quantity;
-
-    ////////////////////////////////////////////
     if (pathname === "/cart") {
       if (!user) {
         setUser();
@@ -82,27 +81,20 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
       for (let thisItem of cart.items) {
         cart.totalPrice += thisItem.subtotal;
       }
-
       setThisQuantity(Number(quantity));
+      localStorage.setItem("cart", JSON.stringify(cart));
       updateItems();
     }
-    ///////////////////////////////////////////////
-
     updateCart();
   }, [quantity]);
-
+  ///////////////////////////////////////////////////
   function handleSubmit(e) {
     e.preventDefault();
-
-    console.log("user before postOrder:", user);
-    console.log("cart before postOrder:", cart);
-
-    console.log("orderId", orderId);
     /*if (!user) {
       cart.items.userId === 0;
     }*/
     if (!cart.id) {
-      handleNewCart();
+      addNewCart();
       return;
     }
 

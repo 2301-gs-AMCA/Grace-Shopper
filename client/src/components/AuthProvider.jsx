@@ -8,13 +8,6 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({ id: null });
   const [loggedIn, setLoggedIn] = useState(false);
 
-  /*const [cart, setCart] = useState({
-    id: 1,
-    userId: 1,
-    totalPrice: 0,
-    items: [],
-  });*/
-
   useEffect(() => {
     async function getFetchMe() {
       try {
@@ -34,12 +27,6 @@ const AuthProvider = ({ children }) => {
       }
     }
     getFetchMe();
-    /*let thisCart = JSON.parse(localStorage.getItem("cart"));
-    if (thisCart !== null) {
-      setCart(thisCart);
-    } else {
-      setCart(cart);
-    }*/
   }, [loggedIn, setUser]);
 
   const contextValue = {

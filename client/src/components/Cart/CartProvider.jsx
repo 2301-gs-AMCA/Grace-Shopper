@@ -1,6 +1,11 @@
 import { createContext, useState, useEffect } from "react";
 import { fetchMyCart, fetchUsersOrders } from "../../api/auth";
-import { getCurrentOrder, getUsersOrders, postOrder } from "../../api/orders";
+import {
+  getCurrentOrder,
+  getUsersOrders,
+  patchOrder,
+  postOrder,
+} from "../../api/orders";
 import useAuth from "../../hooks/useAuth";
 
 export const CartContext = createContext();
@@ -25,9 +30,10 @@ const CartProvider = ({ children }) => {
         if (result.success) {
           console.log("result in getMyCart", result);
           setCart(result.order);
+          return;
         } else {
           setCart({
-            id: orderId,
+            id: cart.id,
             userId: user.id,
             isCart: true,
             isComplete: false,
@@ -36,17 +42,27 @@ const CartProvider = ({ children }) => {
           });
         }
       }
+
       /*let thisCart = JSON.parse(localStorage.getItem("cart"));
-      if (thisCart !== null) {
-        setCart(thisCart);
-      } else {
+      console.log("thisCart from local:", thisCart);
+      if (thisCart.id !== null) {
+        if (thisCart.userId !== user.id) {
+          thisCart.userId = user.id;
+          async function updateOrder() {
+            const result = await patchOrder(thisCart);
+            setCart(result.order);
+          }
+          updateOrder();
+
+          setCart(thisCart);
+        } else {
+          setCart(cart);
+        }
+        console.log(user);
         setCart(cart);
+        return;
       }*/
-      cart.userId = user.id;
-      if (cart.userId) {
-        console.log("cart", cart);
-        getMyCart();
-      }
+      getMyCart();
     }
   }, [loggedIn, user, cart.isComplete, orderId]);
 

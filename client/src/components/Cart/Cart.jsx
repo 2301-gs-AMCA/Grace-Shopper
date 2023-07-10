@@ -3,7 +3,7 @@ import "../../App.css";
 import useAuth from "../../hooks/useAuth";
 import useCart from "../../hooks/useCart";
 import AddToCart from "../Shop/AddToCart";
-import { postOrder } from "../../api/orders";
+import { postOrder, patchOrder } from "../../api/orders";
 import { postOrderItem } from "../../api/order_items";
 
 let cartImg =
@@ -35,23 +35,28 @@ export default function Cart() {
     e.preventDefault();
     setClick(e.target.value);
   }
-
+  console.log("cart before complete order:", cart);
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      cart.isCart === false;
-      cart.isComplete === true;
-      const result = await patchOrder(cart);
+      async function completeOrder() {
+        const result = await patchOrder(cart.id, {
+          id: cart.id,
+          userId: user.id,
+          isCart: false,
+          isComplete: true,
+          date: cart.order_date,
+        });
+        setCart(result.order);
 
-      //cart.items = [];
-      //cart.totalPrice = 0;
-      //setCart(cart);
+        localStorage.removeItem("cart");
 
-      //localStorage.removeItem("cart");
+        setClick(!click);
+        return;
+      }
+      completeOrder();
 
-      setClick(!click);
-
-      return result;
+      return;
     } catch (error) {
       console.error(error);
     }
@@ -62,19 +67,21 @@ export default function Cart() {
       <h1>Cart</h1>
       <h2> Total Price: $ {cart.totalPrice ? cart.totalPrice : 0}</h2>
       <div>
-        {cart.items.map((item) => {
-          return (
-            <div key={item.id} className="item-card">
-              <p>Item: {item.name}</p>
-              <p>Price: ${item.subtotal}</p>
-              <AddToCart
-                item={item}
-                handleClick={handleClick}
-                setThisQuantity={setThisQuantity}
-              />
-            </div>
-          );
-        })}
+        {cart.items &&
+          cart.items.map((item) => {
+            return (
+              <div key={item.id} className="item-card">
+                <p>Item: {item.name}</p>
+                <p>Price: ${item.cost}</p>
+                <p>Subtotal: ${item.cost * item.quantity}</p>
+                <AddToCart
+                  item={item}
+                  handleClick={handleClick}
+                  setThisQuantity={setThisQuantity}
+                />
+              </div>
+            );
+          })}
       </div>
       <form onSubmit={handleSubmit}>
         <button>Complete Order</button>

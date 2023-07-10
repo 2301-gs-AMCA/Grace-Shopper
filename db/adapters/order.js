@@ -207,11 +207,9 @@ async function getAllOrdersByUsername(username) {
   }
 }
 
-async function updateOrder(ordObj) {
+async function updateOrder(orderId, ordObj) {
   try {
-    const {
-      rows: [order],
-    } = await client.query(
+    const { rows: order } = await client.query(
       `
                 UPDATE orders
                 SET
@@ -221,7 +219,7 @@ async function updateOrder(ordObj) {
                 WHERE id = $1
                 RETURNING *;
             `,
-      [ordObj.id, ordObj.isCart, ordObj.isComplete]
+      [orderId, ordObj.isCart, ordObj.isComplete]
     );
     return order;
   } catch (error) {

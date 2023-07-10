@@ -120,21 +120,17 @@ orderRouter.get("/:orderId", async (req, res, next) => {
 // PATCH /order/:orderId
 orderRouter.patch("/:orderId", authRequired, async (req, res, next) => {
   const { orderId } = req.params;
-  const updateOrderObj = {};
-
-  if (totalPrice) {
-    updateOrderObj.totalPrice = totalPrice;
-  }
 
   try {
+    const updateOrderObj = req.body;
     const originalOrder = await getOrderById(orderId);
 
     if (originalOrder.userId === req.user.id || req.user.isAdmin) {
-      const modifiedOrder = await updateOrder(orderId);
+      const updatedOrder = await updateOrder(orderId, updateOrderObj);
 
-      const orderCookie = req.cookies.order;
+      //const orderCookie = req.cookies.order;
 
-      const updatedOrder = { ...orderCookie, ...modifiedOrder };
+      //const updatedOrder = { ...orderCookie, ...modifiedOrder };
 
       res.cookie("order", updatedOrder, {
         sameSite: "strict",

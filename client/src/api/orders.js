@@ -76,13 +76,14 @@ export async function postOrder(userId) {
   }
 }
 
-export async function patchOrder(orderId) {
+export async function patchOrder(orderId, updatedOrder) {
   try {
     const response = await fetch(`api/order/${orderId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify(updatedOrder),
     });
     const result = await response.json();
     console.log("result from patchOrder: ", result);
