@@ -8,7 +8,7 @@ export default function Profile() {
   console.log(user);
   let adminhtml = ""
 
-  if (user.isadmin) {
+  if (user.isAdmin) {
     adminhtml = (
       <Link
          to={"/dashboard"}

@@ -7,6 +7,7 @@ const {
   createItem,
   updateItem,
   getItemById,
+  deleteItem
 } = require("../db/adapters/items");
 
 const { authRequired } = require("./utils");
@@ -84,7 +85,7 @@ itemsRouter.post("/", authRequired, async (req, res, next) => {
 
 //PATCH /api/items/:itemId
 itemsRouter.patch("/:itemId", authRequired, async (req, res, next) => {
-  if (req.user.isadmin != true) {
+  if (req.user.isAdmin != true) {
     res.send({ message: "you are not an admin" });
     return;
   }
@@ -92,7 +93,7 @@ itemsRouter.patch("/:itemId", authRequired, async (req, res, next) => {
   const {itemObj} =  req.body;
  
   try {
-    if (req.user.isadmin) {
+    if (req.user.isAdmin) {
       const updatedItem = await updateItem(itemObj);
       console.log("updating item:", updatedItem);
       res.send({
@@ -110,5 +111,19 @@ itemsRouter.patch("/:itemId", authRequired, async (req, res, next) => {
     next({ name, message });
   }
 });
+itemsRouter.delete("/delete/:id", authRequired, async(req,res,next)=>{
+  const {id} = req.params;
+  console.log("item being deleted ", id)
+  try {
+    const {name} = await deleteItem(id)
+    res.send({
+      success: true,
+      message: `${name} is deleted from inventory!`
+    });
+  } catch (error) {
+    throw error;
+  }
+
+})
 
 module.exports = itemsRouter;

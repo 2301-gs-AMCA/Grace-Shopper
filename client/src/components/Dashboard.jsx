@@ -11,9 +11,9 @@ export default function Dashboard() {
   const [inventory_qty, setInventory_qty] = useState(0);
   const [isAvailable, setIsAvailable] = useState(false);
   const [allItems, setAllItems] = useState([]);
-  const [Table,setTable] = useState("");
-  const [refresh,setRefresh] = useState(true);
-  let trigger = false;
+  const [Table, setTable] = useState("");
+  const [refresh, setRefresh] = useState(true);
+  const [trigger,setTrigger] = useState(false);
 
   useEffect(() => {
     async function addItem(itemObj) {
@@ -23,39 +23,39 @@ export default function Dashboard() {
           const newItem = await postItem(itemObj);
           console.log("newItem", newItem);
           alert(`${newItem.message}`);
-          trigger = false;
-          
+          setTrigger(false);
+          window.location.reload(true);
         } catch (error) {
           throw error;
         }
       }
     }
     async function getAllItems() {
-      try {
-        const { items } = await fetchAllItems();
-        // console.log("allItems", items);
-        setAllItems(items);
-        setRefresh(true);
-      } catch (error) {
-        throw error;
+      if (refresh === true) {
+        try {
+          const { items } = await fetchAllItems();
+          // console.log("allItems", items);
+          setAllItems(items);
+          
+        } catch (error) {
+          throw error;
+        }
       }
     }
-    
+    function RenderTableItems(allItems) {
+      if (allItems.length != 0 && allItems != undefined) {
+          setTable(<ItemTable items={allItems}/>);
+          console.log("table is", Table);
+          setRefresh(false);
+         
+      }
+    }
+
     addItem(item);
     getAllItems().then(RenderTableItems(allItems));
-  }, [trigger,refresh]);
+  }, [trigger, allItems]);
 
-  useEffect(()=>{
 
-    async function RenderTableItems(allItems) {
-      if(refresh===true){
-      setTable(<ItemTable items={allItems} setRefresh={setRefresh} />)
-      console.log("table is",Table)
-      setRefresh(false);
-      }
-    }
-    RenderTableItems(allItems);
-  },[allItems])
 
   function handleNewItem() {
     setItem({
@@ -67,7 +67,8 @@ export default function Dashboard() {
       isAvailable,
     });
     console.log("clicked", item);
-    trigger = true;
+    setTrigger(true);
+    setRefresh(true);
   }
 
   return (

@@ -119,7 +119,7 @@ async function createItem(itemObj) {
             ON CONFLICT (name) DO NOTHING 
             RETURNING *;
           `,
-      [itemObj.itemName, itemObj.itemDescription, itemObj.itemCost, itemObj.itemCategory, itemObj.inventory_qty, itemObj.isavailable]
+      [itemObj.itemName, itemObj.itemDescription, itemObj.itemCost, itemObj.itemCategory, itemObj.inventory_qty, itemObj.isAvailable]
     );
 
     return item;
@@ -153,10 +153,24 @@ async function updateItem(itemObj) {
   }
 }
 
+async function deleteItem(id){
+  try{
+  const {rows:[item]} = await client.query(`
+  DELETE FROM items
+  Where id = $1
+  Returning *;
+  `,[id]);
+  return item
+  }catch(err){
+      throw err
+  }
+}
+
 module.exports = {
   getItemById,
   getItemsByCategory,
   getAllItems,
   createItem,
   updateItem,
+  deleteItem
 };

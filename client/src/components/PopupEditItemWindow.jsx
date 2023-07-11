@@ -1,22 +1,21 @@
 import { patchItem } from "../api/items";
 import { useState,useEffect} from "react"
 /// A popup window to input the update info for review
-export default function pupupEditItemWindow(props){
+export default function pupupEditItemWindow({item}){
     const [update,setUpdate] = useState({});
     const [itemName, setItemName] = useState("");
     const [itemDescription, setItemDescription] = useState("");
-    const [itemCategory, setItemCategory] = useState("");
-    const [itemCost, setItemCost] = useState(0);
-    const [inventory_qty, setInventory_qty] = useState(0);
-    const [isAvailable, setIsAvailable] = useState(false);
-    const item = props.item;
+    const [itemCategory, setItemCategory] = useState(item.category);
+    const [itemCost, setItemCost] = useState(item.cost);
+    const [inventory_qty, setInventory_qty] = useState(item.inventory_qty);
+    const [isAvailable, setIsAvailable] = useState(item.isAvailable);
     const itemId = item.id;
-
+    console.log("popupeditwindowProps",item)
     
     useEffect(()=>{
         /// when submit is clicked and the update state 
         ///isnt null, then it will run the PATCH
-        if(update !={}){
+        if(Object.keys(update).length !== 0){
         async function postUpdate(){
         
             console.log(itemName,itemDescription,itemCategory,itemCost,inventory_qty,isAvailable)
@@ -24,7 +23,10 @@ export default function pupupEditItemWindow(props){
             console.log("current update",update)
             try{
             const response = await patchItem(update)
-            console.log("updated item", response)
+            if(response.success === true){
+                 window.location.reload(true);
+            }
+            
         
             return response;
             }catch(err){
@@ -38,10 +40,13 @@ export default function pupupEditItemWindow(props){
     },[update])
     function handleSubmit(e){
         ///starts PATCH,sends refresh for parent, removes popup
-        setUpdate({id:itemId,name:itemName,description:itemDescription,category:itemCategory,cost:itemCost,inventory_qty:inventory_qty,isavailable:isAvailable});
-        const popUp = document.getElementById("popup-root")
-        props.setRefresh(true);
+        setUpdate({id:itemId,name:itemName,description:itemDescription,category:itemCategory,cost:itemCost,inventory_qty:inventory_qty,isAvailable:isAvailable});
+        const popUp = document.getElementById("popup-root");
+        // setTableRefresh(true);
+        
         popUp.remove();
+        
+        
     }
     
     return(
@@ -66,9 +71,9 @@ export default function pupupEditItemWindow(props){
             </select>
             </label>
             <label>availability
-                <select name="availability" placeholder={item.isavailable} value={isAvailable} onChange={(e)=>{setIsAvailable(e.target.value)}}>
-                    <option value="yes" selected={true}>yes</option>
-                    <option value="no" selected={false}>no</option>
+                <select name="availability" placeholder={item.isAvailable.toString()} value={isAvailable} onChange={(e)=>{setIsAvailable(e.target.value)}}>
+                    <option value={true} >yes</option>
+                    <option value={false} >no</option>
                 </select>
             </label>
             <label htmlFor="">Inventory Quantity
@@ -77,7 +82,6 @@ export default function pupupEditItemWindow(props){
         </form>
         <button onClick={(e)=>{
                 handleSubmit(e);
-                
         }}>SUBMIT</button>
      </div>   
     )

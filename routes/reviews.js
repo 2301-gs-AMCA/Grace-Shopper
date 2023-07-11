@@ -61,7 +61,7 @@ reviewRouter.patch("/update", authRequired, async (req, res, next) => {
     throw error;
   }
 });
-
+//delete
 reviewRouter.delete("/delete/:id", authRequired, async(req,res,next)=>{
   const {id} = req.params;
   console.log("review being deleted ", id)

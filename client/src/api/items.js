@@ -83,3 +83,20 @@ export async function patchItem(itemObj) {
     console.error(error);
   }
 }
+
+export async function deleteItemApi(id){
+  try {
+      const response = await fetch(`/api/items/delete/${id}`,{
+          method: 'DELETE',
+          headers:{
+              'Content-Type': 'application/json'
+          }
+      })
+      
+      const {message} = await response.json();
+      
+      return message
+  } catch (err) {
+      throw err;
+  }
+}
