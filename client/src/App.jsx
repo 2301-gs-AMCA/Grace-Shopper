@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 
-import Navbar from "./Components/Navbar";
+import Navbar from "./components/Navbar";
 
 import Home from "./components/Home";
 import Footer from "./components/Footer";
@@ -8,7 +8,7 @@ import Footer from "./components/Footer";
 import Profile from "./components/Profile";
 import Shop from "./components/Shop/Shop";
 import Cart from "./components/Cart/Cart";
-import AuthForm from "./Components/AuthForm";
+import AuthForm from "./components/AuthForm";
 import Dashboard from "./components/Dashboard";
 import Reviews from "./ProfileLinks/Reviews";
 import Settings from "./ProfileLinks/Settings";
@@ -24,6 +24,7 @@ import { useEffect, useState } from "react";
 import useAuth from "./hooks/useAuth";
 import CategoryItems from "./components/Shop/CategoryItems";
 import ConfirmationPage from "./components/ConfirmationPage";
+import ErrorPage from "./components/Error";
 
 import { motion as m } from "framer-motion";
 function App() {
@@ -48,6 +49,7 @@ function App() {
         <Route path="/dashboard/settings/:userId" element={<Settings />} />
         <Route path="/dashboard/security/:userId" element={<Security />} />
         <Route path="/confirmation" element={<ConfirmationPage />} />
+        <Route path="/error" element={<ErrorPage />} />
       </Routes>
       <Footer />
     </m.div>
