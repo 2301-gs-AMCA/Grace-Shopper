@@ -4,11 +4,9 @@
   box-sizing: border-box;
 }
 
-.app,
-html {
-  display: flex;
-  flex-direction: column;
+.app, html {
   min-height: 100vh;
+  min-width: none;
   text-align: center;
   font-family: "Fira_Sans";
   color: #222823;
@@ -192,9 +190,6 @@ html {
   box-shadow: 1px 1px 2px 2px;
 }
 
-.profile {
-  min-height: 100vh;
-}
 
 .profile {
   display: flexbox;
@@ -208,11 +203,15 @@ html {
 }
 
 .userInfo {
+  display: flex;
+  flex-direction: column;
   float: right;
+  align-items: right;
   list-style: none;
   font-size: 24px;
-  width: 25vw;
-  border: 1px solid;
+  padding: 4rem;
+  border: 2px solid;
+  margin-right: 2rem;
 }
 
 .reviews {
@@ -242,21 +241,27 @@ html {
   width: 200px;
 }
 
-.itemsULike {
-  float: left;
-  min-width: 68vw;
-  min-height: 43vh;
-  border: 2px solid;
+.itemsULike{
+display: flex;
+flex-direction: column;
+float: left;
+min-width: 60vw;
+min-height: 43vh;
+border: 2px solid;
+
 }
 
 .likedItems {
   list-style: none;
 }
 
-.orderHistory {
-  margin-top: 30rem;
-  border: 2px solid;
-  min-height: 30vh;
+.orderHistory{
+  display: flex;
+  flex-direction: column;
+margin-top: 30rem;
+border: 2px solid;
+min-height: 30vh;
+
 }
 
 .history {
@@ -323,7 +328,16 @@ html {
   min-height: 99vh;
 }
 
+
 .security {
+  min-height: 99vh;
+}
+
+
+.order-history{
+  min-height: 99vh;
+}
+.reviews{
   min-height: 99vh;
 }
 

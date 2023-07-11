@@ -2,9 +2,12 @@ import useAuth from "../hooks/useAuth";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion as m } from "framer-motion";
+import { getMyOrders } from "../api/orders";
+
 export default function Profile() {
   const { user } = useAuth();
   const navigate = useNavigate();
+
   console.log(user);
   let adminhtml = "";
 
@@ -16,6 +19,17 @@ export default function Profile() {
     );
   }
 
+  const [myOrders, setMyOrders] = useState();
+
+
+  async function getOrders() {
+    let order = await getMyOrders();
+    console.log("my orders", order);
+    setMyOrders(order);
+  }
+  useEffect(() => {
+    getOrders();
+  }, []);
   return (
     <m.div
       className="profile"
@@ -28,10 +42,10 @@ export default function Profile() {
         <u>USER INFO</u>
         <br></br>
         <Link
-          to={`/dashboard/security/${user.id}`}
+          to={`/dashboard/orderHistory/${user.id}`}
           style={{ cursor: "pointer" }}
         >
-          Security Info
+          Order History
         </Link>
         <br></br>
         <Link
@@ -59,9 +73,10 @@ export default function Profile() {
       </div>
       {/*//ORDER HISTORY TABLE///*/}
       <div className="orderHistory">
-        <h2>Order History</h2>
-        <h3 className="historyItems">Your Recently Ordered Items</h3>
-        <ul className="history"></ul>
+        <h2>Buy Again</h2>
+        <ul className="history">
+          <li>Your Recently Ordered Items</li>
+        </ul>
       </div>
     </m.div>
   );

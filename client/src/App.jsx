@@ -12,7 +12,7 @@ import AuthForm from "./components/AuthForm";
 import Dashboard from "./components/Dashboard";
 import Reviews from "./ProfileLinks/Reviews";
 import Settings from "./ProfileLinks/Settings";
-import Security from "./ProfileLinks/Security";
+import OrderHistory from "./ProfileLinks/OrderHistory";
 
 import Items from "./components/Shop/Items";
 import SingleItem from "./components/Shop/SingleItem";
@@ -47,7 +47,10 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/dashboard/reviews/:userId" element={<Reviews />} />
         <Route path="/dashboard/settings/:userId" element={<Settings />} />
-        <Route path="/dashboard/security/:userId" element={<Security />} />
+        <Route
+          path="/dashboard/orderHistory/:userId"
+          element={<OrderHistory />}
+        />
         <Route path="/confirmation" element={<ConfirmationPage />} />
         <Route path="/error" element={<ErrorPage />} />
       </Routes>
