@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../../App.css";
 import useAuth from "../../hooks/useAuth";
 import useCart from "../../hooks/useCart";
@@ -11,6 +12,7 @@ let cartImg =
 export default function Cart() {
   const { user, setUser } = useAuth();
   const { cart, setCart } = useCart();
+  const navigate = useNavigate();
   const [click, setClick] = useState();
   const [thisQuantity, setThisQuantity] = useState();
 
@@ -34,7 +36,7 @@ export default function Cart() {
     e.preventDefault();
     setClick(e.target.value);
   }
-  console.log("cart before complete order:", cart);
+
   async function handleSubmit(e) {
     e.preventDefault();
     try {
@@ -47,11 +49,8 @@ export default function Cart() {
           date: cart.order_date,
         });
         setCart(result.order);
-
         localStorage.removeItem("cart");
-
-        setClick(!click);
-        return;
+        navigate("/confirmation");
       }
       completeOrder();
 
