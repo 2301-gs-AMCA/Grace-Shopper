@@ -1,7 +1,8 @@
+
 const client = require('../client');
 // const {images, items} = require('../seedData');
 
-async function createImagesTable(imgObj){
+async function createImage(imgObj){
    
     try {
         const {rows: image}= await client.query(`
@@ -36,32 +37,19 @@ async function getImagesByItemId(itemId){
         throw error;
     }
 }
-async function getItemByImage(img){
-    try {
-        const {rows:item} = await client.query(`
-        SELECT itemId FROM item_imgs WHERE image = ($1);
-        `,[img]);
-        return item;
-    } catch (err) {
-        throw err;
-    }
-}
-
-// async function addImagestoItem(imgObj){
-   
+// async function getItemByImage(img){
 //     try {
-//         const {rows: itemImage} = await client.query(`
-//         INSERT INTO items_images_throughtable(itemId,imageId)
-//         SELECT itms.id, img.id
-//         FROM items itms
-//         JOIN items_imgs img ON img.itemId = itms.id
-//         WHERE img.itemId = $1
-//         RETURNING *;
-//         `,[imgObj.itemId]);
-//         return itemImage;
+//         const {rows:item} = await client.query(`
+//         SELECT itemId FROM item_imgs WHERE image = ($1);
+//         `,[img]);
+//         return item;
 //     } catch (err) {
 //         throw err;
 //     }
 // }
 
-module.exports = {createImagesTable,getAllImages,getImagesByItemId,getItemByImage};
+
+
+
+
+module.exports = {createImage,getAllImages,getImagesByItemId };

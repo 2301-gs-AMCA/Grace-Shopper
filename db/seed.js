@@ -30,7 +30,7 @@ const {
   destroyOrderItem,
 } = require("./adapters/order_items");
 const {
-  createImagesTable,
+  createImage,
   getAllImages,
   getImagesByItemId,
 } = require("./adapters/assets");
@@ -146,7 +146,7 @@ async function populateTables() {
     }
 
     for (const img of images) {
-      await createImagesTable(img);
+      await createImage(img);
     }
     console.log("reviews list:", reviews);
     for (const review of reviews) {

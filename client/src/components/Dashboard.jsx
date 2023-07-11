@@ -1,10 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { fetchAllItems, postItem } from "../api/items";
+import { addImageToItem } from "../api/assets";
 import ItemTable from "./ItemTable";
 export default function Dashboard() {
   const [item, setItem] = useState({});
   const [itemName, setItemName] = useState("");
+  const [image,setImage] = useState("");
   const [itemDescription, setItemDescription] = useState("");
   const [itemCategory, setItemCategory] = useState("");
   const [itemCost, setItemCost] = useState(0);
@@ -30,6 +32,7 @@ export default function Dashboard() {
         console.log("ItemObject", item);
         try {
           const newItem = await postItem(itemObj);
+          
           console.log("newItem", newItem);
           alert(`${newItem.message}`);
           setTrigger(false);
@@ -66,6 +69,7 @@ export default function Dashboard() {
   }, [trigger, allItems]);
 
   function handleNewItem() {
+    
     setItem({
       itemName,
       itemDescription,
@@ -73,7 +77,9 @@ export default function Dashboard() {
       itemCategory,
       inventory_qty,
       isAvailable,
+      image
     });
+
     console.log("clicked", item);
     setTrigger(true);
     
@@ -95,6 +101,15 @@ export default function Dashboard() {
                 setItemName(e.target.value);
               }}
             />
+          </label>
+          <br />
+          <label htmlFor="">
+            Image url:
+              <input type="text" 
+              onChange={(e)=>{
+               setImage( e.target.value);
+              }}
+              />
           </label>
           <br />
           <label htmlFor="">

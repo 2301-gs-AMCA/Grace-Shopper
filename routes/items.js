@@ -1,6 +1,6 @@
 const itemsRouter = require("express").Router();
 
-const { getItemByImage } = require("../db/adapters/assets");
+const { createImage } = require("../db/adapters/assets");
 const {
   getAllItems,
   getItemsByCategory,
@@ -57,20 +57,28 @@ itemsRouter.get("/:category", async (req, res) => {
 
 //POST /api/items
 itemsRouter.post("/", authRequired, async (req, res, next) => {
+  let image = "";
   if (req.user.isAdmin != true) {
     res.send({ message: "you are not an admin" });
     return;
   }
   const {itemObj} = req.body
   console.log("newItem Obj:",itemObj)
+  
+  if(itemObj.image !== ""){
+     image = itemObj.image
+  }
+
   try {
     const item = await createItem(itemObj);
 
     if (item) {
+      const itemImage = await createImage({itemId:item.id,image})
       res.send({
         success: true,
         message: `${item.name} is added to shop`,
         item,
+        itemImage
       });
     } else {
       next({
@@ -78,6 +86,9 @@ itemsRouter.post("/", authRequired, async (req, res, next) => {
         message: "Null value in required field",
       });
     }
+    // if(item){
+     
+    // }
   } catch ({ name, message }) {
     next({ name, message });
   }

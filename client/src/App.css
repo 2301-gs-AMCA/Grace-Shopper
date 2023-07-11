@@ -260,8 +260,9 @@ list-style: none;
   min-height: 99vh;
 }
 .popup-container{
-  background-color: #542ec5;
-  outline: solid white 2px;
+  background-color:#a2cde1;
+  outline: solid rgb(0, 0, 0) 2px;
+  
   padding: 5%;
   min-width:500px;
 }

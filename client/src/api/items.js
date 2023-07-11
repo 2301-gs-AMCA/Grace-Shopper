@@ -46,7 +46,7 @@ export async function fetchItemsByCategory(category) {
     console.error(error);
   }
 }
-/// POST an item, haven't used yet
+/// POST an item
 export async function postItem(itemObj) {
   try {
     const response = await fetch(`/api/items`, {

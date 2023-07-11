@@ -1,4 +1,4 @@
-const { getImagesByItemId } = require("../db/adapters/assets");
+const { getImagesByItemId,createImage} = require("../db/adapters/assets");
 const imgRouter = require("express").Router();
 
 imgRouter.use((req, res, next) => {
@@ -20,5 +20,18 @@ imgRouter.get("/img/:itemId", async (req, res, next) => {
    throw err 
 }
 });
+
+imgRouter.post("/img/:itemId", async(req,res,next)=>{
+  try {
+    const {itemId} = req.params;
+  const img = await createImage(imgObj);
+  response.send({
+    success:true,
+    message:"image recieved"
+  })
+  } catch (error) {
+    throw error;
+  }
+})
 
 module.exports = imgRouter

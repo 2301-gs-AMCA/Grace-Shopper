@@ -13,7 +13,7 @@ const users = [
 const items = [
   {
     itemName: "bunny plush",
-    isavailable: true,
+    isAvailable: true,
     itemCost: "15",
     itemDescription: "a soft bunny friend.",
     itemCategory: "plush",
@@ -21,7 +21,7 @@ const items = [
   },
   {
     itemName: "stich plush",
-    isavailable: true,
+    isAvailable: true,
     itemCost: "20",
     itemDescription:
       "a plush of your favorite blue trouble maker.Disney please don't sue.",
@@ -30,7 +30,7 @@ const items = [
   },
   {
     itemName: "cat eared cat bed",
-    isavailable: true,
+    isAvailable: true,
     itemCost: "50",
     itemDescription: "keeps your little guy cozy; in style.",
     itemCategory: "pets",
@@ -38,7 +38,7 @@ const items = [
   },
   {
     itemName: "thicksole slippers",
-    isavailable: true,
+    isAvailable: true,
     itemCost: "20",
     itemDescription: "soft an dcomfortable.best to wear on a staycation.",
     itemCategory: "shoes",
@@ -46,7 +46,7 @@ const items = [
   },
   {
     itemName: "toe aid",
-    isavailable: true,
+    isAvailable: true,
     itemCost: "10",
     itemDescription:
       "ever stubbed your toe and now you fell like its a bit off? this will help straighten and support your big toe",
@@ -55,7 +55,7 @@ const items = [
   },
   {
     itemName: "green leaf blanket",
-    isavailable: true,
+    isAvailable: true,
     itemCost: "35",
     itemDescription:
       "from Gloriosum, this will be a perfect blanket for a chill night watching netflix",
@@ -64,7 +64,7 @@ const items = [
   },
   {
     itemName: "soft cat bed",
-    isavailable: true,
+    isAvailable: true,
     itemCost: "50",
     itemDescription: "a soft bed for your soft ,sometimes hostile, buddy",
     itemCategory: "pets",
@@ -72,7 +72,7 @@ const items = [
   },
   {
     itemName: "tarot card blanket",
-    isavailable: true,
+    isAvailable: true,
     itemCost: "35",
     itemDescription:
       "a blanket that can also tell your future. its a comfortable one",
@@ -81,7 +81,7 @@ const items = [
   },
   {
     itemName: "cosmic psyonic toad in tub, No.5",
-    isavailable: true,
+    isAvailable: true,
     itemCost: "40",
     itemDescription:
       "omniptent being under the stress of the bad vibes of the cosmos.help him out by getting yourself confy with this blanket or another of our great products!",
