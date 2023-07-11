@@ -79,6 +79,26 @@
   border: 1px solid #000;
   padding: 8px;
 }
+.form-container{
+  text-align: center;
+  padding: 1rem;
+  border-radius: 2rem;
+  border: 5px solid red;
+  margin: 2rem;
+  color:  #222823;
+  display: grid;
+  gap: 2px;
+}
+
+
+.form-container label {
+  display: block;
+  align-items: center;
+}
+
+.form-container label > span {
+  margin-right: 10px;
+}
 
 
 .footlink {

@@ -7,23 +7,21 @@ import { deleteItemApi } from "../api/items";
 export default function ItemTable({ items }) {
   console.log("tableItems", items);
   const [html, setHtml] = useState("");
-//removetableRefresh and refreshes in general, im using window.location.reload();
-  const [tableRefresh, setTableRefresh] = useState(true);
-  // const [inventory.setInventory] = useState()
+ 
 
   useEffect(() => {
-    console.log("itemTable refresh Position", tableRefresh);
-    async function handleDelete(id){
+    /**handles the delete button and reloads the page */
+    async function handleDelete(id) {
       try {
         console.log("triggered");
         const response = await deleteItemApi(id);
         alert(response);
-        location.reload()
+        location.reload();
       } catch (error) {
-        throw error
+        throw error;
       }
-    } 
-
+    }
+    /**Table for the Inventory with a popup to edit and a button to delete */
     async function Table() {
       let temp = (
         <table id="inventory-Table" className="item-table">
@@ -50,12 +48,15 @@ export default function ItemTable({ items }) {
                 <td>{item.inventory_qty}</td>
                 <td>
                   <Popup trigger={<button> Edit</button>} position="left">
-                    <PopupEditItemWindow
-                      item={item}
-                      setTableRefresh={setTableRefresh}
-                    />
+                    <PopupEditItemWindow item={item} />
                   </Popup>
-                  <button onClick={()=>{handleDelete(item.id)}}>remove</button>
+                  <button
+                    onClick={() => {
+                      handleDelete(item.id);
+                    }}
+                  >
+                    remove
+                  </button>
                 </td>
               </tr>
             ))}
@@ -63,12 +64,14 @@ export default function ItemTable({ items }) {
         </table>
       );
       setHtml(temp);
-      setTableRefresh(false);
+      false;
     }
-    if(tableRefresh === true){
-      Table();
-    }
-  }, [tableRefresh]);
+
+    Table();
+  }, []);
+
+  /**isAvailableCheck returns a text yes or no for the table 
+   * since isAvailable is boolean values */
   function isAvailableCheck(check) {
     if (check) {
       return "yes";
@@ -76,7 +79,6 @@ export default function ItemTable({ items }) {
       return "no";
     }
   }
-  
-  
+
   return <div>{html}</div>;
 }

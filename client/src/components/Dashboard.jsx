@@ -13,7 +13,16 @@ export default function Dashboard() {
   const [allItems, setAllItems] = useState([]);
   const [Table, setTable] = useState("");
   const [loadTable, setLoadTable] = useState(true);
-  const [trigger,setTrigger] = useState(false);
+  const [trigger, setTrigger] = useState(false);
+
+  /**useEffect is triggered by
+   * trigger,for the addItem function
+   * and
+   * allItems for the RenderTableItems function
+   *
+   * addItem only executes when trigger is true
+   * and calls a reload of the page.
+   */
 
   useEffect(() => {
     async function addItem(itemObj) {
@@ -30,32 +39,31 @@ export default function Dashboard() {
         }
       }
     }
+    /**getAllItems fetch all items
+     * and only executes if loadTable is true */
     async function getAllItems() {
       if (loadTable === true) {
         try {
           const { items } = await fetchAllItems();
-          // console.log("allItems", items);
           setAllItems(items);
-          
         } catch (error) {
           throw error;
         }
       }
     }
+    /**RenderTableItems only executes if allItems isn't empty
+     * and will setloadTable to false to prevent loop*/
     function RenderTableItems(allItems) {
       if (allItems.length != 0 && allItems != undefined) {
-          setTable(<ItemTable items={allItems}/>);
-          console.log("table is", Table);
-          setLoadTable(false);
-         
+        setTable(<ItemTable items={allItems} />);
+        console.log("table is", Table);
+        setLoadTable(false);
       }
     }
 
     addItem(item);
     getAllItems().then(RenderTableItems(allItems));
   }, [trigger, allItems]);
-
-
 
   function handleNewItem() {
     setItem({
@@ -68,7 +76,7 @@ export default function Dashboard() {
     });
     console.log("clicked", item);
     setTrigger(true);
-    setRefresh(true);
+    
   }
 
   return (
@@ -76,8 +84,8 @@ export default function Dashboard() {
       <h1>Dashboard</h1>
       <div>
         <h2>Items and Inventory</h2>
-        <form action="">
-          Add a Item
+        <form action="" className="form-container">
+          <h3>Add a Item</h3>
           <br />
           <label htmlFor="">
             Name:
@@ -124,12 +132,6 @@ export default function Dashboard() {
               <option value="accessories">accessories</option>
               <option value="bedding">bedding</option>
             </select>
-            {/* <input
-              type="text"
-              onChange={(e) => {
-                setItemCategory(e.target.value);
-              }}
-            /> */}
           </label>
           <br />
           <label htmlFor="">

@@ -31,7 +31,6 @@ export async function fetchAllItems() {
   }
 }
 
-
 /// GET item by category
 export async function fetchItemsByCategory(category) {
   try {
@@ -47,7 +46,7 @@ export async function fetchItemsByCategory(category) {
     console.error(error);
   }
 }
-/// POST an item, haven't used yet 
+/// POST an item, haven't used yet
 export async function postItem(itemObj) {
   try {
     const response = await fetch(`/api/items`, {
@@ -55,7 +54,7 @@ export async function postItem(itemObj) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({itemObj}),
+      body: JSON.stringify({ itemObj }),
     });
     const result = await response.json();
     console.log("Result from postItem: ", result);
@@ -66,7 +65,7 @@ export async function postItem(itemObj) {
 }
 /// PATCH an item
 export async function patchItem(itemObj) {
-  console.log("itemPatch Obj",itemObj)
+  console.log("itemPatch Obj", itemObj);
   const itemId = itemObj.id;
   try {
     const response = await fetch(`/api/items/${itemId}`, {
@@ -74,7 +73,7 @@ export async function patchItem(itemObj) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({itemObj}),
+      body: JSON.stringify({ itemObj }),
     });
     const result = await response.json();
     console.log("result from patchItem: ", result);
@@ -84,19 +83,19 @@ export async function patchItem(itemObj) {
   }
 }
 
-export async function deleteItemApi(id){
+export async function deleteItemApi(id) {
   try {
-      const response = await fetch(`/api/items/delete/${id}`,{
-          method: 'DELETE',
-          headers:{
-              'Content-Type': 'application/json'
-          }
-      })
-      
-      const {message} = await response.json();
-      
-      return message
+    const response = await fetch(`/api/items/delete/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const { message } = await response.json();
+
+    return message;
   } catch (err) {
-      throw err;
+    throw err;
   }
 }
