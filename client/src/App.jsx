@@ -24,6 +24,7 @@ import { useEffect, useState } from "react";
 import useAuth from "./hooks/useAuth";
 import CategoryItems from "./components/Shop/CategoryItems";
 import ConfirmationPage from "./components/ConfirmationPage";
+import ErrorPage from "./components/Error";
 
 import { motion as m } from "framer-motion";
 function App() {
@@ -48,6 +49,7 @@ function App() {
         <Route path="/dashboard/settings/:userId" element={<Settings />} />
         <Route path="/dashboard/security/:userId" element={<Security />} />
         <Route path="/confirmation" element={<ConfirmationPage />} />
+        <Route path="/error" element={<ErrorPage />} />
       </Routes>
       <Footer />
     </m.div>
