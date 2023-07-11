@@ -30,7 +30,7 @@ const {
   destroyOrderItem,
 } = require("./adapters/order_items");
 const {
-  createImagesTable,
+  createImage,
   getAllImages,
   getImagesByItemId,
 } = require("./adapters/assets");
@@ -44,7 +44,7 @@ async function dropTables() {
     DROP TABLE IF EXISTS reviews;
     DROP TABLE IF EXISTS review_imgs;
     DROP TABLE IF EXISTS order_items;
-    DROP TABLE IF EXISTS items_images_throughtable;
+
     DROP TABLE IF EXISTS items_imgs;
     DROP TABLE IF EXISTS items;
     DROP TABLE IF EXISTS orders;
@@ -76,7 +76,6 @@ async function createTables() {
     "isComplete" BOOLEAN DEFAULT false 
   );`);
 
-    //changed cost to INTEGER -cb
     //added category -ac
     await client.query(`CREATE TABLE items (
     id SERIAL PRIMARY KEY,
@@ -84,7 +83,8 @@ async function createTables() {
     description text NOT NULL,
     cost INTEGER,
     category varchar(255) NOT NULL,
-    "isAvailable" BOOLEAN DEFAULT true
+    "isAvailable" BOOLEAN DEFAULT true,
+    inventory_qty INTEGER
   );`);
 
     //images for items
@@ -93,20 +93,6 @@ async function createTables() {
     id SERIAL PRIMARY KEY,
     itemId INTEGER REFERENCES items(id),
     image varchar(255)
-  );`);
-
-    //   await client.query(`CREATE TABLE review_imgs (
-    //   id SERIAL PRIMARY KEY,
-    //   reviewId INTEGER REFERENCES reviews(id),
-    //   imageId INTEGER REFERENCES items_imgs(itemId),
-
-    //   image varchar(255)
-    // );`);
-
-    await client.query(`CREATE TABLE items_images_throughtable (
-    id SERIAL PRIMARY KEY,
-    itemId INTEGER REFERENCES items(id),
-    imageId INTEGER REFERENCES items_imgs(id) UNIQUE NOT NULL
   );`);
 
     await client.query(`CREATE TABLE order_items (
@@ -145,7 +131,7 @@ async function populateTables() {
     }
 
     for (const img of images) {
-      await createImagesTable(img);
+      await createImage(img);
     }
     console.log("reviews list:", reviews);
     for (const review of reviews) {

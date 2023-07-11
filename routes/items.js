@@ -1,12 +1,13 @@
 const itemsRouter = require("express").Router();
 
-const { getItemByImage } = require("../db/adapters/assets");
+const { createImage } = require("../db/adapters/assets");
 const {
   getAllItems,
   getItemsByCategory,
   createItem,
   updateItem,
   getItemById,
+  deleteItem,
 } = require("../db/adapters/items");
 
 const { authRequired } = require("./utils");
@@ -52,38 +53,30 @@ itemsRouter.get("/:category", async (req, res) => {
 });
 */
 
-//GET /api/items/:imageurl
-itemsRouter.get("/:imageurl", async (req, res) => {
-  const itemImg = req.params;
-  const item = await getItemByImage(itemImg);
-
-  res.send({
-    success: true,
-    message: "gotItem",
-    item,
-  });
-});
-
 //POST /api/items
 itemsRouter.post("/", authRequired, async (req, res, next) => {
+  let image = "";
   if (req.user.isAdmin != true) {
     res.send({ message: "you are not an admin" });
     return;
   }
-  const { name, description, cost } = req.body;
-  const itemsObj = {};
-  try {
-    itemsObj.name = name;
-    itemsObj.description = description;
-    itemsObj.cost = cost;
+  const { itemObj } = req.body;
+  console.log("newItem Obj:", itemObj);
 
-    const item = await createItem(itemsObj);
+  if (itemObj.image !== "") {
+    image = itemObj.image;
+  }
+
+  try {
+    const item = await createItem(itemObj);
 
     if (item) {
+      const itemImage = await createImage({ itemId: item.id, image });
       res.send({
         success: true,
-        message: "Item created",
+        message: `${item.name} is added to shop`,
         item,
+        itemImage,
       });
     } else {
       next({
@@ -91,6 +84,9 @@ itemsRouter.post("/", authRequired, async (req, res, next) => {
         message: "Null value in required field",
       });
     }
+    // if(item){
+
+    // }
   } catch ({ name, message }) {
     next({ name, message });
   }
@@ -98,33 +94,16 @@ itemsRouter.post("/", authRequired, async (req, res, next) => {
 
 //PATCH /api/items/:itemId
 itemsRouter.patch("/:itemId", authRequired, async (req, res, next) => {
+  if (req.user.isAdmin != true) {
+    res.send({ message: "you are not an admin" });
+    return;
+  }
   const { itemId } = req.params;
-
-  const { name, description, cost, isAvailable } = req.body;
-  const updateItemsObj = {};
-
-  if (name) {
-    updateItemsObj.name = name;
-  }
-  if (description) {
-    updateItemsObj.description = description;
-  }
-  if (cost) {
-    updateItemsObj.cost = cost;
-  }
-  if (!null) {
-    updateItemsObj.isAvailable = isAvailable;
-  }
+  const { itemObj } = req.body;
 
   try {
     if (req.user.isAdmin) {
-      const updatedItem = await updateItem(
-        itemId,
-        name,
-        description,
-        cost,
-        isAvailable
-      );
+      const updatedItem = await updateItem(itemObj);
       console.log("updating item:", updatedItem);
       res.send({
         success: true,
@@ -139,6 +118,19 @@ itemsRouter.patch("/:itemId", authRequired, async (req, res, next) => {
     }
   } catch ({ name, message }) {
     next({ name, message });
+  }
+});
+itemsRouter.delete("/delete/:id", authRequired, async (req, res, next) => {
+  const { id } = req.params;
+  console.log("item being deleted ", id);
+  try {
+    const { name } = await deleteItem(id);
+    res.send({
+      success: true,
+      message: `${name} is deleted from inventory!`,
+    });
+  } catch (error) {
+    throw error;
   }
 });
 

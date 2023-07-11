@@ -12,72 +12,81 @@ const users = [
 
 const items = [
   {
-    name: "bunny plush",
-    available: true,
-    cost: "15",
-    description: "a soft bunny friend.",
-    category: "plush",
+    itemName: "bunny plush",
+    isAvailable: true,
+    itemCost: "15",
+    itemDescription: "a soft bunny friend.",
+    itemCategory: "plush",
+    inventory_qty: 50,
   },
   {
-    name: "stich plush",
-    available: true,
-    cost: "20",
-    description:
+    itemName: "stich plush",
+    isAvailable: true,
+    itemCost: "20",
+    itemDescription:
       "a plush of your favorite blue trouble maker.Disney please don't sue.",
-    category: "plush",
+    itemCategory: "plush",
+    inventory_qty: 50,
   },
   {
-    name: "cat eared cat bed",
-    available: true,
-    cost: "50",
-    description: "keeps your little guy cozy; in style.",
-    category: "pets",
+    itemName: "cat eared cat bed",
+    isAvailable: true,
+    itemCost: "50",
+    itemDescription: "keeps your little guy cozy; in style.",
+    itemCategory: "pets",
+    inventory_qty: 50,
   },
   {
-    name: "thicksole slippers",
-    available: true,
-    cost: "20",
-    description: "soft an dcomfortable.best to wear on a staycation.",
-    category: "shoes",
+    itemName: "thicksole slippers",
+    isAvailable: true,
+    itemCost: "20",
+    itemDescription: "soft an dcomfortable.best to wear on a staycation.",
+    itemCategory: "shoes",
+    inventory_qty: 50,
   },
   {
-    name: "toe aid",
-    available: true,
-    cost: "10",
-    description:
+    itemName: "toe aid",
+    isAvailable: true,
+    itemCost: "10",
+    itemDescription:
       "ever stubbed your toe and now you fell like its a bit off? this will help straighten and support your big toe",
-    category: "accessories",
+    itemCategory: "accessories",
+    inventory_qty: 50,
   },
   {
-    name: "green leaf blanket",
-    available: true,
-    cost: "35",
-    description:
+    itemName: "green leaf blanket",
+    isAvailable: true,
+    itemCost: "35",
+    itemDescription:
       "from Gloriosum, this will be a perfect blanket for a chill night watching netflix",
-    category: "bedding",
+    itemCategory: "bedding",
+    inventory_qty: 50,
   },
   {
-    name: "soft cat bed",
-    available: true,
-    cost: "50",
-    description: "a soft bed for your soft ,sometimes hostile, buddy",
-    category: "pets",
+    itemName: "soft cat bed",
+    isAvailable: true,
+    itemCost: "50",
+    itemDescription: "a soft bed for your soft ,sometimes hostile, buddy",
+    itemCategory: "pets",
+    inventory_qty: 50,
   },
   {
-    name: "tarot card blanket",
-    available: true,
-    cost: "35",
-    description:
+    itemName: "tarot card blanket",
+    isAvailable: true,
+    itemCost: "35",
+    itemDescription:
       "a blanket that can also tell your future. its a comfortable one",
-    category: "bedding",
+    itemCategory: "bedding",
+    inventory_qty: 50,
   },
   {
-    name: "cosmic psyonic toad in tub, No.5",
-    available: true,
-    cost: "40",
-    description:
+    itemName: "cosmic psyonic toad in tub, No.5",
+    isAvailable: true,
+    itemCost: "40",
+    itemDescription:
       "omniptent being under the stress of the bad vibes of the cosmos.help him out by getting yourself confy with this blanket or another of our great products!",
-    category: "accessories",
+    itemCategory: "accessories",
+    inventory_qty: 50,
   },
 ];
 
@@ -134,9 +143,9 @@ let reviews = users.forEach((user, index) => {
   temp.push({
     itemId: index + 1,
     userId: index + 1,
-    title: `${items[index].name}`,
+    title: `${items[index].itemName}`,
     rating: 4,
-    review: `I ${user.username},fully endorse ${items[index].name}`,
+    review: `I ${user.username},fully endorse ${items[index].itemName}`,
   });
 });
 reviews = temp;

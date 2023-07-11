@@ -7,7 +7,20 @@ import { getMyOrders } from "../api/orders";
 export default function Profile() {
   const { user } = useAuth();
   const navigate = useNavigate();
+
+  console.log(user);
+  let adminhtml = "";
+
+  if (user.isAdmin) {
+    adminhtml = (
+      <Link to={"/dashboard"} style={{ cursor: "pointer" }}>
+        Dashboard
+      </Link>
+    );
+  }
+
   const [myOrders, setMyOrders] = useState();
+
 
   async function getOrders() {
     let order = await getMyOrders();
@@ -48,6 +61,8 @@ export default function Profile() {
         >
           Reviews
         </Link>
+        <br></br>
+        {adminhtml}
       </div>
       {/*//SUGGESTION TABLE///*/}
       <div className="itemsULike">
