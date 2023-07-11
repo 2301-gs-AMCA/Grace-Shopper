@@ -1,5 +1,5 @@
 {
-  "name": "Grace-Shopper-amca",
+  "name": "grace-shopper-amca",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -28,5 +28,14 @@
     "pg": "^8.11.0",
     "react-router-dom": "^6.14.0",
     "reactjs-popup": "^2.0.5"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/2301-gs-AMCA/Grace-Shopper.git"
+  },
+  "bugs": {
+    "url": "https://github.com/2301-gs-AMCA/Grace-Shopper/issues"
+  },
+  "homepage": "https://github.com/2301-gs-AMCA/Grace-Shopper#readme"
 }

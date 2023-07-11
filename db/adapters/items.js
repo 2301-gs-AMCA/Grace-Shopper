@@ -41,7 +41,7 @@ async function getItemById(itemId) {
     WHERE
       itms.id = $1
     GROUP BY
-      itms.id, itms.name, itms.description, itms.cost, itms.category, itms.isavailable, it_imgs.id
+      itms.id, itms.name, itms.description, itms.cost, itms.category, itms."isAvailable", it_imgs.id
     ORDER BY
       itms.id;
         `,
