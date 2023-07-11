@@ -12,7 +12,7 @@ export default function Dashboard() {
   const [isAvailable, setIsAvailable] = useState(false);
   const [allItems, setAllItems] = useState([]);
   const [Table, setTable] = useState("");
-  const [refresh, setRefresh] = useState(true);
+  const [loadTable, setLoadTable] = useState(true);
   const [trigger,setTrigger] = useState(false);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ export default function Dashboard() {
       }
     }
     async function getAllItems() {
-      if (refresh === true) {
+      if (loadTable === true) {
         try {
           const { items } = await fetchAllItems();
           // console.log("allItems", items);
@@ -46,7 +46,7 @@ export default function Dashboard() {
       if (allItems.length != 0 && allItems != undefined) {
           setTable(<ItemTable items={allItems}/>);
           console.log("table is", Table);
-          setRefresh(false);
+          setLoadTable(false);
          
       }
     }
@@ -161,8 +161,7 @@ export default function Dashboard() {
             submit
           </button>
         </form>
-        {/* ///////////////////////////// */}
-
+        {/*Table for Inventory Items*/}
         {Table}
       </div>
     </div>

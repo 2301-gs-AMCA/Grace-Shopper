@@ -145,7 +145,7 @@ async function updateItem(itemObj) {
         WHERE id = $1
         RETURNING *;
       `,
-      [itemObj.id, itemObj.name, itemObj.description, itemObj.cost, itemObj.category, itemObj.isavailable, itemObj.inventory_qty]
+      [itemObj.id, itemObj.name, itemObj.description, itemObj.cost, itemObj.category, itemObj.isAvailable, itemObj.inventory_qty]
     );
     return item;
   } catch (error) {
