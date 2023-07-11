@@ -31,7 +31,7 @@ export default function pupupEditItemWindow({ item }) {
         console.log("current update", update);
         try {
           const response = await patchItem(update);
-          /**This makes sure the page load dosnt happen until 
+          /**This makes sure the page load dosnt happen until
            * the response gets back */
           if (response.success === true) {
             window.location.reload(true);

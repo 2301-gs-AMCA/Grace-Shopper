@@ -17,7 +17,7 @@ const items = [
     itemCost: "15",
     itemDescription: "a soft bunny friend.",
     itemCategory: "plush",
-    inventory_qty:50
+    inventory_qty: 50,
   },
   {
     itemName: "stich plush",
@@ -26,7 +26,7 @@ const items = [
     itemDescription:
       "a plush of your favorite blue trouble maker.Disney please don't sue.",
     itemCategory: "plush",
-    inventory_qty:50
+    inventory_qty: 50,
   },
   {
     itemName: "cat eared cat bed",
@@ -34,7 +34,7 @@ const items = [
     itemCost: "50",
     itemDescription: "keeps your little guy cozy; in style.",
     itemCategory: "pets",
-    inventory_qty:50
+    inventory_qty: 50,
   },
   {
     itemName: "thicksole slippers",
@@ -42,7 +42,7 @@ const items = [
     itemCost: "20",
     itemDescription: "soft an dcomfortable.best to wear on a staycation.",
     itemCategory: "shoes",
-    inventory_qty:50
+    inventory_qty: 50,
   },
   {
     itemName: "toe aid",
@@ -51,7 +51,7 @@ const items = [
     itemDescription:
       "ever stubbed your toe and now you fell like its a bit off? this will help straighten and support your big toe",
     itemCategory: "accessories",
-    inventory_qty:50
+    inventory_qty: 50,
   },
   {
     itemName: "green leaf blanket",
@@ -60,7 +60,7 @@ const items = [
     itemDescription:
       "from Gloriosum, this will be a perfect blanket for a chill night watching netflix",
     itemCategory: "bedding",
-    inventory_qty:50
+    inventory_qty: 50,
   },
   {
     itemName: "soft cat bed",
@@ -68,7 +68,7 @@ const items = [
     itemCost: "50",
     itemDescription: "a soft bed for your soft ,sometimes hostile, buddy",
     itemCategory: "pets",
-    inventory_qty:50
+    inventory_qty: 50,
   },
   {
     itemName: "tarot card blanket",
@@ -77,7 +77,7 @@ const items = [
     itemDescription:
       "a blanket that can also tell your future. its a comfortable one",
     itemCategory: "bedding",
-    inventory_qty:50
+    inventory_qty: 50,
   },
   {
     itemName: "cosmic psyonic toad in tub, No.5",
@@ -86,7 +86,7 @@ const items = [
     itemDescription:
       "omniptent being under the stress of the bad vibes of the cosmos.help him out by getting yourself confy with this blanket or another of our great products!",
     itemCategory: "accessories",
-    inventory_qty:50
+    inventory_qty: 50,
   },
 ];
 

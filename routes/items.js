@@ -7,7 +7,7 @@ const {
   createItem,
   updateItem,
   getItemById,
-  deleteItem
+  deleteItem,
 } = require("../db/adapters/items");
 
 const { authRequired } = require("./utils");
@@ -53,8 +53,6 @@ itemsRouter.get("/:category", async (req, res) => {
 });
 */
 
-
-
 //POST /api/items
 itemsRouter.post("/", authRequired, async (req, res, next) => {
   let image = "";
@@ -62,23 +60,23 @@ itemsRouter.post("/", authRequired, async (req, res, next) => {
     res.send({ message: "you are not an admin" });
     return;
   }
-  const {itemObj} = req.body
-  console.log("newItem Obj:",itemObj)
-  
-  if(itemObj.image !== ""){
-     image = itemObj.image
+  const { itemObj } = req.body;
+  console.log("newItem Obj:", itemObj);
+
+  if (itemObj.image !== "") {
+    image = itemObj.image;
   }
 
   try {
     const item = await createItem(itemObj);
 
     if (item) {
-      const itemImage = await createImage({itemId:item.id,image})
+      const itemImage = await createImage({ itemId: item.id, image });
       res.send({
         success: true,
         message: `${item.name} is added to shop`,
         item,
-        itemImage
+        itemImage,
       });
     } else {
       next({
@@ -87,7 +85,7 @@ itemsRouter.post("/", authRequired, async (req, res, next) => {
       });
     }
     // if(item){
-     
+
     // }
   } catch ({ name, message }) {
     next({ name, message });
@@ -101,8 +99,8 @@ itemsRouter.patch("/:itemId", authRequired, async (req, res, next) => {
     return;
   }
   const { itemId } = req.params;
-  const {itemObj} =  req.body;
- 
+  const { itemObj } = req.body;
+
   try {
     if (req.user.isAdmin) {
       const updatedItem = await updateItem(itemObj);
@@ -122,19 +120,18 @@ itemsRouter.patch("/:itemId", authRequired, async (req, res, next) => {
     next({ name, message });
   }
 });
-itemsRouter.delete("/delete/:id", authRequired, async(req,res,next)=>{
-  const {id} = req.params;
-  console.log("item being deleted ", id)
+itemsRouter.delete("/delete/:id", authRequired, async (req, res, next) => {
+  const { id } = req.params;
+  console.log("item being deleted ", id);
   try {
-    const {name} = await deleteItem(id)
+    const { name } = await deleteItem(id);
     res.send({
       success: true,
-      message: `${name} is deleted from inventory!`
+      message: `${name} is deleted from inventory!`,
     });
   } catch (error) {
     throw error;
   }
-
-})
+});
 
 module.exports = itemsRouter;

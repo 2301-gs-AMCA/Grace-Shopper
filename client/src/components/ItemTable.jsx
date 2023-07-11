@@ -3,20 +3,27 @@ import { useState, useEffect } from "react";
 import Popup from "reactjs-popup";
 import PopupEditItemWindow from "./PopupEditItemWindow";
 import { deleteItemApi } from "../api/items";
+import { deleteImageApi } from "../api/assets";
 
 export default function ItemTable({ items }) {
   console.log("tableItems", items);
   const [html, setHtml] = useState("");
- 
 
   useEffect(() => {
     /**handles the delete button and reloads the page */
-    async function handleDelete(id) {
+    async function handleDelete(idObj) {
       try {
-        console.log("triggered");
-        const response = await deleteItemApi(id);
-        alert(response);
-        location.reload();
+        if (idObj.imgId) {
+          const imgResponse = await deleteImageApi(idObj.imgId);
+          const response = await deleteItemApi(idObj.itemId);
+          alert(response);
+
+          location.reload();
+        } else {
+          const response = await deleteItemApi(idObj.itemId);
+          alert(response);
+          location.reload();
+        }
       } catch (error) {
         throw error;
       }
@@ -52,7 +59,14 @@ export default function ItemTable({ items }) {
                   </Popup>
                   <button
                     onClick={() => {
-                      handleDelete(item.id);
+                      if (item.imagereel) {
+                        handleDelete({
+                          itemId: item.id,
+                          imgId: item.imagereel[0].id,
+                        });
+                      } else {
+                        handleDelete({ itemId: item.id });
+                      }
                     }}
                   >
                     remove
@@ -70,7 +84,7 @@ export default function ItemTable({ items }) {
     Table();
   }, []);
 
-  /**isAvailableCheck returns a text yes or no for the table 
+  /**isAvailableCheck returns a text yes or no for the table
    * since isAvailable is boolean values */
   function isAvailableCheck(check) {
     if (check) {

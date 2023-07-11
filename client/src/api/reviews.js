@@ -26,35 +26,35 @@ export async function updateReview(editedReview) {
     throw error;
   }
 }
-export async function postReviewApi(postrevObj){
-    try {
-        const response = await fetch (`/api/reviews/${postrevObj.itemid}`, {
-            method: 'POST',
-            headers:{
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(postrevObj)
-        });
-        console.log("postReview:",response);
-        const result = await response.json();
-        return result;
-    } catch (error) {
-        throw error
-    }
+export async function postReviewApi(postrevObj) {
+  try {
+    const response = await fetch(`/api/reviews/${postrevObj.itemid}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(postrevObj),
+    });
+    console.log("postReview:", response);
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    throw error;
+  }
 }
 
-export async function deleteReviewApi(id){
-    try {
-        const response = await fetch(`/api/reviews/delete/${id}`,{
-            method: 'DELETE',
-            headers:{
-                'Content-Type': 'application/json'
-            }
-        })
-        console.log("delete review:",response)
-        const result = await response.json();
-        return result
-    } catch (err) {
-        throw err;
-    }
+export async function deleteReviewApi(id) {
+  try {
+    const response = await fetch(`/api/reviews/delete/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log("delete review:", response);
+    const result = await response.json();
+    return result;
+  } catch (err) {
+    throw err;
+  }
 }

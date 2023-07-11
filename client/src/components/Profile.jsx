@@ -6,16 +6,13 @@ export default function Profile() {
   const { user } = useAuth();
   const navigate = useNavigate();
   console.log(user);
-  let adminhtml = ""
+  let adminhtml = "";
 
   if (user.isAdmin) {
     adminhtml = (
-      <Link
-         to={"/dashboard"}
-         style={{ cursor: "pointer" }}
-         >
-          Dashboard
-        </Link>
+      <Link to={"/dashboard"} style={{ cursor: "pointer" }}>
+        Dashboard
+      </Link>
     );
   }
 
@@ -52,7 +49,6 @@ export default function Profile() {
         </Link>
         <br></br>
         {adminhtml}
-        
       </div>
       {/*//SUGGESTION TABLE///*/}
       <div className="itemsULike">
