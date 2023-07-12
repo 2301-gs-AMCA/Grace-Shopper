@@ -28,6 +28,7 @@ export default function Navbar() {
   }, [nav]);
 
   useEffect(() => {
+    let count = [cart.items.length];
     function headerButtons(loggedIn) {
       let html = "";
 
@@ -60,7 +61,7 @@ export default function Navbar() {
               </li>
               <li>
                 <button className="link" onClick={() => nav("/cart")}>
-                  <p className="counter">1</p>
+                  <p className="counter">{count}</p>
                   <img
                     src="https://em-content.zobj.net/source/microsoft-teams/363/shopping-cart_1f6d2.png"
                     style={{ width: "30px", height: "40px" }}
@@ -102,7 +103,7 @@ export default function Navbar() {
               </li>
               <li>
                 <button className="link" onClick={() => nav("/cart")}>
-                  <p className="counter">1</p>
+                  <p className="counter">{count}</p>
                   <img
                     src="https://em-content.zobj.net/source/microsoft-teams/363/shopping-cart_1f6d2.png"
                     style={{ width: "30px", height: "40px" }}
