@@ -60,6 +60,7 @@ export default function Navbar() {
               </li>
               <li>
                 <button className="link" onClick={() => nav("/cart")}>
+                  <p className="counter">1</p>
                   <img
                     src="https://em-content.zobj.net/source/microsoft-teams/363/shopping-cart_1f6d2.png"
                     style={{ width: "30px", height: "40px" }}
@@ -71,7 +72,7 @@ export default function Navbar() {
         );
       } else {
         //builds the DASHBOARD button for Admin in nav
-        
+
         html = (
           <div>
             <ul className="navlinks">
@@ -93,7 +94,7 @@ export default function Navbar() {
                   Profile
                 </button>
               </li>
-              
+
               <li>
                 <button className="link" onClick={() => nav("/shop")}>
                   Shop
@@ -101,6 +102,7 @@ export default function Navbar() {
               </li>
               <li>
                 <button className="link" onClick={() => nav("/cart")}>
+                  <p className="counter">1</p>
                   <img
                     src="https://em-content.zobj.net/source/microsoft-teams/363/shopping-cart_1f6d2.png"
                     style={{ width: "30px", height: "40px" }}
