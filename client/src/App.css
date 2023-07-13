@@ -330,11 +330,20 @@ html {
   min-height: 99vh;
 }
 
-.order-history {
+
+
+.reviews{
   min-height: 99vh;
 }
-.reviews {
+
+.order-history{
+
   min-height: 99vh;
+}
+.order-history-list{
+  display: flex;  
+  padding: 8px;
+  list-style: none;
 }
 
 .counter {
@@ -354,3 +363,4 @@ html {
   color: white;
   background-size: contain;
 }
+

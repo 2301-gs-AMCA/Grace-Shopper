@@ -2,7 +2,7 @@ export async function getOrderItems(orderId) {
   try {
     const response = await fetch(`/api/order_items/${orderId}`);
     const result = await response.json();
-    console.log("result from getOrder");
+    console.log("result from getOrder", result);
     return result;
   } catch (error) {
     console.error(error);
