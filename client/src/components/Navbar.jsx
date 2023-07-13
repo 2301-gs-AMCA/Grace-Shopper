@@ -31,7 +31,7 @@ export default function Navbar() {
     function headerButtons(loggedIn) {
       let html = "";
 
-      if (!loggedIn && user.isGuest) {
+      if (user.isGuest) {
         html = (
           <div>
             <ul className="navlinks">
