@@ -8,7 +8,7 @@ import {
   useElements
 } from "@stripe/react-stripe-js";
 
-import "../StripeStyle.css"
+import "./StripeStyle.css"
 
 export default function CheckoutForm() {
   const stripe = useStripe();
@@ -64,9 +64,11 @@ export default function CheckoutForm() {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: "/api/confirmation",
+        return_url: "http://localhost:5173/confirmation",
+        receipt_email: email
       },
     });
+
 
     // This point will only be reached if there is an immediate error when
     // confirming the payment. Otherwise, your customer will be redirected to
@@ -76,6 +78,7 @@ export default function CheckoutForm() {
     if (error.type === "card_error" || error.type === "validation_error") {
       setMessage(error.message);
     } else {
+      console.log(error)
       setMessage("An unexpected error occurred.");
     }
 
@@ -87,13 +90,13 @@ export default function CheckoutForm() {
   }
 
   return (
-    <form id="payment-form" onSubmit={handleSubmit}>
+    <form id="payment-form stripe " onSubmit={handleSubmit}>
       <LinkAuthenticationElement
         id="link-authentication-element"
         onChange={(e) => setEmail(e.target.value)}
       />
       <PaymentElement id="payment-element" options={paymentElementOptions} />
-      <button disabled={isLoading || !stripe || !elements} id="submit">
+      <button disabled={isLoading || !stripe || !elements} id="submit stripe">
         <span id="button-text">
           {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
         </span>

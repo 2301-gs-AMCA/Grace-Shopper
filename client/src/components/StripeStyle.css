@@ -1,20 +1,20 @@
-#root {
+#stripe-root {
     display: flex;
     align-items: center;
   }
   
-  body {
+  #stripe body {
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: 16px;
     -webkit-font-smoothing: antialiased;
     display: flex;
     justify-content: center;
     align-content: center;
-    height: 100vh;
+    height: 100vh; 
     width: 100vw;
   }
   
-  form {
+  #stripe form {
     width: 30vw;
     min-width: 500px;
     align-self: center;
@@ -38,7 +38,7 @@
   }
   
   /* Buttons and links */
-  button {
+  #stripe button {
     background: #5469d4;
     font-family: Arial, sans-serif;
     color: #ffffff;
@@ -54,11 +54,11 @@
     width: 100%;
   }
   
-  button:hover {
+  #stripe button:hover {
     filter: contrast(115%);
   }
   
-  button:disabled {
+  #stripe button:disabled {
     opacity: 0.5;
     cursor: default;
   }
@@ -128,7 +128,7 @@
   }
   
   @media only screen and (max-width: 600px) {
-    form {
+    #stripe form {
       width: 80vw;
       min-width: initial;
     }
