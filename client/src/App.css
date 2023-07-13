@@ -4,8 +4,7 @@
   box-sizing: border-box;
 }
 
-.app,
-html {
+.app, html {
   min-height: 100vh;
   min-width: none;
   text-align: center;
@@ -48,6 +47,7 @@ html {
 
 .home-sub-header {
   font-style: italic;
+
 }
 
 .home-description {
@@ -76,7 +76,7 @@ html {
   width: 50%;
   aspect-ratio: 16/9;
   margin: 1rem;
-  border: #222823 0.2rem solid;
+  border: #222823 .2rem solid;
 }
 
 .item-table {
@@ -100,14 +100,16 @@ html {
   gap: 2px;
 }
 
+
 .form-container label {
   display: block;
   align-items: center;
 }
 
-.form-container label > span {
+.form-container label>span {
   margin-right: 10px;
 }
+
 
 .footlink {
   padding: 6px;
@@ -188,6 +190,7 @@ html {
   box-shadow: 1px 1px 2px 2px;
 }
 
+
 .profile {
   display: flexbox;
   min-height: 100vh;
@@ -217,6 +220,7 @@ html {
   min-height: 43vh;
   max-width: 40%;
   border: 2px solid;
+
 }
 
 #submit-review-container {
@@ -237,25 +241,27 @@ html {
   width: 200px;
 }
 
-.itemsULike {
-  display: flex;
-  flex-direction: column;
-  float: left;
-  min-width: 60vw;
-  min-height: 43vh;
-  border: 2px solid;
+.itemsULike{
+display: flex;
+flex-direction: column;
+float: left;
+min-width: 60vw;
+min-height: 43vh;
+border: 2px solid;
+
 }
 
 .likedItems {
   list-style: none;
 }
 
-.orderHistory {
+.orderHistory{
   display: flex;
   flex-direction: column;
-  margin-top: 30rem;
-  border: 2px solid;
-  min-height: 30vh;
+margin-top: 30rem;
+border: 2px solid;
+min-height: 30vh;
+
 }
 
 .history {
@@ -282,17 +288,14 @@ html {
   border: 2px solid red;
   margin: 2rem;
   color: #222823;
-
   max-width: 824px;
-
 }
 
 .item-card img {
   width: 500px;
   height: 500px;
   object-fit: downsize;
-  overflow: auto;
-}
+  overflow: auto;}
 
 .cart {
   min-height: 99vh;
@@ -326,10 +329,10 @@ html {
   min-height: 99vh;
 }
 
+
 .security {
   min-height: 99vh;
 }
-
 
 
 .reviews{
@@ -337,7 +340,6 @@ html {
 }
 
 .order-history{
-
   min-height: 99vh;
 }
 .order-history-list{
@@ -345,7 +347,6 @@ html {
   padding: 8px;
   list-style: none;
 }
-
 .counter {
   position: relative;
   justify-content: center;
@@ -363,4 +364,3 @@ html {
   color: white;
   background-size: contain;
 }
-
