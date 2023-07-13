@@ -22,6 +22,8 @@ const imgRouter = require("./assets");
 router.use("/assets",imgRouter);
 const reviewRouter = require("./reviews")
 router.use("/reviews",reviewRouter);
+const stripeRouter = require("./stripe");
+router.use("/",stripeRouter)
 
     
 
