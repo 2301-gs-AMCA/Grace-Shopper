@@ -90,9 +90,7 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
   ///////////////////////////////////////////////////
   function handleSubmit(e) {
     e.preventDefault();
-    /*if (!user) {
-      cart.items.userId === 0;
-    }*/
+
     if (!cart.id) {
       addNewCart();
       return;
@@ -103,6 +101,7 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
       for (let thatItem of cart.items) {
         if (item.id === thatItem.id) {
           cart.totalPrice += item.subtotal;
+          item.order_item_id = thatItem.order_item_id;
           thatItem.quantity += quantity;
           thatItem.subtotal += item.subtotal;
           updateItems();
