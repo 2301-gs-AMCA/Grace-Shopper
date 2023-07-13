@@ -334,10 +334,16 @@ min-height: 30vh;
 }
 
 
-.order-history{
-  min-height: 99vh;
-}
 .reviews{
   min-height: 99vh;
 }
 
+.order-history{
+
+  min-height: 99vh;
+}
+.order-history-list{
+  display: flex;  
+  padding: 8px;
+  list-style: none;
+}
