@@ -105,6 +105,8 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
           item.order_item_id = thatItem.order_item_id;
           if (pathname === "/shop" || pathname === `/shop/${category}`) {
             item.quantity = thatItem.quantity + 1;
+          } else if (pathname === `/shop/items/${itemId}`) {
+            item.quantity += thatItem.quantity;
           } else {
             item.quantity = thatItem.quantity;
           }

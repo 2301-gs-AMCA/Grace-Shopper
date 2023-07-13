@@ -37,7 +37,7 @@ export async function patchOrderItem(
   item_quantity
 ) {
   try {
-    const response = await fetch(`api/order_items/${orderItemId}`, {
+    const response = await fetch(`/api/order_items/${orderItemId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
