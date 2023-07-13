@@ -44,7 +44,7 @@ async function dropTables() {
     DROP TABLE IF EXISTS reviews;
     DROP TABLE IF EXISTS review_imgs;
     DROP TABLE IF EXISTS order_items;
-
+    DROP TABLE IF EXISTS items_images_throughtable;
     DROP TABLE IF EXISTS items_imgs;
     DROP TABLE IF EXISTS items;
     DROP TABLE IF EXISTS orders;
