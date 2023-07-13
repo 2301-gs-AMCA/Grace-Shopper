@@ -12,7 +12,7 @@ const AuthProvider = ({ children }) => {
     async function getFetchMe() {
       try {
         const result = await fetchMe();
-        if (result.success && result.user.isGuest !== true) {
+        if (result.success) {
           setLoggedIn(true);
           setUser(result.user);
         } else {

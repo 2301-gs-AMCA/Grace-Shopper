@@ -4,7 +4,8 @@
   box-sizing: border-box;
 }
 
-.app, html {
+.app,
+html {
   min-height: 100vh;
   min-width: none;
   text-align: center;
@@ -47,7 +48,6 @@
 
 .home-sub-header {
   font-style: italic;
-
 }
 
 .home-description {
@@ -76,7 +76,7 @@
   width: 50%;
   aspect-ratio: 16/9;
   margin: 1rem;
-  border: #222823 .2rem solid;
+  border: #222823 0.2rem solid;
 }
 
 .item-table {
@@ -100,16 +100,14 @@
   gap: 2px;
 }
 
-
 .form-container label {
   display: block;
   align-items: center;
 }
 
-.form-container label>span {
+.form-container label > span {
   margin-right: 10px;
 }
-
 
 .footlink {
   padding: 6px;
@@ -190,7 +188,6 @@
   box-shadow: 1px 1px 2px 2px;
 }
 
-
 .profile {
   display: flexbox;
   min-height: 100vh;
@@ -220,7 +217,6 @@
   min-height: 43vh;
   max-width: 40%;
   border: 2px solid;
-
 }
 
 #submit-review-container {
@@ -241,27 +237,25 @@
   width: 200px;
 }
 
-.itemsULike{
-display: flex;
-flex-direction: column;
-float: left;
-min-width: 60vw;
-min-height: 43vh;
-border: 2px solid;
-
+.itemsULike {
+  display: flex;
+  flex-direction: column;
+  float: left;
+  min-width: 60vw;
+  min-height: 43vh;
+  border: 2px solid;
 }
 
 .likedItems {
   list-style: none;
 }
 
-.orderHistory{
+.orderHistory {
   display: flex;
   flex-direction: column;
-margin-top: 30rem;
-border: 2px solid;
-min-height: 30vh;
-
+  margin-top: 30rem;
+  border: 2px solid;
+  min-height: 30vh;
 }
 
 .history {
@@ -289,11 +283,15 @@ min-height: 30vh;
   margin: 2rem;
   color: #222823;
 
+  max-width: 824px;
+
 }
 
 .item-card img {
-  width: 80%;
-  height: auto;
+  width: 500px;
+  height: 500px;
+  object-fit: downsize;
+  overflow: auto;
 }
 
 .cart {
@@ -328,10 +326,10 @@ min-height: 30vh;
   min-height: 99vh;
 }
 
-
 .security {
   min-height: 99vh;
 }
+
 
 
 .reviews{
@@ -347,3 +345,22 @@ min-height: 30vh;
   padding: 8px;
   list-style: none;
 }
+
+.counter {
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  top: 2.5rem;
+  right: 0.75rem;
+  width: 20px;
+  height: 20px;
+  font-size: small;
+  border-radius: 50%;
+  background: fixed;
+  z-index: 2;
+  opacity: 0.7;
+  background-color: red;
+  color: white;
+  background-size: contain;
+}
+

@@ -84,15 +84,13 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
       setThisQuantity(Number(quantity));
       localStorage.setItem("cart", JSON.stringify(cart));
       updateItems();
+      updateCart();
     }
-    updateCart();
   }, [quantity]);
   ///////////////////////////////////////////////////
   function handleSubmit(e) {
     e.preventDefault();
-    /*if (!user) {
-      cart.items.userId === 0;
-    }*/
+
     if (!cart.id) {
       addNewCart();
       return;
@@ -103,6 +101,16 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
       for (let thatItem of cart.items) {
         if (item.id === thatItem.id) {
           cart.totalPrice += item.subtotal;
+          //got the item to have order_item_id in shop if cart already has item
+          item.order_item_id = thatItem.order_item_id;
+          if (pathname === "/shop" || pathname === `/shop/${category}`) {
+            item.quantity = thatItem.quantity + 1;
+            item.subtotal = item.cost * item.quantity;
+          } else if (pathname === `/shop/items/${itemId}`) {
+            item.quantity += thatItem.quantity;
+          } else {
+            item.quantity = thatItem.quantity;
+          }
           thatItem.quantity += quantity;
           thatItem.subtotal += item.subtotal;
           updateItems();
