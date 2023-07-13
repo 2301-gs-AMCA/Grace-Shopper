@@ -282,11 +282,16 @@ html {
   border: 2px solid red;
   margin: 2rem;
   color: #222823;
+
+  max-width: 824px;
+
 }
 
 .item-card img {
-  width: 80%;
-  height: auto;
+  width: 500px;
+  height: 500px;
+  object-fit: downsize;
+  overflow: auto;
 }
 
 .cart {
