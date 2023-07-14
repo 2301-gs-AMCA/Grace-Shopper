@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../../App.css";
 import useAuth from "../../hooks/useAuth";
 import useCart from "../../hooks/useCart";
@@ -12,6 +13,7 @@ let cartImg =
 export default function Cart() {
   const { user, setUser } = useAuth();
   const { cart, setCart } = useCart();
+  const navigate = useNavigate();
   const [click, setClick] = useState();
   const [thisQuantity, setThisQuantity] = useState();
   const nav = useNavigate();
