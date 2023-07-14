@@ -4,6 +4,7 @@ import useAuth from "../../hooks/useAuth";
 import useCart from "../../hooks/useCart";
 import AddToCart from "../Shop/AddToCart";
 import { patchOrder } from "../../api/orders";
+import { useNavigate,Link } from "react-router-dom";
 
 let cartImg =
   "https://em-content.zobj.net/source/microsoft-teams/363/shopping-cart_1f6d2.png";
@@ -13,6 +14,7 @@ export default function Cart() {
   const { cart, setCart } = useCart();
   const [click, setClick] = useState();
   const [thisQuantity, setThisQuantity] = useState();
+  const nav = useNavigate();
 
   useEffect(() => {
     cart.userId = user.id;
@@ -35,31 +37,31 @@ export default function Cart() {
     setClick(e.target.value);
   }
   console.log("cart before complete order:", cart);
-  async function handleSubmit(e) {
-    e.preventDefault();
-    try {
-      async function completeOrder() {
-        const result = await patchOrder(cart.id, {
-          id: cart.id,
-          userId: user.id,
-          isCart: false,
-          isComplete: true,
-          date: cart.order_date,
-        });
-        setCart(result.order);
+  // async function handleSubmit(e) {
+  //   e.preventDefault();
+  //   try {
+  //     async function completeOrder() {
+  //       const result = await patchOrder(cart.id, {
+  //         id: cart.id,
+  //         userId: user.id,
+  //         isCart: false,
+  //         isComplete: true,
+  //         date: cart.order_date,
+  //       });
+  //       setCart(result.order);
 
-        localStorage.removeItem("cart");
+  //       localStorage.removeItem("cart");
 
-        setClick(!click);
-        return;
-      }
-      completeOrder();
+  //       setClick(!click);
+  //       return;
+  //     }
+  //     completeOrder();
 
-      return;
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  //     return;
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
 
   return (
     <div className="cart">
@@ -82,9 +84,9 @@ export default function Cart() {
             );
           })}
       </div>
-      <form onSubmit={handleSubmit}>
-        <button>Complete Order</button>
-      </form>
+      <Link to={"http://localhost:5173/checkout"}>
+        <button>Checkout</button>
+        </Link>
     </div>
   );
 }

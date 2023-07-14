@@ -1,8 +1,9 @@
 import React from 'react'
 import CheckoutForm from './CheckoutForm';
+import AddressForm from './AddressForm';
 import { useState, useEffect } from 'react';
 import { loadStripe } from "@stripe/stripe-js";
-import { Elements } from "@stripe/react-stripe-js";
+import { AddressElement, Elements } from "@stripe/react-stripe-js";
 export default function Checkout() {
     const [clientSecret, setClientSecret] = useState("");
 
@@ -35,6 +36,8 @@ const stripePromise = loadStripe("pk_test_51NSsoYE7507WjCKqIHB47wC9Rbde4kjHYAz86
     <div>Checkout
         {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
+          <AddressForm />
+          
           <CheckoutForm />
         </Elements>
       )}
