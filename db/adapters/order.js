@@ -174,7 +174,7 @@ async function getAllOrdersByUsername(username) {
   try {
     const { rows: orders } = await client.query(
       `
-                SELECT ords.id, ords."userId", ords."isCart", ords."isComplete", COALESCE(CAST(SUM(ROUND((orditms.item_quantity * itms.cost), 2)) AS INT), 0) AS "totalPrice",
+                SELECT ords.id, ords."userId", ords."isCart", ords."isComplete", ords.order_date, COALESCE(CAST(SUM(ROUND((orditms.item_quantity * itms.cost), 2)) AS INT), 0) AS "totalPrice",
                 CASE WHEN orditms."orderId" IS NULL THEN '[]'::json
                 ELSE
                 JSON_AGG(
