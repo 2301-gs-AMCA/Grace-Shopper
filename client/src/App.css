@@ -289,13 +289,16 @@ min-height: 30vh;
   margin: 2rem;
   color: #222823;
   max-width: 824px;
+  list-style: none;
 }
 
 .item-card img {
   width: 500px;
   height: 500px;
   object-fit: downsize;
-  overflow: auto;}
+  overflow: auto;
+
+}
 
 .cart {
   min-height: 99vh;
@@ -340,11 +343,20 @@ min-height: 30vh;
 }
 
 .order-history{
+  margin: 1rem;
   min-height: 99vh;
 }
+.order-details{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  padding-top: 1rem;
+  border: 2px solid;
+}
 .order-history-list{
-  display: flex;  
-  padding: 8px;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
   list-style: none;
 }
 .counter {
@@ -363,4 +375,7 @@ min-height: 30vh;
   background-color: red;
   color: white;
   background-size: contain;
+}
+.confirmation{
+  min-height: 99vh;
 }

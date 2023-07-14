@@ -1,21 +1,19 @@
 import React from "react";
 import { getMyOrders } from "../api/orders";
-import { getOrderItems } from "../api/order_items";
 import { useState, useEffect } from "react";
-import useAuth from "../hooks/useAuth";
 
 export default function OrderHistory() {
-  const { user } = useAuth();
   const [myOrders, setMyOrders] = useState([]);
-  const [orderItems, setOrderItems] = useState();
-  const [orderId, setOrderId] = useState(0);
-
+  const [orderDate, setOrderDate] = useState();
+  const formattedDate = new Intl.DateTimeFormat("en-US", {
+    dateStyle: "full",
+  }).format(orderDate);
   async function getOrders() {
     let result = await getMyOrders();
     console.log("my orders", result.orders);
     setMyOrders(result.orders);
     myOrders.map((order) => {
-      setOrderId(order.id);
+      setOrderDate(order.order_date);
     });
   }
 
@@ -25,12 +23,12 @@ export default function OrderHistory() {
 
   return (
     <div className="order-history">
+      <h1 className="userHeader">Order History</h1>
       {myOrders.map((order) => {
         return (
-          <div>
-            {order.id}
+          <div className="order-details">
+            <u>{formattedDate}</u>
             {order.items.map((item) => {
-              console.log(item.name);
               return (
                 <ul className="order-history-list">
                   <li>{item.name}</li>
