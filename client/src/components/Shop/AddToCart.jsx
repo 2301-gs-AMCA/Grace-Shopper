@@ -51,6 +51,7 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
         item.id,
         item.quantity
       );
+      updateCart();
       return result;
     }
     updateOrderItem();
@@ -59,6 +60,7 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
   function addNewItems() {
     async function addOrderItem() {
       const result = await postOrderItem(cart.id, item.id, item.quantity);
+      item.order_item_id = result.orderItem.id;
       return result;
     }
     addOrderItem();
@@ -113,6 +115,7 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
           }
           thatItem.quantity += quantity;
           thatItem.subtotal += item.subtotal;
+          localStorage.setItem("cart", JSON.stringify(cart));
           updateItems();
           updateCart();
           return;
