@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+
 import "../../App.css";
 import useAuth from "../../hooks/useAuth";
 import useCart from "../../hooks/useCart";

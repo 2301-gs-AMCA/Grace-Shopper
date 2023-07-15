@@ -65,54 +65,39 @@ export default function CheckoutForm() {
 
     setIsLoading(true);
 
-    const { error } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        // Make sure to change this to your payment completion page
-        return_url: "http://localhost:5173/confirmation",
-        receipt_email: email
-      },
-    });
-
-    // if(error.type === "validation_error"){
-    //   console.log("im in valid error");
-    //   setValidationError(true);
-    // }
-
-    if(error){
-      console.log("error in cart submit",error.type,validationError)
-      try {
-        async function completeOrder() {
-          if(error.type === "validation_error"){
-            //if a field is not filled,then stop.
-            return;
-          }else{
-            const result = await patchOrder(cart.id, {
-              id: cart.id,
-              userId: user.id,
-              isCart: false,
-              isComplete: true,
-              date: cart.order_date,
-            });
-            setCart(result.order);
-    
-            localStorage.removeItem("cart");
-    
-            // setClick(!click);
-            
-
-          }
+    try {
+      async function completeOrder() {
+          const result = await patchOrder(cart.id, {
+            id: cart.id,
+            userId: user.id,
+            isCart: false,
+            isComplete: true,
+            date: cart.order_date,
+          });
+          setCart(result.order);
+  
+          localStorage.removeItem("cart");
+  
+          // setClick(!click);
           
-        }
-        completeOrder();
-        
-      } catch (error) {
-        console.error(error);
-      }
-    }
 
-    console.log("this is inside stripe handlesubmit:",error)
-    // This point will only be reached if there is an immediate error when
+        }
+        
+      
+      completeOrder().then(async()=>{
+        const { error } = await stripe.confirmPayment({
+          elements,
+          confirmParams: {
+            // Make sure to change this to your payment completion page
+            return_url: "http://localhost:5173/confirmation",
+            receipt_email: email
+            
+          },
+        });
+      });
+      
+    } catch (error) {
+       // This point will only be reached if there is an immediate error when
     // confirming the payment. Otherwise, your customer will be redirected to
     // your `return_url`. For some payment methods like iDEAL, your customer will
     // be redirected to an intermediate site first to authorize the payment, then
@@ -122,7 +107,9 @@ export default function CheckoutForm() {
     } else {
       console.log(error)
       setMessage("An unexpected error occurred.");
+    };
     }
+
    
     setIsLoading(false);
   };
@@ -130,16 +117,7 @@ export default function CheckoutForm() {
   const paymentElementOptions = {
     layout: "tabs"
   }
-  // async function handleSubmitCart(e) {
-  //   e.preventDefault();
-  //   if (!stripe || !elements) {
-  //     // Stripe.js hasn't yet loaded.
-  //     // Make sure to disable form submission until Stripe.js has loaded.
-  //     return;
-  //   }
-
-   
-  // }
+  
 
   return (
     <form id="payment-form stripe " onSubmit={handleSubmit}>
