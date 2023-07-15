@@ -26,7 +26,6 @@ export default function SingleItem() {
         console.log("result getItemById: ", result);
         setItem(result.item);
 
-
         await fetchImg(result.item);
       }
       //the function that fetches the first image off the image reel
@@ -44,7 +43,6 @@ export default function SingleItem() {
       }
       // pulls reviews for item
       async function fetchReviews(itm) {
-
         let revHtml = await itm.reviewlist.map((review) => {
           return (
             <div key={review.id} className="review-card">
@@ -55,7 +53,6 @@ export default function SingleItem() {
             </div>
           );
         });
-
 
         setReviews(revHtml);
       }
@@ -69,7 +66,6 @@ export default function SingleItem() {
         } catch (err) {
           console.error(err);
           setPostReview(null);
-
         }
       }
 
@@ -105,61 +101,60 @@ export default function SingleItem() {
 
         <AddToCart item={item} />
 
-
-      <br />
-      <div>
-        <h2>Write a review:</h2>
-        <form id="submit-review-container" action="">
-          <label htmlFor="">
-            Title
-            <input
-              type="text"
-              placeholder="Title"
-              onChange={(e) => {
-                setTitle(e.target.value);
-              }}
-            />
-          </label>
-          <label htmlFor="">
-            rating
-            <input
-              type="Number"
-              min="1"
-              max="5"
-              placeholder="5"
-              style={{ width: "50px" }}
-              onChange={(e) => {
-                setRating(e.target.value);
-              }}
-            />
-            out of 5
-          </label>
-          <label htmlFor="">
-            body
-            <textarea
-              type="text"
-              placeholder="review"
-              onChange={(e) => {
-                setReview(e.target.value);
-              }}
-            />
-          </label>
-        </form>
-        <button
-          onClick={(e) => {
-            handleSubmit(e);
-            console.log(e.target);
-          }}
-        >
-          SUBMIT
-        </button>
-      </div>
-      <br />
-      <br />
-      <div>
-        <h2>Reviews:</h2>
-        {reviews}
-
+        <br />
+        <div>
+          <h2>Write a review:</h2>
+          <form id="submit-review-container" action="">
+            <label htmlFor="">
+              Title
+              <input
+                type="text"
+                placeholder="Title"
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
+              />
+            </label>
+            <label htmlFor="">
+              rating
+              <input
+                type="Number"
+                min="1"
+                max="5"
+                placeholder="5"
+                style={{ width: "50px" }}
+                onChange={(e) => {
+                  setRating(e.target.value);
+                }}
+              />
+              out of 5
+            </label>
+            <label htmlFor="">
+              body
+              <textarea
+                type="text"
+                placeholder="review"
+                onChange={(e) => {
+                  setReview(e.target.value);
+                }}
+              />
+            </label>
+          </form>
+          <button
+            onClick={(e) => {
+              handleSubmit(e);
+              console.log(e.target);
+            }}
+          >
+            SUBMIT
+          </button>
+        </div>
+        <br />
+        <br />
+        <div>
+          <h2>Reviews:</h2>
+          {reviews}
+        </div>
       </div>
     </div>
   );
