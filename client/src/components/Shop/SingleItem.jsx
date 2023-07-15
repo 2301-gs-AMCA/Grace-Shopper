@@ -26,6 +26,7 @@ export default function SingleItem() {
         console.log("result getItemById: ", result);
         setItem(result.item);
 
+
         await fetchImg(result.item);
       }
       //the function that fetches the first image off the image reel
@@ -43,6 +44,7 @@ export default function SingleItem() {
       }
       // pulls reviews for item
       async function fetchReviews(itm) {
+
         let revHtml = await itm.reviewlist.map((review) => {
           return (
             <div key={review.id} className="review-card">
@@ -53,6 +55,7 @@ export default function SingleItem() {
             </div>
           );
         });
+
 
         setReviews(revHtml);
       }
@@ -66,6 +69,7 @@ export default function SingleItem() {
         } catch (err) {
           console.error(err);
           setPostReview(null);
+
         }
       }
 
@@ -92,13 +96,15 @@ export default function SingleItem() {
   }
 
   return (
-    <div className="item-card">
-      <h1>{item.name}</h1>
-      <img src={image} alt="imageNotFound" />
-      <p>Description: {item.description}</p>
-      <p>Price: ${item.cost}</p>
+    <div className="item-container">
+      <div className="single-item-card">
+        <h1>{item.name}</h1>
+        <img src={image} alt="imageNotFound" />
+        <p>Description: {item.description}</p>
+        <p>Price: ${item.cost}</p>
 
-      <AddToCart item={item} />
+        <AddToCart item={item} />
+
 
       <br />
       <div>
@@ -153,6 +159,7 @@ export default function SingleItem() {
       <div>
         <h2>Reviews:</h2>
         {reviews}
+
       </div>
     </div>
   );
