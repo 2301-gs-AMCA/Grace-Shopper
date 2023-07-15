@@ -4,6 +4,7 @@ import "../../App.css";
 import useAuth from "../../hooks/useAuth";
 import useCart from "../../hooks/useCart";
 import AddToCart from "../Shop/AddToCart";
+import RemoveCartItem from "../Shop/RemoveCartItem";
 import { patchOrder } from "../../api/orders";
 import { fetchMyCart } from "../../api/auth";
 
@@ -39,6 +40,21 @@ export default function Cart() {
     getCart();
     console.log("cart", cart);
   }, [click]);
+
+  //sets cart items on load so that cart.items have item.order_item_id
+  useEffect(() => {
+    async function setCartItems() {
+      const result = await fetchMyCart();
+      if (result.success) {
+        console.log("result in getMyCart", result);
+        setCart(result.order);
+        return;
+      } else {
+        setCart(cart);
+      }
+    }
+    setCartItems();
+  }, []);
 
   //re-renders totalPrice and price
   function handleClick(e) {
@@ -86,6 +102,7 @@ export default function Cart() {
                   handleClick={handleClick}
                   setThisQuantity={setThisQuantity}
                 />
+                <RemoveCartItem item={item} handleClick={handleClick} />
               </div>
             );
           })}

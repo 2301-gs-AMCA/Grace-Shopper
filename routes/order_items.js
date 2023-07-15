@@ -99,8 +99,8 @@ order_itemsRouter.delete(
     const { orderItemId } = req.params;
     try {
       const orderItem = await getOrderItemById(orderItemId);
-      const order = await getOrderById(orderItem.orderid);
-      const item = await getItemById(orderItem.itemid);
+      const order = await getOrderById(orderItem.orderId);
+      const item = await getItemById(orderItem.itemId);
       if (orderItem && (order.userId === req.user.id || req.user.isAdmin)) {
         const deletedOrderItem = await destroyOrderItem(orderItemId);
         res.send({

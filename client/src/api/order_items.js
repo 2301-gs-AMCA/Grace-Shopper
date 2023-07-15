@@ -58,7 +58,7 @@ export async function patchOrderItem(
 
 export async function deleteOrderItem(orderItemId) {
   try {
-    const response = await fetch(`api/order_items/${orderItemId}`, {
+    const response = await fetch(`/api/order_items/${orderItemId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
