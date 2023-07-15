@@ -30,7 +30,7 @@ export default function AuthForm() {
 
       result && result.success
         ? (alert(result.message),
-          setLoggedIn(true),
+          //setLoggedIn(true),
           setUser(result.user),
           updateCart(),
           setUsername(""),
@@ -43,8 +43,10 @@ export default function AuthForm() {
       let thisCart = {};
 
       async function updateCart() {
+        console.log("cart before upDateCart", cart);
         if (cart.id && cart.isCart) {
           const haveCart = await fetchMyCart();
+          console.log("haveCart result", haveCart);
           if (haveCart.success) {
             //setOrderId(haveCart.order.id);
             orderId = haveCart.order.id;
@@ -53,38 +55,38 @@ export default function AuthForm() {
           } else {
             const result2 = await postOrder(userId);
             console.log("result2 from postOrder", result2);
-            //setOrderId(result2.order.id);
             orderId = result2.order.id;
             setOrderId(orderId);
           }
-
+          console.log("cart.items", cart.items);
           for (let item of cart.items) {
+            console.log("thisCart", thisCart);
+            let found;
             if (thisCart.items) {
-              let found = thisCart.items.find(
+              found = thisCart.items.find(
                 (thisItem) => thisItem.id === item.id
               );
-              if (found) {
-                for (let thatItem of thisCart.items) {
-                  if (item.id === thatItem.id) {
-                    thatItem.quantity += item.quantity;
-                    thatItem.subtotal += item.subtotal;
-                    async function updateOrderItem() {
-                      console.log("thatItem", thatItem);
-                      console.log("thisCart", thisCart);
-                      const result3 = await patchOrderItem(
-                        thatItem.order_item_id,
-                        thisCart.id,
-                        thatItem.id,
-                        thatItem.quantity
-                      );
-                      setOrderId(thisCart.id);
-                      return result3;
-                    }
-                    updateOrderItem();
-                    setCart(cart);
-                    localStorage.setItem("cart", JSON.stringify(cart));
-                    return;
+            }
+            if (found) {
+              for (let thatItem of thisCart.items) {
+                if (item.id === thatItem.id) {
+                  thatItem.quantity += item.quantity;
+                  thatItem.subtotal += item.subtotal;
+                  async function updateOrderItem() {
+                    console.log("thatItem", thatItem);
+                    console.log("thisCart", thisCart);
+                    const result3 = await patchOrderItem(
+                      thatItem.order_item_id,
+                      thisCart.id,
+                      thatItem.id,
+                      thatItem.quantity
+                    );
+                    setOrderId(thisCart.id);
+                    return result3;
                   }
+                  updateOrderItem();
+                  setCart(cart);
+                  localStorage.setItem("cart", JSON.stringify(cart));
                 }
               }
             } else {
@@ -101,7 +103,6 @@ export default function AuthForm() {
                 }
               }
               postPostOrderItem();
-              return;
             }
           }
         }

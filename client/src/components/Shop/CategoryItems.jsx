@@ -9,7 +9,7 @@ export default function CategoryItems() {
   useEffect(() => {
     async function getItems() {
       const result = await fetchItemsByCategory(category);
-      console.log("result from getItemsByCategory: ", result);
+
       setItems(result);
     }
     getItems();

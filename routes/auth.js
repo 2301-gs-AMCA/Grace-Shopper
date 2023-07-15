@@ -183,12 +183,25 @@ authRouter.get("/logout", async (req, res, next) => {
 });
 
 // GET api/auth/me
-authRouter.get("/me", authRequired, (req, res, next) => {
-  res.send({
-    success: true,
-    message: "you are authorized",
-    user: req.user,
-  });
+authRouter.get("/me", authRequired, async (req, res, next) => {
+  const _user = await getUserByUsername(req.user.username);
+  if (!_user) {
+    res.status(401);
+    res.send({
+      success: false,
+      error: {
+        message: "There is no user with that username!",
+        name: "Auth Error",
+      },
+    });
+    return;
+  } else {
+    res.send({
+      success: true,
+      message: "you are authorized",
+      user: req.user,
+    });
+  }
 });
 
 //GET /orders/myOrders
