@@ -20,14 +20,14 @@ const AuthProvider = ({ children }) => {
           console.log("result2", result2);
           setUser(result2.user);
 
-          setLoggedIn(false);
+          setLoggedIn(true);
         }
       } catch (error) {
         setLoggedIn(false);
       }
     }
     getFetchMe();
-  }, [loggedIn, setUser]);
+  }, [loggedIn, setUser, user.isGuest]);
 
   const contextValue = {
     user,
