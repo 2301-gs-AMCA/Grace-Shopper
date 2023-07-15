@@ -12,7 +12,7 @@ let cartImg =
 
 export default function Cart() {
   const { user, setUser } = useAuth();
-  const { cart, setCart } = useCart();
+  const { cart, setCart, isCounted } = useCart();
   const navigate = useNavigate();
   const [click, setClick] = useState();
   const [thisQuantity, setThisQuantity] = useState();
