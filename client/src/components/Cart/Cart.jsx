@@ -5,14 +5,18 @@ import useAuth from "../../hooks/useAuth";
 import useCart from "../../hooks/useCart";
 import AddToCart from "../Shop/AddToCart";
 import { patchOrder } from "../../api/orders";
+
 import { useNavigate,Link } from "react-router-dom";
+
+import { fetchMyCart } from "../../api/auth";
+
 
 let cartImg =
   "https://em-content.zobj.net/source/microsoft-teams/363/shopping-cart_1f6d2.png";
 
 export default function Cart() {
   const { user, setUser } = useAuth();
-  const { cart, setCart } = useCart();
+  const { cart, setCart, isCounted } = useCart();
   const navigate = useNavigate();
   const [click, setClick] = useState();
   const [thisQuantity, setThisQuantity] = useState();
@@ -28,6 +32,14 @@ export default function Cart() {
         await setCart(cart);
       }
       setCart(cart);
+      /*const result = await fetchMyCart();
+      if (result.success) {
+        console.log("result in getMyCart", result);
+        setCart(result.order);
+        return;
+      } else {
+        setCart(cart);
+      }*/
     }
     getCart();
     console.log("cart", cart);

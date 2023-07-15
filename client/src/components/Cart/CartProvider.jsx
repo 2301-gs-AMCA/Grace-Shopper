@@ -13,6 +13,7 @@ export const CartContext = createContext();
 const CartProvider = ({ children }) => {
   const { user, setUser, loggedIn } = useAuth();
   const [orderId, setOrderId] = useState(null);
+  const [isCounted, setIsCounted] = useState(false);
   const [cart, setCart] = useState({
     id: null,
     userId: user.id,
@@ -64,13 +65,15 @@ const CartProvider = ({ children }) => {
       }*/
       getMyCart();
     }
-  }, [loggedIn, user, cart.isComplete, orderId]);
+  }, [user.id, cart.id, cart.isComplete, orderId]);
 
   const contextValue = {
     cart,
     setCart,
     orderId,
     setOrderId,
+    isCounted,
+    setIsCounted,
   };
 
   return (

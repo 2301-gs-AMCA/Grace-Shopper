@@ -10,7 +10,8 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
   const { pathname } = useLocation();
   const { itemId, category } = useParams();
   const { user, setUser } = useAuth();
-  const { cart, setCart, orderId, setOrderId } = useCart();
+  const { cart, setCart, orderId, setOrderId, isCounted, setIsCounted } =
+    useCart();
   const [quantity, setQuantity] = useState(item.quantity || 1);
 
   function addNewCart() {
@@ -18,7 +19,6 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
       async function postNewOrder() {
         const result = await postOrder(user.id);
         setOrderId(result.order.id);
-        console.log(orderId);
         cart.id === result.order.id;
         setCart(cart);
         if (cart.items.length === 0) {
@@ -31,6 +31,7 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
             return result2;
           }
           postNewOrderItem();
+          setIsCounted(!isCounted);
           cart.items.push(item);
           cart.totalPrice = cart.totalPrice;
           updateCart();
@@ -51,14 +52,19 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
         item.id,
         item.quantity
       );
+      updateCart();
       return result;
     }
     updateOrderItem();
   }
   //////////////////////////////////////////////////////////
   function addNewItems() {
+    console.log("cart before addNewItems", cart);
     async function addOrderItem() {
       const result = await postOrderItem(cart.id, item.id, item.quantity);
+      setIsCounted(!isCounted);
+      setCart(cart);
+      item.order_item_id = result.orderItem.id;
       return result;
     }
     addOrderItem();
@@ -73,7 +79,22 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
     cart.userId = user.id;
     item.quantity = quantity;
     item.subtotal = item.cost * quantity;
-    if (pathname === "/cart") {
+    try {
+      async function getMyCart() {
+        const result = await fetchMyCart();
+        if (result.success) {
+          console.log("result in getMyCart", result);
+          setCart(result.order);
+          return;
+        } else {
+          setCart(cart);
+        }
+      }
+      getMyCart();
+    } catch (error) {
+      console.error(error);
+    }
+    /*if (pathname === "/cart") {
       if (!user) {
         setUser();
       }
@@ -85,8 +106,8 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
       localStorage.setItem("cart", JSON.stringify(cart));
       updateItems();
       updateCart();
-    }
-  }, [quantity]);
+    }*/
+  }, []);
   ///////////////////////////////////////////////////
   function handleSubmit(e) {
     e.preventDefault();
@@ -104,6 +125,8 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
           //got the item to have order_item_id in shop if cart already has item
           item.order_item_id = thatItem.order_item_id;
           if (pathname === "/shop" || pathname === `/shop/${category}`) {
+            console.log("thatItem", thatItem);
+            console.log("item", item);
             item.quantity = thatItem.quantity + 1;
             item.subtotal = item.cost * item.quantity;
           } else if (pathname === `/shop/items/${itemId}`) {
@@ -111,8 +134,11 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
           } else {
             item.quantity = thatItem.quantity;
           }
-          thatItem.quantity += quantity;
+          if (pathname === "/cart") {
+            thatItem.quantity += quantity;
+          }
           thatItem.subtotal += item.subtotal;
+          localStorage.setItem("cart", JSON.stringify(cart));
           updateItems();
           updateCart();
           return;
@@ -122,10 +148,30 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
 
     cart.items.push(item);
     addNewItems();
+    setCart(cart);
   }
   function handleChange(e) {
     e.preventDefault();
     setQuantity(Number(e.target.value));
+
+    item.quantity = Number(e.target.value);
+    console.log("e.target.value", e.target.value);
+    console.log("item.quantity", item.quantity);
+    console.log("quantity", quantity);
+    item.subtotal = item.cost * quantity;
+    if (pathname === "/cart") {
+      if (!user) {
+        setUser();
+      }
+      cart.totalPrice = 0;
+      for (let thisItem of cart.items) {
+        cart.totalPrice += thisItem.cost * thisItem.quantity;
+      }
+      setThisQuantity(Number(quantity));
+      localStorage.setItem("cart", JSON.stringify(cart));
+      updateItems();
+      updateCart();
+    }
   }
 
   return (
