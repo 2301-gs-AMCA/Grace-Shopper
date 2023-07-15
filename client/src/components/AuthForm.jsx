@@ -151,7 +151,7 @@ export default function AuthForm() {
           Show Password
         </div>
         <br></br>
-        <button>Submit</button>
+        <button className="submitbutton">Submit</button>
         <br></br>
         {pathname === "/register" ? (
           <p>

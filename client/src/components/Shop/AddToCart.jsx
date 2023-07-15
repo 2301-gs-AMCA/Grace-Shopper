@@ -61,7 +61,6 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
         window.alert(result.message);
       }
       return result.order_item;
-
     }
     updateOrderItem();
   }
@@ -107,13 +106,11 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
         } else {
           setCart(cart);
         }
-
       }
       getMyCart();
     } catch (error) {
       console.error(error);
     }
-
   }, []);
   ///////////////////////////////////////////////////
   function handleSubmit(e) {
@@ -132,7 +129,6 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
           //got the item to have order_item_id in shop if cart already has item
           item.order_item_id = thatItem.order_item_id;
           if (pathname === "/shop" || pathname === `/shop/${category}`) {
-
             item.quantity = thatItem.quantity + 1;
             item.subtotal = item.cost * item.quantity;
           } else if (pathname === `/shop/items/${itemId}`) {
@@ -181,7 +177,7 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
     <div>
       {(pathname === "/shop" || pathname === `/shop/${category}`) && (
         <form onSubmit={handleSubmit}>
-          <button>Quick Add</button>
+          <button className="quickadd">Quick Add</button>
         </form>
       )}
       {pathname === `/shop/items/${itemId}` && (
@@ -199,7 +195,7 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
             />
           </label>
           <br></br>
-          <button>Add To Cart</button>
+          <button className="addtocart">Add To Cart</button>
         </form>
       )}
       {pathname === "/cart" && (

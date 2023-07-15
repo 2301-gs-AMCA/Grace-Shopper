@@ -17,7 +17,9 @@ export default function RemoveCartItem({ item }) {
         }
       }}
     >
-      <button type="onClick">Remove</button>
+      <button className="remove" type="onClick">
+        Remove
+      </button>
     </form>
   );
 }
