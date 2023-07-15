@@ -14,7 +14,7 @@ import Reviews from "./ProfileLinks/Reviews";
 import Settings from "./ProfileLinks/Settings";
 import OrderHistory from "./ProfileLinks/OrderHistory";
 import Checkout from "./components/Checkout";
-
+import Billing from "./components/Billing";
 import Items from "./components/Shop/Items";
 import SingleItem from "./components/Shop/SingleItem";
 
@@ -31,18 +31,15 @@ import { motion as m } from "framer-motion";
 function App() {
   const { user } = useAuth();
   const [err, setErr] = useState(null);
-  
 
-  
   return (
     <m.div>
-      
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<AuthForm />} />
         <Route path="/register" element={<AuthForm />} />
-        <Route path="/checkout" element={<Checkout/>}/>
+        <Route path="/checkout" element={<Checkout />} />
         <Route path="/dashboard/profile" element={<Profile />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/shop/:category" element={<CategoryItems />} />
@@ -55,9 +52,9 @@ function App() {
           path="/dashboard/orderHistory/:userId"
           element={<OrderHistory />}
         />
+        <Route path="/billing" element={<Billing />} />
         <Route path="/confirmation" element={<ConfirmationPage />} />
         <Route path="/error" element={<ErrorPage />} />
-        
       </Routes>
       <Footer />
     </m.div>

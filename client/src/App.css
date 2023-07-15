@@ -275,16 +275,21 @@ min-height: 30vh;
 
 .items-container {
   display: flex;
+  justify-content: center;
+  align-items: center;
   min-height: 99vh;
   text-align: center;
-  align-items: center;
   flex-wrap: wrap;
   margin: 1rem 1rem;
 }
 
 .item-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  padding: 10rem;
+  padding: 3rem;
   border: 2px solid red;
   margin: 2rem;
   color: #222823;
@@ -292,12 +297,18 @@ min-height: 30vh;
   list-style: none;
 }
 
+.single-item-card{
+
+  border: 2px solid red;
+  margin: 1rem 7rem 1rem 7rem;
+  padding: 1rem;
+}
+
 .item-card img {
-  width: 500px;
-  height: 500px;
+  width: 400px;
+  height: 400px;
   object-fit: downsize;
   overflow: auto;
-
 }
 
 .cart {
@@ -327,16 +338,6 @@ min-height: 30vh;
 .popup-container label textarea {
   margin-top: 5px;
 }
-
-.settings {
-  min-height: 99vh;
-}
-
-
-.security {
-  min-height: 99vh;
-}
-
 
 .reviews{
   min-height: 99vh;
@@ -378,4 +379,42 @@ min-height: 30vh;
 }
 .confirmation{
   min-height: 99vh;
+  
+}
+.security {
+  min-height: 99vh;
+}
+.settings {
+  display:flex;
+  flex-direction: column;
+  min-height: 99vh;
+}
+
+.personal-information{
+  margin: 8px;
+  list-style: none;
+  border: 2px solid;
+  padding: 1rem;
+}
+.billing-information{
+  margin: 8px;
+  list-style: none;
+  border: 2px solid;
+  padding: 1rem;
+}
+.payment-information{
+  min-height: 99vh;
+}
+.p-info-buttons{
+  padding: 4px;
+}
+.billing-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1rem 4rem 1rem 4rem;
+  padding: 2rem;
+  border: 1px solid;
+  box-shadow: 1px 1px 2px 2px;
+  min-height: 50vh;
 }
