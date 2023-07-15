@@ -51,7 +51,7 @@ export default function Reviews() {
                     handleDelete(review.id);
                   }}
                 >
-                  delete
+                  Delete
                 </button>
               </div>
             </div>
