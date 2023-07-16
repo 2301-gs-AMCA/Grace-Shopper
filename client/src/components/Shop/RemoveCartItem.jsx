@@ -1,7 +1,8 @@
 import { deleteOrderItem } from "../../api/order_items";
+import useCart from "../../hooks/useCart";
 
 export default function RemoveCartItem({ item }) {
-  console.log("item in removeItem", item);
+  const { isCounted, setIsCounted } = useCart();
   return (
     <form
       onClick={(e) => {
@@ -11,6 +12,7 @@ export default function RemoveCartItem({ item }) {
         );
         if (confirm === true) {
           deleteOrderItem(item.order_item_id);
+          setIsCounted(!isCounted);
         }
       }}
     >

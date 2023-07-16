@@ -15,6 +15,7 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
   const [quantity, setQuantity] = useState(item.quantity || 1);
 
   function addNewCart() {
+    console.log("user", user);
     if (!cart.id) {
       async function postNewOrder() {
         const result = await postOrder(user.id);
@@ -60,6 +61,9 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
   //////////////////////////////////////////////////////////
   function addNewItems() {
     console.log("cart before addNewItems", cart);
+    console.log("item.quantity", item.quantity);
+    console.log("quantity", quantity);
+    item.quantity = quantity;
     async function addOrderItem() {
       const result = await postOrderItem(cart.id, item.id, item.quantity);
       setIsCounted(!isCounted);
@@ -112,12 +116,16 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
           //got the item to have order_item_id in shop if cart already has item
           item.order_item_id = thatItem.order_item_id;
           if (pathname === "/shop" || pathname === `/shop/${category}`) {
-            console.log("thatItem", thatItem);
-            console.log("item", item);
+            console.log("thatItem.quantity", thatItem.quantity);
+            console.log("item.quantity", item.quantity);
+            console.log("quantity", quantity);
             item.quantity = thatItem.quantity + 1;
             item.subtotal = item.cost * item.quantity;
           } else if (pathname === `/shop/items/${itemId}`) {
-            item.quantity += thatItem.quantity;
+            console.log("thatItem.quantity", thatItem.quantity);
+            console.log("item.quantity", item.quantity);
+            console.log("quantity", quantity);
+            item.quantity = thatItem.quantity + quantity;
           } else {
             item.quantity = thatItem.quantity;
           }
