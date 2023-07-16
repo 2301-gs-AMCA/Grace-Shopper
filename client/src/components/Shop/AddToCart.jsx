@@ -5,6 +5,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { postOrder } from "../../api/orders";
 import { patchOrderItem, postOrderItem } from "../../api/order_items";
 import { fetchMyCart } from "../../api/auth";
+import RemoveCartItem from "./RemoveCartItem";
 
 export default function AddToCart({ item, handleClick, setThisQuantity }) {
   const { pathname } = useLocation();
@@ -200,7 +201,7 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
             <input
               type="number"
               max={100}
-              min={0}
+              min={1}
               value={item.quantity}
               onChange={handleChange}
               onClick={handleClick}
