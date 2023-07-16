@@ -8,7 +8,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 export default function Items({ items }) {
   return (
     <div>
-      <h2>Shop</h2>
       <Container className="mt-4">
         <Card className="mt-2">
           <div className="items-container">
