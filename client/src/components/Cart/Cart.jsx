@@ -108,7 +108,7 @@ export default function Cart() {
                   handleClick={handleClick}
                   setThisQuantity={setThisQuantity}
                 />
-                <RemoveCartItem item={item} handleClick={handleClick} />
+                <RemoveCartItem item={item} />
               </div>
             );
           })}
