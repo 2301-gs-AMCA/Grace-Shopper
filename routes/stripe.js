@@ -10,15 +10,21 @@ const calculateOrderAmount = (items) => {
   // Calculate the order total on the server to prevent
   // people from directly manipulating the amount on the client
   console.log("inside of calculatedOrderAmount",items)
-  return 1400;
+  let sum =0;
+  for(let item of items){
+    sum = sum+(item.quantity*item.cost);
+  }
+  console.log("testing sum",sum)
+  return sum;
 };
 //api/create-payment-intent
 stripeRouter.post("/create-payment-intent", async (req, res) => {
-  const { items } = req.body;
+  console.log("req.body in route",req.body)
+  const items = req.body;
 try {
   // Create a PaymentIntent with the order amount and currency
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: calculateOrderAmount(items),
+    amount: calculateOrderAmount(items), 
     currency: "usd",
     automatic_payment_methods: {
       enabled: true,
@@ -26,6 +32,7 @@ try {
   });
   res.send({
     clientSecret: paymentIntent.client_secret,
+    total: calculateOrderAmount(items),
   });
 } catch (error) {
   console.log(error)

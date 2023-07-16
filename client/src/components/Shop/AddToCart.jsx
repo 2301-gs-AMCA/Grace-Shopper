@@ -55,27 +55,33 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
         item.quantity
       );
       updateCart();
+
       setQuantity(1);
       if (result.success) {
         window.alert(result.message);
       }
       return result.order_item;
+
     }
     updateOrderItem();
   }
   //////////////////////////////////////////////////////////
   function addNewItems() {
     console.log("cart before addNewItems", cart);
+
     console.log("item.quantity", item.quantity);
     console.log("quantity", quantity);
     item.quantity = quantity;
+
     async function addOrderItem() {
       const result = await postOrderItem(cart.id, item.id, item.quantity);
       setIsCounted(!isCounted);
       setCart(cart);
+
       if (result.success) {
         window.alert(result.message);
       }
+
       item.order_item_id = result.orderItem.id;
       return result;
     }
@@ -101,11 +107,13 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
         } else {
           setCart(cart);
         }
+
       }
       getMyCart();
     } catch (error) {
       console.error(error);
     }
+
   }, []);
   ///////////////////////////////////////////////////
   function handleSubmit(e) {
@@ -124,15 +132,10 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
           //got the item to have order_item_id in shop if cart already has item
           item.order_item_id = thatItem.order_item_id;
           if (pathname === "/shop" || pathname === `/shop/${category}`) {
-            console.log("thatItem.quantity", thatItem.quantity);
-            console.log("item.quantity", item.quantity);
-            console.log("quantity", quantity);
+
             item.quantity = thatItem.quantity + 1;
             item.subtotal = item.cost * item.quantity;
           } else if (pathname === `/shop/items/${itemId}`) {
-            console.log("thatItem.quantity", thatItem.quantity);
-            console.log("item.quantity", item.quantity);
-            console.log("quantity", quantity);
             item.quantity = thatItem.quantity + quantity;
           } else {
             item.quantity = thatItem.quantity;
@@ -158,7 +161,6 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
     setQuantity(Number(e.target.value));
 
     item.quantity = Number(e.target.value);
-
     item.subtotal = item.cost * quantity;
     if (pathname === "/cart") {
       if (!user) {

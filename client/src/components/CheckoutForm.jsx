@@ -1,6 +1,8 @@
 import React from 'react'
-
+import { patchOrder } from '../api/orders';
 import { useEffect, useState } from "react";
+import useCart from '../hooks/useCart';
+import useAuth from '../hooks/useAuth';
 import {
   PaymentElement,
   LinkAuthenticationElement,
@@ -17,7 +19,10 @@ export default function CheckoutForm() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-
+  const { cart, setCart } = useCart();
+  const {user,setUser} = useAuth();
+  const [validationError,setValidationError]=useState(false);
+  console.log("cart in checkout",cart)
   useEffect(() => {
     if (!stripe) {
       return;
@@ -60,17 +65,39 @@ export default function CheckoutForm() {
 
     setIsLoading(true);
 
-    const { error } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        // Make sure to change this to your payment completion page
-        return_url: "http://localhost:5173/confirmation",
-        receipt_email: email
-      },
-    });
+    try {
+      async function completeOrder() {
+          const result = await patchOrder(cart.id, {
+            id: cart.id,
+            userId: user.id,
+            isCart: false,
+            isComplete: true,
+            date: cart.order_date,
+          });
+          setCart(result.order);
+  
+          localStorage.removeItem("cart");
+  
+          // setClick(!click);
+          
 
-
-    // This point will only be reached if there is an immediate error when
+        }
+        
+      
+      completeOrder().then(async()=>{
+        const { error } = await stripe.confirmPayment({
+          elements,
+          confirmParams: {
+            // Make sure to change this to your payment completion page
+            return_url: "http://localhost:5173/confirmation",
+            receipt_email: email
+            
+          },
+        });
+      });
+      
+    } catch (error) {
+       // This point will only be reached if there is an immediate error when
     // confirming the payment. Otherwise, your customer will be redirected to
     // your `return_url`. For some payment methods like iDEAL, your customer will
     // be redirected to an intermediate site first to authorize the payment, then
@@ -80,17 +107,21 @@ export default function CheckoutForm() {
     } else {
       console.log(error)
       setMessage("An unexpected error occurred.");
+    };
     }
 
+   
     setIsLoading(false);
   };
 
   const paymentElementOptions = {
     layout: "tabs"
   }
+  
 
   return (
     <form id="payment-form stripe " onSubmit={handleSubmit}>
+      <h3>Payment</h3>
       <LinkAuthenticationElement
         id="link-authentication-element"
         onChange={(e) => setEmail(e.target.value)}

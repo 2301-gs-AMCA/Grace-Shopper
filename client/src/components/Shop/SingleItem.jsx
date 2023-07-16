@@ -25,20 +25,16 @@ export default function SingleItem() {
         const result = await fetchItem(itemId);
         console.log("result getItemById: ", result);
         setItem(result.item);
-        console.log("call 1", result.item);
-
         await fetchImg(result.item);
       }
       //the function that fetches the first image off the image reel
       async function nextFunc(itm) {
-        console.log("call 3");
         return itm.imagereel[0].image;
       }
       //fetches image because image needs to be awaited to load with
       //page, for some reason.
       //may replace with the imagereel as a whole reel instead.if we have time
       async function fetchImg(itm) {
-        console.log("call 2");
         let img = await nextFunc(itm);
 
         setImage(img);
@@ -46,8 +42,6 @@ export default function SingleItem() {
       }
       // pulls reviews for item
       async function fetchReviews(itm) {
-        console.log("call4");
-
         let revHtml = await itm.reviewlist.map((review) => {
           return (
             <div key={review.id} className="review-card">
@@ -62,12 +56,10 @@ export default function SingleItem() {
         setReviews(revHtml);
       }
       async function postUserReview() {
-        console.log("postUserReview", postReview);
-
         try {
           const response = await postReviewApi(postReview);
           const result = await response.json();
-          console.log("POST RESULT", result);
+
           setPostReview(null);
           return result;
         } catch (err) {
@@ -109,7 +101,6 @@ export default function SingleItem() {
         <AddToCart item={item} />
 
         <br />
-
         <div>
           <h2>Write a review:</h2>
           <form id="submit-review-container" action="">
