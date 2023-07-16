@@ -79,7 +79,11 @@ order_itemsRouter.patch(
           orderItemId,
           item_quantity
         );
-        res.send({ order_item: updatedOrderItem });
+        res.send({
+          success: true,
+          message: "Cart updated",
+          order_item: updatedOrderItem,
+        });
       } else {
         next({
           name: "UnathorizedUserError",

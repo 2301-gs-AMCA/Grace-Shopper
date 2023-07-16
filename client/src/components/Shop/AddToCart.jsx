@@ -55,8 +55,11 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
         item.quantity
       );
       updateCart();
-      setQuantity(result.order_item.item_quantity);
-      return result;
+      setQuantity(1);
+      if (result.success) {
+        window.alert(result.message);
+      }
+      return result.order_item;
     }
     updateOrderItem();
   }
@@ -70,6 +73,9 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
       const result = await postOrderItem(cart.id, item.id, item.quantity);
       setIsCounted(!isCounted);
       setCart(cart);
+      if (result.success) {
+        window.alert(result.message);
+      }
       item.order_item_id = result.orderItem.id;
       return result;
     }
