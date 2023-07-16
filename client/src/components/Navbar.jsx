@@ -151,11 +151,21 @@ export default function Navbar() {
             </li>
           )}
           {user.isAdmin ? (
+            <>
+            <li>
+              <button
+                className="link"
+                onClick={() => nav("/dashboard/profile")}
+              >
+                Profile
+              </button>
+            </li>
             <li>
               <button className="link" onClick={() => nav("/dashboard")}>
                 Dashboard
               </button>
             </li>
+            </>
           ) : (
             <li>
               <button
