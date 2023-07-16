@@ -114,7 +114,7 @@ export default function Cart() {
           })}
       </div>
       <Link to={"http://localhost:5173/checkout"}>
-        <button>Checkout</button>
+        <button className="checkout">Checkout</button>
       </Link>
     </div>
   );

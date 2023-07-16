@@ -4,7 +4,8 @@
   box-sizing: border-box;
 }
 
-.app, html {
+.app,
+html {
   min-height: 100vh;
   min-width: none;
   text-align: center;
@@ -47,7 +48,6 @@
 
 .home-sub-header {
   font-style: italic;
-
 }
 
 .home-description {
@@ -76,7 +76,7 @@
   width: 50%;
   aspect-ratio: 16/9;
   margin: 1rem;
-  border: #222823 .2rem solid;
+  border: #222823 0.2rem solid;
 }
 
 .item-table {
@@ -100,16 +100,14 @@
   gap: 2px;
 }
 
-
 .form-container label {
   display: block;
   align-items: center;
 }
 
-.form-container label>span {
+.form-container label > span {
   margin-right: 10px;
 }
-
 
 .footlink {
   padding: 6px;
@@ -190,7 +188,6 @@
   box-shadow: 1px 1px 2px 2px;
 }
 
-
 .profile {
   display: flexbox;
   min-height: 100vh;
@@ -220,7 +217,6 @@
   min-height: 43vh;
   max-width: 40%;
   border: 2px solid;
-
 }
 
 #submit-review-container {
@@ -241,27 +237,25 @@
   width: 200px;
 }
 
-.itemsULike{
-display: flex;
-flex-direction: column;
-float: left;
-min-width: 60vw;
-min-height: 43vh;
-border: 2px solid;
-
+.itemsULike {
+  display: flex;
+  flex-direction: column;
+  float: left;
+  min-width: 60vw;
+  min-height: 43vh;
+  border: 2px solid;
 }
 
 .likedItems {
   list-style: none;
 }
 
-.orderHistory{
+.orderHistory {
   display: flex;
   flex-direction: column;
-margin-top: 30rem;
-border: 2px solid;
-min-height: 30vh;
-
+  margin-top: 30rem;
+  border: 2px solid;
+  min-height: 30vh;
 }
 
 .history {
@@ -272,11 +266,10 @@ min-height: 30vh;
   min-height: 99vh;
   overflow: hidden;
 }
-.sidebar{
-display: flex;
-justify-content: space-evenly;
-margin-left: 4.5rem;
-
+.sidebar {
+  display: flex;
+  justify-content: space-evenly;
+  margin-left: 4.5rem;
 }
 
 .items-container {
@@ -304,8 +297,7 @@ margin-left: 4.5rem;
   list-style: none;
 }
 
-.single-item-card{
-
+.single-item-card {
   border: 4px solid rgb(181, 59, 14);
   border-radius: 20px;
   margin: 1rem 7rem 1rem 7rem;
@@ -346,22 +338,22 @@ margin-left: 4.5rem;
   margin-top: 5px;
 }
 
-.reviews{
+.reviews {
   min-height: 99vh;
 }
 
-.order-history{
+.order-history {
   margin: 1rem;
   min-height: 99vh;
 }
-.order-details{
+.order-details {
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
   padding-top: 1rem;
   border: 2px solid;
 }
-.order-history-list{
+.order-history-list {
   display: flex;
   justify-content: space-between;
   padding: 1rem;
@@ -384,35 +376,34 @@ margin-left: 4.5rem;
   color: white;
   background-size: contain;
 }
-.confirmation{
+.confirmation {
   min-height: 99vh;
-  
 }
 .security {
   min-height: 99vh;
 }
 .settings {
-  display:flex;
+  display: flex;
   flex-direction: column;
   min-height: 99vh;
 }
 
-.personal-information{
+.personal-information {
   margin: 8px;
   list-style: none;
   border: 2px solid;
   padding: 1rem;
 }
-.billing-information{
+.billing-information {
   margin: 8px;
   list-style: none;
   border: 2px solid;
   padding: 1rem;
 }
-.payment-information{
+.payment-information {
   min-height: 99vh;
 }
-.p-info-buttons{
+.p-info-buttons {
   padding: 4px;
 }
 .billing-form {
@@ -424,4 +415,24 @@ margin-left: 4.5rem;
   border: 1px solid;
   box-shadow: 1px 1px 2px 2px;
   min-height: 50vh;
+}
+
+.quickadd {
+  margin: 20px;
+}
+
+.addtocart {
+  margin: 20px;
+}
+
+.submitbutton {
+  margin: 20px;
+}
+
+.checkout {
+  margin: 20px;
+}
+
+.remove {
+  margin: 20px;
 }

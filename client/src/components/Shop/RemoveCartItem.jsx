@@ -34,6 +34,7 @@ export default function RemoveCartItems({ item }) {
   };
 
   return (
+
     <Container className="mt-4">
       <Row>
         <Col md={{ span: 10, offset: 1 }}>
@@ -57,5 +58,6 @@ export default function RemoveCartItems({ item }) {
         message={deleteMessage}
       />
     </Container>
+
   );
 }
