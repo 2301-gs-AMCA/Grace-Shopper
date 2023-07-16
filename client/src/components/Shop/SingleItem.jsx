@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import AddToCart from "./AddToCart";
 import { postReviewApi } from "../../api/reviews";
 import useAuth from "../../hooks/useAuth";
+import { Row, Col, Container, Card, Table, Alert } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function SingleItem() {
   const { itemId } = useParams();
@@ -91,70 +93,81 @@ export default function SingleItem() {
   }
 
   return (
-    <div className="item-container">
-      <div className="single-item-card">
-        <h1>{item.name}</h1>
-        <img src={image} alt="imageNotFound" />
-        <p>Description: {item.description}</p>
-        <p>Price: ${item.cost}</p>
-
-        <AddToCart item={item} />
-
-        <br />
-        <div>
-          <h2>Write a review:</h2>
-          <form id="submit-review-container" action="">
-            <label htmlFor="">
-              Title
-              <input
-                type="text"
-                placeholder="Title"
-                onChange={(e) => {
-                  setTitle(e.target.value);
+    <Container className="mt-4">
+      <Row>
+        <Col md={{ span: 10, offset: 1 }}>
+          <Card className="mt-2">
+            <Card.Header>
+              <h1>{item.name} </h1>
+              <p>Description: {item.description} </p>
+              <p>Price: ${item.cost} </p>
+              <p>
+                <img src={image} alt="imageNotFound" />
+              </p>
+              <p className="text-center">
+                <AddToCart item={item} />
+              </p>
+            </Card.Header>
+          </Card>
+          <Card.Body>
+            <Table striped borderered hover size="sm"></Table>
+            <br></br>
+            <div>
+              <h2>Write a review:</h2>
+              <form id="submit-review-container" action="">
+                <label htmlFor="">
+                  Title
+                  <input
+                    type="text"
+                    placeholder="Title"
+                    onChange={(e) => {
+                      setTitle(e.target.value);
+                    }}
+                  />
+                </label>
+                <label htmlFor="">
+                  rating
+                  <input
+                    type="Number"
+                    min="1"
+                    max="5"
+                    placeholder="5"
+                    style={{ width: "50px" }}
+                    onChange={(e) => {
+                      setRating(e.target.value);
+                    }}
+                  />
+                  out of 5
+                </label>
+                <label htmlFor="">
+                  body
+                  <textarea
+                    type="text"
+                    placeholder="review"
+                    onChange={(e) => {
+                      setReview(e.target.value);
+                    }}
+                  />
+                </label>
+              </form>
+              <button
+                onClick={(e) => {
+                  handleSubmit(e);
+                  console.log(e.target);
                 }}
-              />
-            </label>
-            <label htmlFor="">
-              rating
-              <input
-                type="Number"
-                min="1"
-                max="5"
-                placeholder="5"
-                style={{ width: "50px" }}
-                onChange={(e) => {
-                  setRating(e.target.value);
-                }}
-              />
-              out of 5
-            </label>
-            <label htmlFor="">
-              body
-              <textarea
-                type="text"
-                placeholder="review"
-                onChange={(e) => {
-                  setReview(e.target.value);
-                }}
-              />
-            </label>
-          </form>
-          <button
-            onClick={(e) => {
-              handleSubmit(e);
-              console.log(e.target);
-            }}
-          >
-            SUBMIT
-          </button>
-        </div>
-        <br />
-        <br />
-        <div>
-          <h2>Reviews:</h2>
-          {reviews}
-        </div>
-      </div>
-    </div>
+              >
+                SUBMIT
+              </button>
+            </div>
+            <br />
+            <br />
+            <div>
+              <h2>Reviews:</h2>
+              {reviews}
+            </div>
+          </Card.Body>
+        </Col>
+      </Row>
+    </Container>
   );
 }
