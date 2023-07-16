@@ -43,5 +43,18 @@ usersRouter.get("/:username/orders", authRequired, async (req, res, next) => {
     next({ name, message });
   }
 });
+usersRouter.patch("/updateUser", authRequired, async (req, res, next) => {
+  try {
+    const updateUser = await updateUser(username, password);
+    if (user) {
+      res.send({
+        success: true,
+        message: "username changed",
+      });
+    }
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
 
 module.exports = usersRouter;

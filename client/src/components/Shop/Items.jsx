@@ -25,7 +25,6 @@ export default function Items({ items }) {
           </div>
         </Card>
       </Container>
-      ;
     </div>
   );
 }
