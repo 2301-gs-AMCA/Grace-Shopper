@@ -202,17 +202,12 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
   return (
     <div>
       {(pathname === "/shop" || pathname === `/shop/${category}`) && (
-
         <Container>
           <Row>
             <Col md={{ span: 10, offset: 1 }}>
-              <Card className="mt-2">
-                <Card.Body striped bordered hover size="sm">
-                  <form onSubmit={handleSubmit}>
-                    <button>Quick Add</button>
-                  </form>
-                </Card.Body>
-              </Card>
+              <form onSubmit={handleSubmit}>
+                <button>Quick Add</button>
+              </form>
             </Col>
           </Row>
           <AddSuccessMessage
@@ -253,7 +248,6 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
             item={item}
           />
         </Container>
-
       )}
       {pathname === "/cart" && (
         <form>
