@@ -5,7 +5,18 @@ import { useLocation, useParams } from "react-router-dom";
 import { postOrder } from "../../api/orders";
 import { patchOrderItem, postOrderItem } from "../../api/order_items";
 import { fetchMyCart } from "../../api/auth";
-import RemoveCartItem from "./RemoveCartItem";
+import AddSuccessMessage from "./AddSuccessMessage";
+import {
+  Row,
+  Col,
+  Container,
+  Card,
+  Table,
+  Alert,
+  Button,
+} from "react-bootstrap";
+
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function AddToCart({ item, handleClick, setThisQuantity }) {
   const { pathname } = useLocation();
@@ -14,6 +25,12 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
   const { cart, setCart, orderId, setOrderId, isCounted, setIsCounted } =
     useCart();
   const [quantity, setQuantity] = useState(item.quantity || 1);
+  const [displayConfirmationModal, setDisplayConfirmationModal] =
+    useState(false);
+
+  const hideConfirmationModal = () => {
+    setDisplayConfirmationModal(false);
+  };
 
   function addNewCart() {
     console.log("user", user);
@@ -57,11 +74,15 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
       updateCart();
 
       setQuantity(1);
-      if (result.success) {
+      /*if (result.success) {
         window.alert(result.message);
+      }*/
+      if (result.success) {
+        setDisplayConfirmationModal(true);
+        setTimeout(() => setDisplayConfirmationModal(false), 1000);
       }
-      return result.order_item;
 
+      return result.order_item;
     }
     updateOrderItem();
   }
@@ -78,8 +99,12 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
       setIsCounted(!isCounted);
       setCart(cart);
 
-      if (result.success) {
+      /*if (result.success) {
         window.alert(result.message);
+      }*/
+      if (result.success) {
+        setDisplayConfirmationModal(true);
+        setTimeout(() => setDisplayConfirmationModal(false), 1000);
       }
 
       item.order_item_id = result.orderItem.id;
@@ -107,13 +132,11 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
         } else {
           setCart(cart);
         }
-
       }
       getMyCart();
     } catch (error) {
       console.error(error);
     }
-
   }, []);
   ///////////////////////////////////////////////////
   function handleSubmit(e) {
@@ -132,7 +155,6 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
           //got the item to have order_item_id in shop if cart already has item
           item.order_item_id = thatItem.order_item_id;
           if (pathname === "/shop" || pathname === `/shop/${category}`) {
-
             item.quantity = thatItem.quantity + 1;
             item.subtotal = item.cost * item.quantity;
           } else if (pathname === `/shop/items/${itemId}`) {
@@ -180,27 +202,56 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
   return (
     <div>
       {(pathname === "/shop" || pathname === `/shop/${category}`) && (
-        <form onSubmit={handleSubmit}>
-          <button>Quick Add</button>
-        </form>
+        <Container>
+          <Row>
+            <Col md={{ span: 10, offset: 1 }}>
+              <Card className="mt-2">
+                <Card.Body striped bordered hover size="sm">
+                  <form onSubmit={handleSubmit}>
+                    <button>Quick Add</button>
+                  </form>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+          <AddSuccessMessage
+            showModal={displayConfirmationModal}
+            hideModal={hideConfirmationModal}
+            item={item}
+          />
+        </Container>
       )}
       {pathname === `/shop/items/${itemId}` && (
-        <form onSubmit={handleSubmit}>
-          <label>
-            quantity:
-            <input
-              type="number"
-              max="100"
-              min="0"
-              value={quantity}
-              onChange={(e) => {
-                setQuantity(Number(e.target.value));
-              }}
-            />
-          </label>
-          <br></br>
-          <button>Add To Cart</button>
-        </form>
+        <Container>
+          <Row>
+            <Col md={{ span: 10, offset: 1 }}>
+              <form onSubmit={handleSubmit}>
+                <label>
+                  quantity:
+                  <input
+                    type="number"
+                    max="100"
+                    min="0"
+                    value={quantity}
+                    onChange={(e) => {
+                      setQuantity(Number(e.target.value));
+                    }}
+                  />
+                </label>
+
+                <span>
+                  <button>Add To Cart</button>
+                </span>
+              </form>
+            </Col>
+          </Row>
+
+          <AddSuccessMessage
+            showModal={displayConfirmationModal}
+            hideModal={hideConfirmationModal}
+            item={item}
+          />
+        </Container>
       )}
       {pathname === "/cart" && (
         <form>

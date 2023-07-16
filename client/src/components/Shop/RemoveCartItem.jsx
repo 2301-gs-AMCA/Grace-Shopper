@@ -1,37 +1,9 @@
 import { deleteOrderItem } from "../../api/order_items";
 import useCart from "../../hooks/useCart";
-import { Modal, Button } from "bootstrap";
 import { Row, Col, Container, Card, Table, Alert } from "react-bootstrap";
 import { useState } from "react";
 import RemoveConfirmation from "./RemoveConfirmation";
 import "bootstrap/dist/css/bootstrap.min.css";
-
-const DeleteConfirmation = ({
-  showModal,
-  hideModal,
-  confirmModal,
-  item,
-  message,
-}) => {
-  return (
-    <Modal show={showModal} onHide={hideModal}>
-      <Modal.Header closeButton>
-        <Modal.Title>Remove Confirmation</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <div className="alert alert-danger">{message}</div>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="default" onClick={hideModal}>
-          Cancel
-        </Button>
-        <Button variant="danger" onClick={() => confirmModal(item)}>
-          Remove
-        </Button>
-      </Modal.Footer>
-    </Modal>
-  );
-};
 
 export default function RemoveCartItems({ item }) {
   const { setCart, isCounted, setIsCounted } = useCart();
@@ -87,24 +59,3 @@ export default function RemoveCartItems({ item }) {
     </Container>
   );
 }
-
-/*export default function RemoveCartItem({ item }) {
-  const { setCart, isCounted, setIsCounted } = useCart();
-  return (
-    <form
-      onClick={async (e) => {
-        e.preventDefault();
-        const confirm = window.confirm(
-          "Are you sure you want to remove this item from your cart?"
-        );
-        if (confirm === true) {
-          const order = await deleteOrderItem(item.order_item_id);
-          setCart(order);
-          setIsCounted(!isCounted);
-        }
-      }}
-    >
-      <button type="onClick">Remove</button>
-    </form>
-  );
-}*/
