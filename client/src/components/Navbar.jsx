@@ -128,7 +128,7 @@ export default function Navbar() {
   }, [loggedIn, user]);*/
 
   return (
-    <div className="navbar">
+    <div id="navbar" className="navbar">
       <h1>A More Comfortable Area</h1>
       <div>
         <ul className="navlinks">
