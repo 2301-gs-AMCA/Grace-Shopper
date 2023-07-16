@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const SALT_ROUNDS = 10;
 const { createUser, getUserByUsername } = require("../db/adapters/users");
 const { authRequired } = require("./utils");
+const { getItemsByOrderId } = require("../db/adapters/items");
 const {
   createOrder,
   getAllUsersOrders,
@@ -210,6 +211,10 @@ authRouter.get("/myCart", authRequired, async (req, res, next) => {
     const order = await getUsersLastOrder(req.user.id);
     console.log("get last order: ", order);
     if (order && order.isCart) {
+      const items = await getItemsByOrderId(order.id);
+      if (items) {
+        order.items === items;
+      }
       res.cookie("order", order);
       res.send({
         success: true,

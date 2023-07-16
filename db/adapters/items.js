@@ -108,6 +108,25 @@ async function getAllItems() {
   }
 }
 
+async function getItemsByOrderId(orderId) {
+  try {
+    const { rows } = await client.query(
+      `
+    SELECT itms.id, itms.name, itms.cost, orditms.item_quantity as quantity, itms."isAvailable", itms.inventory_qty
+    FROM items itms
+    FULL OUTER JOIN order_items orditms
+    ON itms.id = orditms."itemId"
+    WHERE orditms."orderId" = $1
+    GROUP BY itms.id, orditms.id
+    ORDER BY orditms.id;`,
+      [orderId]
+    );
+    return rows;
+  } catch (error) {
+    throw error;
+  }
+}
+
 async function createItem(itemObj) {
   try {
     const {
@@ -189,6 +208,7 @@ async function deleteItem(id) {
 module.exports = {
   getItemById,
   getItemsByCategory,
+  getItemsByOrderId,
   getAllItems,
   createItem,
   updateItem,

@@ -79,7 +79,11 @@ order_itemsRouter.patch(
           orderItemId,
           item_quantity
         );
-        res.send({ order_item: updatedOrderItem });
+        res.send({
+          success: true,
+          message: "Cart updated",
+          order_item: updatedOrderItem,
+        });
       } else {
         next({
           name: "UnathorizedUserError",
@@ -99,12 +103,14 @@ order_itemsRouter.delete(
     const { orderItemId } = req.params;
     try {
       const orderItem = await getOrderItemById(orderItemId);
-      const order = await getOrderById(orderItem.orderid);
-      const item = await getItemById(orderItem.itemid);
+      const order = await getOrderById(orderItem.orderId);
+      const item = await getItemById(orderItem.itemId);
       if (orderItem && (order.userId === req.user.id || req.user.isAdmin)) {
         const deletedOrderItem = await destroyOrderItem(orderItemId);
+        const returnOrder = await getOrderById(order.id);
         res.send({
           message: `${item.name} is deleted from order ${order.id}`,
+          order: returnOrder,
         });
       } else {
         next(

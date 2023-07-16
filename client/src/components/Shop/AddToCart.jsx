@@ -5,6 +5,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { postOrder } from "../../api/orders";
 import { patchOrderItem, postOrderItem } from "../../api/order_items";
 import { fetchMyCart } from "../../api/auth";
+import RemoveCartItem from "./RemoveCartItem";
 
 export default function AddToCart({ item, handleClick, setThisQuantity }) {
   const { pathname } = useLocation();
@@ -15,6 +16,7 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
   const [quantity, setQuantity] = useState(item.quantity || 1);
 
   function addNewCart() {
+    console.log("user", user);
     if (!cart.id) {
       async function postNewOrder() {
         const result = await postOrder(user.id);
@@ -53,17 +55,33 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
         item.quantity
       );
       updateCart();
-      return result;
+
+      setQuantity(1);
+      if (result.success) {
+        window.alert(result.message);
+      }
+      return result.order_item;
+
     }
     updateOrderItem();
   }
   //////////////////////////////////////////////////////////
   function addNewItems() {
     console.log("cart before addNewItems", cart);
+
+    console.log("item.quantity", item.quantity);
+    console.log("quantity", quantity);
+    item.quantity = quantity;
+
     async function addOrderItem() {
       const result = await postOrderItem(cart.id, item.id, item.quantity);
       setIsCounted(!isCounted);
       setCart(cart);
+
+      if (result.success) {
+        window.alert(result.message);
+      }
+
       item.order_item_id = result.orderItem.id;
       return result;
     }
@@ -89,24 +107,13 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
         } else {
           setCart(cart);
         }
+
       }
       getMyCart();
     } catch (error) {
       console.error(error);
     }
-    /*if (pathname === "/cart") {
-      if (!user) {
-        setUser();
-      }
-      cart.totalPrice = 0;
-      for (let thisItem of cart.items) {
-        cart.totalPrice += thisItem.subtotal;
-      }
-      setThisQuantity(Number(quantity));
-      localStorage.setItem("cart", JSON.stringify(cart));
-      updateItems();
-      updateCart();
-    }*/
+
   }, []);
   ///////////////////////////////////////////////////
   function handleSubmit(e) {
@@ -125,12 +132,11 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
           //got the item to have order_item_id in shop if cart already has item
           item.order_item_id = thatItem.order_item_id;
           if (pathname === "/shop" || pathname === `/shop/${category}`) {
-            console.log("thatItem", thatItem);
-            console.log("item", item);
+
             item.quantity = thatItem.quantity + 1;
             item.subtotal = item.cost * item.quantity;
           } else if (pathname === `/shop/items/${itemId}`) {
-            item.quantity += thatItem.quantity;
+            item.quantity = thatItem.quantity + quantity;
           } else {
             item.quantity = thatItem.quantity;
           }
@@ -155,9 +161,6 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
     setQuantity(Number(e.target.value));
 
     item.quantity = Number(e.target.value);
-    console.log("e.target.value", e.target.value);
-    console.log("item.quantity", item.quantity);
-    console.log("quantity", quantity);
     item.subtotal = item.cost * quantity;
     if (pathname === "/cart") {
       if (!user) {
@@ -206,8 +209,8 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
             <input
               type="number"
               max={100}
-              min={0}
-              value={quantity}
+              min={1}
+              value={item.quantity}
               onChange={handleChange}
               onClick={handleClick}
             />

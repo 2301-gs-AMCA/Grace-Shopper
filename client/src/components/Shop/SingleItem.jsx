@@ -25,7 +25,6 @@ export default function SingleItem() {
         const result = await fetchItem(itemId);
         console.log("result getItemById: ", result);
         setItem(result.item);
-
         await fetchImg(result.item);
       }
       //the function that fetches the first image off the image reel

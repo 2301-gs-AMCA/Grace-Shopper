@@ -9,7 +9,6 @@ export default function Items({ items }) {
       <h2>Shop</h2>
       <div className="items-container">
         {items.map((item) => {
-
           return (
             <div key={item.id} className="item-card">
               <Link key={item.id} to={`/shop/items/${item.id}`}>

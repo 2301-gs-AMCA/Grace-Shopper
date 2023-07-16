@@ -86,28 +86,6 @@ export async function fetchMyCart() {
     const result = await response.json();
     console.log("result fetchMyCart", result);
 
-    /*
-    if (result.order && result.order !== "undefined") {
-      "result from fetchMyCart (isCart: true)", result;
-      console.log("result fetchMyCart", result);
-      return result;
-    } else {
-      const response2 = await fetch(`api/order`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: req.user.id,
-          isCart,
-          isComplete,
-          totalPrice,
-        }),
-      });
-      const result2 = await response2.json();
-      console.log("result2 from fetchMyCart (isCart: false)", result2);
-      return result2;
-    }*/
     return result;
   } catch (error) {
     console.error(error);
