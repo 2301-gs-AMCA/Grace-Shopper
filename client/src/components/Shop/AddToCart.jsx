@@ -54,6 +54,7 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
         item.quantity
       );
       updateCart();
+      setQuantity(result.order_item.item_quantity);
       return result;
     }
     updateOrderItem();
@@ -200,7 +201,7 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
               type="number"
               max={100}
               min={0}
-              value={quantity}
+              value={item.quantity}
               onChange={handleChange}
               onClick={handleClick}
             />
