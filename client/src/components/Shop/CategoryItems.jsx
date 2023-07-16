@@ -17,6 +17,7 @@ export default function CategoryItems() {
 
   return (
     <div id="items-shop">
+      <h2>{category}</h2>
       <Items items={items} />
     </div>
   );

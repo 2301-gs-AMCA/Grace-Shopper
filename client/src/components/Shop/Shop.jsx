@@ -29,6 +29,8 @@ export default function Shop() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeIn" }}
     >
+      <h2>Shop</h2>
+      <br></br>
       <CategorySidebar />
       <Items items={items} />
     </m.div>
