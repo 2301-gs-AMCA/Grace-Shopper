@@ -8,10 +8,7 @@ import RemoveCartItem from "../Shop/RemoveCartItem";
 import { patchOrder } from "../../api/orders";
 import { fetchMyCart } from "../../api/auth";
 
-import { useNavigate,Link } from "react-router-dom";
-
-import { fetchMyCart } from "../../api/auth";
-
+import { useNavigate, Link } from "react-router-dom";
 
 let cartImg =
   "https://em-content.zobj.net/source/microsoft-teams/363/shopping-cart_1f6d2.png";
@@ -118,7 +115,7 @@ export default function Cart() {
       </div>
       <Link to={"http://localhost:5173/checkout"}>
         <button>Checkout</button>
-        </Link>
+      </Link>
     </div>
   );
 }
