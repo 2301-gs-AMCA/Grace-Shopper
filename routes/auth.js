@@ -209,12 +209,12 @@ authRouter.get("/me", authRequired, async (req, res, next) => {
 authRouter.get("/myCart", authRequired, async (req, res, next) => {
   try {
     const order = await getUsersLastOrder(req.user.id);
-    const items = await getItemsByOrderId(order.id);
     console.log("get last order: ", order);
-    if (items) {
-      order.items === items;
-    }
     if (order && order.isCart) {
+      const items = await getItemsByOrderId(order.id);
+      if (items) {
+        order.items === items;
+      }
       res.cookie("order", order);
       res.send({
         success: true,

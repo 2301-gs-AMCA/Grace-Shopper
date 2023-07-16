@@ -112,7 +112,7 @@ async function getItemsByOrderId(orderId) {
   try {
     const { rows } = await client.query(
       `
-    SELECT itms.id, itms.name, itms.description, itms.cost, itms.category, itms."isAvailable", itms.inventory_qty
+    SELECT itms.id, itms.name, itms.cost, orditms.item_quantity as quantity, itms."isAvailable", itms.inventory_qty
     FROM items itms
     FULL OUTER JOIN order_items orditms
     ON itms.id = orditms."itemId"
