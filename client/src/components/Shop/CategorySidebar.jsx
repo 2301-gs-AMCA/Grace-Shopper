@@ -12,7 +12,11 @@ export default function CategorySidebar() {
     <div className="sidebar">
       {categories.map((category) => {
         return (
-          <Link key={category.id} to={`/shop/${category.name}`}>
+          <Link
+            className="sidebar-links"
+            key={category.id}
+            to={`/shop/${category.name}`}
+          >
             {category.name}
           </Link>
         );

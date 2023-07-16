@@ -2,6 +2,7 @@ import React from "react";
 import "../App.css";
 import useAuth from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import Popup from "reactjs-popup";
 export default function Settings() {
   const { user } = useAuth();
   const nav = useNavigate();
@@ -10,14 +11,10 @@ export default function Settings() {
       <h1>Settings</h1>
       <ul className="personal-information">
         <h2>Personal Information</h2>
-        <br></br>
         <li>Current Username: {user.username} </li>
-        <button className="p-info-buttons">Change Username</button>
-        <br></br>
         <li>Current Password: {user.password} </li>
-        <button className="p-info-buttons">Change Password</button>
-        <br></br>
         <li>Email Address: </li>
+        <button className="p-info-buttons">Update Personal Information</button>
       </ul>
       <ul className="billing-information">
         <h2>Billing Information</h2>

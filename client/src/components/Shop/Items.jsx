@@ -6,7 +6,6 @@ import AddToCart from "./AddToCart";
 export default function Items({ items }) {
   return (
     <div>
-      <h2>Shop</h2>
       <div className="items-container">
         {items.map((item) => {
           return (
