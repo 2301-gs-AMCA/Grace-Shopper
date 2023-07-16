@@ -65,7 +65,7 @@ const CartProvider = ({ children }) => {
       }*/
       getMyCart();
     }
-  }, [user.id, cart.id, cart.isComplete, orderId]);
+  }, [user.id, cart.id, cart.isComplete, orderId, isCounted]);
 
   const contextValue = {
     cart,
