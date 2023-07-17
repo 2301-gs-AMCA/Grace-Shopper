@@ -1,7 +1,29 @@
 .modal-dialog {
+  color: aquamarine;
   position: fixed;
-  top: 0;
+  top: auto;
   right: 0;
   left: auto;
-  bottom: auto;
+  bottom: 0;
+}
+
+#remove_confirm {
+  position: absolute;
+  top: 30%;
+  left: 0%;
+}
+
+#success {
+  height: 100%;
+  margin: none;
+  padding: none;
+}
+
+.modal-backdrop {
+  background-color: transparent;
+}
+
+.modal-content {
+  background-color: transparent;
+  border: 0;
 }

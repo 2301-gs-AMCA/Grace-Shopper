@@ -10,9 +10,10 @@ export default function AddSuccessMessage({
   message,
 }) {
   return (
-    <div className="modal-dialog position-fixed right-0 bottom-0">
-      <Modal show={showModal} onHide={hideModal}>
+    <div className="modal-dialog">
+      <Modal id="modal" show={showModal} onHide={hideModal}>
         <div
+          id="success"
           className="alert alert-success alert-dismissible fade show"
           role="alert"
           data-tor="show:scale.from(0)"
