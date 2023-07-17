@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 import "../../App.css";
 import useAuth from "../../hooks/useAuth";
 import useCart from "../../hooks/useCart";
@@ -8,8 +7,9 @@ import RemoveCartItem from "../Shop/RemoveCartItem";
 import { fetchMyCart } from "../../api/auth";
 import { Row, Col, Container, Card } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { patchOrder } from "../../api/orders";
 
 let cartImg =
   "https://em-content.zobj.net/source/microsoft-teams/363/shopping-cart_1f6d2.png";
@@ -19,7 +19,7 @@ export default function Cart() {
   const { cart, setCart } = useCart();
   const [click, setClick] = useState();
   const [setThisQuantity] = useState();
-
+  const navigate = useNavigate();
   //sets cart items on load so that cart.items have item.order_item_id
   useEffect(() => {
     cart.userId = user.id;
@@ -39,6 +39,29 @@ export default function Cart() {
   function handleClick(e) {
     e.preventDefault();
     setClick(e.target.value);
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    try {
+      async function completeOrder() {
+        const result = await patchOrder(cart.id, {
+          id: cart.id,
+          userId: user.id,
+          isCart: false,
+          isComplete: true,
+          date: cart.order_date,
+        });
+        setCart(result.order);
+
+        navigate("/confirmation");
+      }
+      completeOrder();
+
+      return;
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
@@ -70,9 +93,9 @@ export default function Cart() {
             </Card>
           </Row>
         </div>
-        <Link to={"http://localhost:5173/checkout"}>
-          <button className="checkout">Checkout</button>
-        </Link>
+        <form onSubmit={handleSubmit}>
+          <button>Complete Order</button>
+        </form>
       </Container>
     </div>
   );
