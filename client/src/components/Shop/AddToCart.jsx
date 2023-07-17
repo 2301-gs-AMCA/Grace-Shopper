@@ -47,6 +47,11 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
               item.id,
               item.quantity
             );
+
+            if (result2.success) {
+              setDisplayConfirmationModal(true);
+              setTimeout(() => setDisplayConfirmationModal(false), 1000);
+            }
             return result2;
           }
           postNewOrderItem();
@@ -79,7 +84,7 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
       }*/
       if (result.success) {
         setDisplayConfirmationModal(true);
-        setTimeout(() => setDisplayConfirmationModal(false), 1000);
+        //setTimeout(() => setDisplayConfirmationModal(false), 1000);
       }
 
       return result.order_item;
