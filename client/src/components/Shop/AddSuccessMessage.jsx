@@ -1,6 +1,7 @@
 import { Modal, Alert, Button, Container } from "react-bootstrap";
 import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./Shop.css";
 
 export default function AddSuccessMessage({
   showModal,
@@ -9,7 +10,7 @@ export default function AddSuccessMessage({
   message,
 }) {
   return (
-    <div>
+    <div className="modal-dialog position-fixed right-0 bottom-0">
       <Modal show={showModal} onHide={hideModal}>
         <div
           className="alert alert-success alert-dismissible fade show"

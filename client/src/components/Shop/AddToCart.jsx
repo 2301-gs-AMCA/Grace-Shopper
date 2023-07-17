@@ -50,7 +50,7 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
 
             if (result2.success) {
               setDisplayConfirmationModal(true);
-              setTimeout(() => setDisplayConfirmationModal(false), 1000);
+              setTimeout(() => setDisplayConfirmationModal(false), 1500);
             }
             return result2;
           }
@@ -84,7 +84,7 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
       }*/
       if (result.success) {
         setDisplayConfirmationModal(true);
-        setTimeout(() => setDisplayConfirmationModal(false), 1000);
+        setTimeout(() => setDisplayConfirmationModal(false), 1500);
       }
 
       return result.order_item;
@@ -109,7 +109,7 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
       }*/
       if (result.success) {
         setDisplayConfirmationModal(true);
-        setTimeout(() => setDisplayConfirmationModal(false), 1000);
+        setTimeout(() => setDisplayConfirmationModal(false), 1500);
       }
 
       item.order_item_id = result.orderItem.id;
