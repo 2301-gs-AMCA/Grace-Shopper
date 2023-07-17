@@ -20,22 +20,9 @@ export default function Cart() {
   const [click, setClick] = useState();
   const [setThisQuantity] = useState();
 
-  useEffect(() => {
-    cart.userId = user.id;
-    async function getCart() {
-      let thatCart = JSON.parse(localStorage.getItem("cart"));
-      if (thatCart !== null) {
-        await setCart(thatCart);
-      } else {
-        await setCart(cart);
-      }
-      setCart(cart);
-    }
-    getCart();
-  }, [click]);
-
   //sets cart items on load so that cart.items have item.order_item_id
   useEffect(() => {
+    cart.userId = user.id;
     async function setCartItems() {
       const result = await fetchMyCart();
       if (result.success) {
