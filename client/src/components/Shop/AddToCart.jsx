@@ -241,7 +241,7 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
                 </label>
 
                 <span>
-                  <button>Add To Cart</button>
+                  <button className="addtocart">Add To Cart</button>
                 </span>
               </form>
             </Col>
