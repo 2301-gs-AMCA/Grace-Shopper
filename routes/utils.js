@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const { createUser } = require("../db/adapters/users");
 
 function requireUser(req, res, next) {
   if (!req.user) {
@@ -10,28 +9,6 @@ function requireUser(req, res, next) {
   }
   next();
 }
-
-/*async function createGuest(req, res, next) {
-  let randomNum = Math.floor(Math.random() * 9000) + 1000; // Generates a random 4-digit number
-  let username = "guest" + randomNum;
-  const characters =
-    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
-  let password = "";
-  for (var i = 0; i < 8; i++) {
-    password += characters.charAt(
-      Math.floor(Math.random() * characters.length)
-    );
-  }
-
-  const user = await createUser({
-    username,
-    password,
-    isAdmin: false,
-    loggedIn: false,
-  });
-  console.log(user);
-  return user;
-}*/
 
 const authRequired = (req, res, next) => {
   try {
