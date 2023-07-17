@@ -2,7 +2,6 @@ export async function getOrderItems(orderId) {
   try {
     const response = await fetch(`/api/order_items/${orderId}`);
     const result = await response.json();
-    console.log("result from getOrder", result);
     return result;
   } catch (error) {
     console.error(error);
@@ -23,7 +22,6 @@ export async function postOrderItem(orderId, itemId, item_quantity) {
       }),
     });
     const result = await response.json();
-    console.log("result from postOrderItem", result);
     return result;
   } catch (error) {
     console.error(error);
@@ -49,7 +47,6 @@ export async function patchOrderItem(
       }),
     });
     const result = await response.json();
-    console.log("result from patchOrderItem: ", result);
     return result;
   } catch (error) {
     console.error(error);
@@ -65,7 +62,6 @@ export async function deleteOrderItem(orderItemId) {
       },
     });
     const result = await response.json();
-    console.log("result from deleteOrderItem: ", result);
     return result;
   } catch (error) {
     console.error(error);

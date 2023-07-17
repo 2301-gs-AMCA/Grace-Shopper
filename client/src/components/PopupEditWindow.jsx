@@ -15,11 +15,8 @@ export default function pupupEditWindow(props) {
     if (update != {}) {
       async function postUpdate() {
         console.log(title, rating, review);
-
-        console.log("current update", update);
         try {
           const response = await updateReview(update);
-          console.log("update error", response);
           const result = await response.json();
           return result;
         } catch (err) {
@@ -79,7 +76,6 @@ export default function pupupEditWindow(props) {
       <button
         onClick={(e) => {
           handleSubmit(e);
-          console.log(e.target);
         }}
       >
         SUBMIT

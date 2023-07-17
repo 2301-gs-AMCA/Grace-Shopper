@@ -25,7 +25,6 @@ export default function SingleItem() {
       //gets the item
       async function getItemById() {
         const result = await fetchItem(itemId);
-        console.log("result getItemById: ", result);
         setItem(result.item);
         await fetchImg(result.item);
       }

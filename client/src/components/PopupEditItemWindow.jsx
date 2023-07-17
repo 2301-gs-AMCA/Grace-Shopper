@@ -11,7 +11,6 @@ export default function pupupEditItemWindow({ item }) {
   const [inventory_qty, setInventory_qty] = useState(item.inventory_qty);
   const [isAvailable, setIsAvailable] = useState(item.isAvailable);
   const itemId = item.id;
-  console.log("popupeditwindowProps", item);
 
   useEffect(() => {
     /**The useEffect reruns when Update State is changed */
@@ -28,7 +27,6 @@ export default function pupupEditItemWindow({ item }) {
           isAvailable
         );
 
-        console.log("current update", update);
         try {
           const response = await patchItem(update);
           /**This makes sure the page load dosnt happen until

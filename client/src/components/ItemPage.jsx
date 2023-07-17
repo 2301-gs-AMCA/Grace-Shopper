@@ -23,7 +23,6 @@ export default function ItemPage() {
 
     fetch();
   }, []);
-  console.log("Item", Item);
 
   return (
     <div>

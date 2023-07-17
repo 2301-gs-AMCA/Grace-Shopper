@@ -36,8 +36,8 @@ export default function Navbar() {
   }, [isCounted, cart]);
 
   return (
-    <div className="navbar">
-      <h1>A More Comfortable Area</h1>
+    <div id="navbar" className="navbar">
+      <h1 className="nav-header">A More Comfortable Area</h1>
       <div>
         <ul className="navlinks">
           <li>
@@ -85,12 +85,12 @@ export default function Navbar() {
             </li>
           )}
           <li>
-            <button className="link" onClick={() => nav("/shop")}>
+            <button className="shop-navlinks" onClick={() => nav("/shop")}>
               Shop
             </button>
           </li>
           <li>
-            <button className="link" onClick={() => nav("/cart")}>
+            <button className="navlinks" onClick={() => nav("/cart")}>
               <p className="counter">{count}</p>
               <img
                 src="https://em-content.zobj.net/source/microsoft-teams/363/shopping-cart_1f6d2.png"

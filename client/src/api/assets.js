@@ -38,8 +38,6 @@ export async function deleteImageApi(id) {
     });
 
     const { message } = await response.json();
-    console.log("Image delete result", message);
-
     return message;
   } catch (err) {
     throw err;
