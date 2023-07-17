@@ -1,5 +1,8 @@
 ///GET all user Reviews
 export async function fetchUserReviews(userId) {
+  if(!userId){
+    return "userid is null"
+  }
   try {
     const response = await fetch(`/api/reviews/${userId}`);
     const reviews = await response.json();
