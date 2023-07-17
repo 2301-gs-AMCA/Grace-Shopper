@@ -30,7 +30,7 @@ async function postReview(revObj) {
           VALUES($1,$2,$3,$4,$5)
           RETURNING *;
           `,
-        [revObj.itemid, revObj.userid, revObj.title, revObj.rating, revObj.review]
+        [revObj.itemId, revObj.userId, revObj.title, revObj.rating, revObj.review]
       );
       return rvw;
     } catch (error) {

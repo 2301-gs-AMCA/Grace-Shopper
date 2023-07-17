@@ -83,8 +83,8 @@ export default function SingleItem() {
     //sets POSTOBJ
 
     setPostReview({
-      userid: user.id,
-      itemid: itemId,
+      userId: user.id,
+      itemId: itemId,
       title: title,
       rating: rating,
       review: review,
