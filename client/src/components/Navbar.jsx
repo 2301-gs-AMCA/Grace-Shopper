@@ -3,6 +3,7 @@ import { logout } from "../api/auth";
 import useAuth from "../hooks/useAuth";
 import useCart from "../hooks/useCart";
 import { useState, useEffect } from "react";
+import Searchbar from "./SearchBar";
 
 export default function Navbar() {
   const nav = useNavigate();

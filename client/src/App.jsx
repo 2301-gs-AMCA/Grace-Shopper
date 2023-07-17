@@ -13,8 +13,9 @@ import Settings from "./ProfileLinks/Settings";
 import OrderHistory from "./ProfileLinks/OrderHistory";
 import Checkout from "./components/Checkout";
 import Billing from "./components/Billing";
-import Items from "./components/Shop/Items";
+
 import SingleItem from "./components/Shop/SingleItem";
+import Searchbar from "./components/SearchBar";
 
 import ItemPage from "./components/ItemPage";
 import "./App.css";
@@ -33,6 +34,7 @@ function App() {
   return (
     <m.div>
       <Navbar />
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<AuthForm />} />

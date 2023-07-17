@@ -1,6 +1,5 @@
 import ItemRow from "./ItemRow";
 import { Link } from "react-router-dom";
-import SingleItem from "./SingleItem";
 import AddToCart from "./AddToCart";
 import { Row, Col, Container, Card, Table, Alert } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";

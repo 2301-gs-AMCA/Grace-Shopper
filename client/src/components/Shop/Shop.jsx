@@ -5,14 +5,16 @@ import CategorySidebar from "./CategorySidebar";
 import { motion as m } from "framer-motion";
 ("../../App.css");
 
-export default function Shop() {
-  const [items, setItems] = useState([]);
+export default function Shop({ items }) {
+  const [theseItems, setTheseItems] = useState([]);
 
   async function getItems() {
     try {
       const result = await fetchAllItems();
       console.log("result from getItems: ", result);
-      setItems(result.items);
+      if (!items) {
+        setTheseItems(result.items);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -32,7 +34,7 @@ export default function Shop() {
       <h2>Shop</h2>
       <br></br>
       <CategorySidebar />
-      <Items items={items} />
+      <Items items={theseItems} />
     </m.div>
   );
 }
