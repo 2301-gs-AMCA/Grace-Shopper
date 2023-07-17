@@ -47,6 +47,11 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
               item.id,
               item.quantity
             );
+
+            if (result2.success) {
+              setDisplayConfirmationModal(true);
+              setTimeout(() => setDisplayConfirmationModal(false), 1500);
+            }
             return result2;
           }
           postNewOrderItem();
@@ -79,7 +84,7 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
       }*/
       if (result.success) {
         setDisplayConfirmationModal(true);
-        setTimeout(() => setDisplayConfirmationModal(false), 1000);
+        setTimeout(() => setDisplayConfirmationModal(false), 1500);
       }
 
       return result.order_item;
@@ -104,7 +109,7 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
       }*/
       if (result.success) {
         setDisplayConfirmationModal(true);
-        setTimeout(() => setDisplayConfirmationModal(false), 1000);
+        setTimeout(() => setDisplayConfirmationModal(false), 1500);
       }
 
       item.order_item_id = result.orderItem.id;
@@ -202,17 +207,12 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
   return (
     <div>
       {(pathname === "/shop" || pathname === `/shop/${category}`) && (
-
         <Container>
           <Row>
             <Col md={{ span: 10, offset: 1 }}>
-              <Card className="mt-2">
-                <Card.Body striped bordered hover size="sm">
-                  <form onSubmit={handleSubmit}>
-                    <button>Quick Add</button>
-                  </form>
-                </Card.Body>
-              </Card>
+              <form onSubmit={handleSubmit}>
+                <button>Quick Add</button>
+              </form>
             </Col>
           </Row>
           <AddSuccessMessage
@@ -253,7 +253,6 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
             item={item}
           />
         </Container>
-
       )}
       {pathname === "/cart" && (
         <form>

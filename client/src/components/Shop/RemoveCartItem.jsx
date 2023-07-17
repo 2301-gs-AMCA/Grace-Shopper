@@ -34,20 +34,12 @@ export default function RemoveCartItems({ item }) {
   };
 
   return (
-
     <Container className="mt-4">
       <Row>
         <Col md={{ span: 10, offset: 1 }}>
-          <Card className="mt-2">
-            <Card.Body striped bordered hover size="sm">
-              <button
-                type="onClick"
-                onClick={() => showDeleteModal("item", item)}
-              >
-                Remove
-              </button>
-            </Card.Body>
-          </Card>
+          <button type="onClick" onClick={() => showDeleteModal("item", item)}>
+            Remove
+          </button>
         </Col>
       </Row>
       <RemoveConfirmation
@@ -58,6 +50,5 @@ export default function RemoveCartItems({ item }) {
         message={deleteMessage}
       />
     </Container>
-
   );
 }

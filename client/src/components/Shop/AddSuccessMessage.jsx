@@ -1,5 +1,7 @@
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Alert, Button, Container } from "react-bootstrap";
 import { useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./Shop.css";
 
 export default function AddSuccessMessage({
   showModal,
@@ -8,23 +10,31 @@ export default function AddSuccessMessage({
   message,
 }) {
   return (
-    <Modal show={showModal} onHide={hideModal}>
-      <Modal.Body
-        className="alert alert-success alert-dismissible fade show"
-        role="alert"
-        data-tor="show:scale.from(0)"
-      >
-        <div>
-          <strong>Success!</strong> Cart updated!!
+    <div className="modal-dialog position-fixed right-0 bottom-0">
+      <Modal show={showModal} onHide={hideModal}>
+        <div
+          className="alert alert-success alert-dismissible fade show"
+          role="alert"
+          data-tor="show:scale.from(0)"
+        >
+          <strong>Success:</strong> Cart updated!!
           <button
             type="button"
-            class="btn-close"
+            className="alert alert-success btn-close"
             data-bs-dismiss="alert"
             aria-label="Close"
             onClick={hideModal}
           />
         </div>
-      </Modal.Body>
-    </Modal>
+      </Modal>
+    </div>
   );
 }
+
+<div class="alert alert-secondary" role="alert">
+  A simple secondary alert with{" "}
+  <a href="#" class="alert-link">
+    an example link
+  </a>
+  . Give it a click if you like.
+</div>;
