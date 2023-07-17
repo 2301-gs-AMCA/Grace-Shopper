@@ -18,11 +18,12 @@ export default function Profile() {
     );
   }
 
-  const [setMyOrders] = useState();
+  const [myOrders, setMyOrders] = useState([]);
 
   async function getOrders() {
     let order = await getMyOrders();
-    setMyOrders(order);
+
+    setMyOrders(order.orders);
   }
   useEffect(() => {
     getOrders();
@@ -69,6 +70,7 @@ export default function Profile() {
         <h2>Items You May Like</h2>
         <ul className="likedItems">
           <li>List of items based on your search history</li>
+          <li>[Under Construction]</li>
         </ul>
       </div>
       {/*//ORDER HISTORY TABLE///*/}
@@ -76,6 +78,7 @@ export default function Profile() {
         <h2>Buy Again</h2>
         <ul className="buy-back">
           <li>Your Recently Ordered Items</li>
+          <li>[Under Construction]</li>
         </ul>
       </div>
     </m.div>
