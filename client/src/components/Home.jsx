@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import "../App.css";
 
 export default function Home() {
-  const { user, loggedIn, isLoggedIn } = useAuth();
+  const { user, loggedIn } = useAuth();
   return (
     <m.div
       className="home-page"
@@ -29,7 +29,7 @@ export default function Home() {
         discomfort whatsoever. If your goal is to be comfortable, we wish to
         fulfill that. However, be Careful... the Power of Comfort is Strong.
         <br></br>
-        {loggedIn === false && (
+        {(loggedIn === false || user.isGuest) && (
           <p>
             <Link to="/login">
               {" "}

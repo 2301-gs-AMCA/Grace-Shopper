@@ -128,10 +128,6 @@ orderRouter.patch("/update", async (req, res, next) => {
     if (originalUser.isGuest) {
       const updatedOrder = await updateOrdersUser(orderId, userId);
 
-      //const orderCookie = req.cookies.order;
-
-      //const updatedOrder = { ...orderCookie, ...modifiedOrder };
-
       res.cookie("order", updatedOrder, {
         sameSite: "strict",
         httpOnly: true,
@@ -163,10 +159,6 @@ orderRouter.patch("/:orderId", authRequired, async (req, res, next) => {
 
     if (originalOrder.userId === req.user.id || req.user.isAdmin) {
       const updatedOrder = await updateOrder(orderId, updateOrderObj);
-
-      //const orderCookie = req.cookies.order;
-
-      //const updatedOrder = { ...orderCookie, ...modifiedOrder };
 
       res.cookie("order", updatedOrder, {
         sameSite: "strict",

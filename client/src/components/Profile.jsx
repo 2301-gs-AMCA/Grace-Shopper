@@ -1,12 +1,11 @@
 import useAuth from "../hooks/useAuth";
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { motion as m } from "framer-motion";
 import { getMyOrders } from "../api/orders";
 
 export default function Profile() {
   const { user } = useAuth();
-  const navigate = useNavigate();
 
   console.log(user);
   let adminhtml = "";
@@ -23,7 +22,7 @@ export default function Profile() {
 
   async function getOrders() {
     let order = await getMyOrders();
-    console.log("my orders", order);
+
     setMyOrders(order.orders);
   }
   useEffect(() => {
@@ -36,7 +35,9 @@ export default function Profile() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeIn" }}
     >
-      <h1 className="userHeader">Welcome, {user.username}!</h1>
+      <h1 className="userHeader">
+        Welcome, {user.isGuest ? "Guest" : user.username}!
+      </h1>
       <div className="userInfo">
         <u>USER INFO</u>
         <br></br>

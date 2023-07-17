@@ -1,7 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { fetchAllItems, postItem } from "../api/items";
-import { addImageToItem } from "../api/assets";
 import ItemTable from "./ItemTable";
 export default function Dashboard() {
   const [item, setItem] = useState({});
@@ -59,7 +58,6 @@ export default function Dashboard() {
     function RenderTableItems(allItems) {
       if (allItems.length != 0 && allItems != undefined) {
         setTable(<ItemTable items={allItems} />);
-        console.log("table is", Table);
         setLoadTable(false);
       }
     }

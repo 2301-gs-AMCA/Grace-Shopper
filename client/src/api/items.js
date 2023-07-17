@@ -40,7 +40,6 @@ export async function fetchItemsByCategory(category) {
     const categoryItems = result.items.filter(
       (item) => item.category === category
     );
-    console.log("result categoryItems: ", categoryItems);
     return categoryItems;
   } catch (error) {
     console.error(error);
@@ -57,7 +56,6 @@ export async function postItem(itemObj) {
       body: JSON.stringify({ itemObj }),
     });
     const result = await response.json();
-    console.log("Result from postItem: ", result);
     return result;
   } catch (error) {
     console.error(error);
@@ -76,7 +74,6 @@ export async function patchItem(itemObj) {
       body: JSON.stringify({ itemObj }),
     });
     const result = await response.json();
-    console.log("result from patchItem: ", result);
     return result;
   } catch (error) {
     console.error(error);

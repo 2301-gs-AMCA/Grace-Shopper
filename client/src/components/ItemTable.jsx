@@ -6,7 +6,6 @@ import { deleteItemApi } from "../api/items";
 import { deleteImageApi } from "../api/assets";
 
 export default function ItemTable({ items }) {
-  console.log("tableItems", items);
   const [html, setHtml] = useState("");
 
   useEffect(() => {

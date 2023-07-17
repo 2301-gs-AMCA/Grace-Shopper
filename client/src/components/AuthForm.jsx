@@ -9,7 +9,7 @@ import useCart from "../hooks/useCart";
 export default function AuthForm() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const { user, setUser, setLoggedIn } = useAuth();
+  const { setUser } = useAuth();
   const { cart, setCart, setOrderId } = useCart();
 
   const [username, setUsername] = useState("");
@@ -23,14 +23,12 @@ export default function AuthForm() {
       let result;
       if (pathname === "/register") {
         result = await registerUser(username, password);
-        console.log("register result", result);
       } else {
         result = await login(username, password);
       }
 
       result && result.success
         ? (alert(result.message),
-          //setLoggedIn(true),
           setUser(result.user),
           updateCart(),
           setUsername(""),
@@ -43,24 +41,21 @@ export default function AuthForm() {
       let thisCart = {};
 
       async function updateCart() {
-        console.log("cart before upDateCart", cart);
         if (cart.id && cart.isCart) {
           const haveCart = await fetchMyCart();
-          console.log("haveCart result", haveCart);
+
           if (haveCart.success) {
-            //setOrderId(haveCart.order.id);
             orderId = haveCart.order.id;
             setOrderId(orderId);
             thisCart = haveCart.order;
           } else {
             const result2 = await postOrder(userId);
-            console.log("result2 from postOrder", result2);
+
             orderId = result2.order.id;
             setOrderId(orderId);
           }
-          console.log("cart.items", cart.items);
+
           for (let item of cart.items) {
-            console.log("thisCart", thisCart);
             let found;
             if (thisCart.items) {
               found = thisCart.items.find(
@@ -73,8 +68,6 @@ export default function AuthForm() {
                   thatItem.quantity += item.quantity;
                   thatItem.subtotal += item.subtotal;
                   async function updateOrderItem() {
-                    console.log("thatItem", thatItem);
-                    console.log("thisCart", thisCart);
                     const result3 = await patchOrderItem(
                       thatItem.order_item_id,
                       thisCart.id,
@@ -86,7 +79,6 @@ export default function AuthForm() {
                   }
                   updateOrderItem();
                   setCart(cart);
-                  localStorage.setItem("cart", JSON.stringify(cart));
                 }
               }
             } else {

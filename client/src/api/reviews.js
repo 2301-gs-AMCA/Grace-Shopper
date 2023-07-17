@@ -1,12 +1,12 @@
 ///GET all user Reviews
 export async function fetchUserReviews(userId) {
-  if(!userId){
-    return "userid is null"
+  if (!userId) {
+    return "userid is null";
   }
   try {
     const response = await fetch(`/api/reviews/${userId}`);
     const reviews = await response.json();
-    console.log("fetchUserReviews:", reviews);
+
     return reviews;
   } catch (err) {
     console.error(err);
@@ -22,7 +22,7 @@ export async function updateReview(editedReview) {
       },
       body: JSON.stringify(editedReview),
     });
-    console.log("updateReview:", response);
+
     const result = await response.json();
     return result;
   } catch (error) {
@@ -38,7 +38,7 @@ export async function postReviewApi(postrevObj) {
       },
       body: JSON.stringify(postrevObj),
     });
-    console.log("postReview:", response);
+
     const result = await response.json();
     return result;
   } catch (error) {
@@ -54,7 +54,7 @@ export async function deleteReviewApi(id) {
         "Content-Type": "application/json",
       },
     });
-    console.log("delete review:", response);
+
     const result = await response.json();
     return result;
   } catch (err) {

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import AddToCart from "./AddToCart";
 import { postReviewApi } from "../../api/reviews";
 import useAuth from "../../hooks/useAuth";
-import { Row, Col, Container, Card, Table, Alert } from "react-bootstrap";
+import { Row, Col, Container, Card } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function SingleItem() {
@@ -25,7 +25,6 @@ export default function SingleItem() {
       //gets the item
       async function getItemById() {
         const result = await fetchItem(itemId);
-        console.log("result getItemById: ", result);
         setItem(result.item);
         await fetchImg(result.item);
       }

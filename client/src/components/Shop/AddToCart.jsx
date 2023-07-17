@@ -6,15 +6,7 @@ import { postOrder } from "../../api/orders";
 import { patchOrderItem, postOrderItem } from "../../api/order_items";
 import { fetchMyCart } from "../../api/auth";
 import AddSuccessMessage from "./AddSuccessMessage";
-import {
-  Row,
-  Col,
-  Container,
-  Card,
-  Table,
-  Alert,
-  Button,
-} from "react-bootstrap";
+import { Row, Col, Container } from "react-bootstrap";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -22,8 +14,7 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
   const { pathname } = useLocation();
   const { itemId, category } = useParams();
   const { user, setUser } = useAuth();
-  const { cart, setCart, orderId, setOrderId, isCounted, setIsCounted } =
-    useCart();
+  const { cart, setCart, setOrderId, isCounted, setIsCounted } = useCart();
   const [quantity, setQuantity] = useState(item.quantity || 1);
   const [displayConfirmationModal, setDisplayConfirmationModal] =
     useState(false);
@@ -33,7 +24,6 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
   };
 
   function addNewCart() {
-    console.log("user", user);
     if (!cart.id) {
       async function postNewOrder() {
         const result = await postOrder(user.id);
@@ -67,8 +57,6 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
   }
   /////////////////////////////////////////////////////////////////
   function updateItems() {
-    console.log("item update", item);
-    console.log("cart update", cart);
     async function updateOrderItem() {
       const result = await patchOrderItem(
         item.order_item_id,
@@ -79,9 +67,7 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
       updateCart();
 
       setQuantity(1);
-      /*if (result.success) {
-        window.alert(result.message);
-      }*/
+
       if (result.success) {
         setDisplayConfirmationModal(true);
         setTimeout(() => setDisplayConfirmationModal(false), 1500);
@@ -93,10 +79,6 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
   }
   //////////////////////////////////////////////////////////
   function addNewItems() {
-    console.log("cart before addNewItems", cart);
-
-    console.log("item.quantity", item.quantity);
-    console.log("quantity", quantity);
     item.quantity = quantity;
 
     async function addOrderItem() {
@@ -104,9 +86,6 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
       setIsCounted(!isCounted);
       setCart(cart);
 
-      /*if (result.success) {
-        window.alert(result.message);
-      }*/
       if (result.success) {
         setDisplayConfirmationModal(true);
         setTimeout(() => setDisplayConfirmationModal(false), 1500);
@@ -120,7 +99,6 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
   ////////////////////////////////////////////////////////
   function updateCart() {
     setCart(cart);
-    localStorage.setItem("cart", JSON.stringify(cart));
   }
   ///////////////////////////////////////////////////
   useEffect(() => {
@@ -131,7 +109,6 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
       async function getMyCart() {
         const result = await fetchMyCart();
         if (result.success) {
-          console.log("result in getMyCart", result);
           setCart(result.order);
           return;
         } else {
@@ -171,7 +148,6 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
             thatItem.quantity += quantity;
           }
           thatItem.subtotal += item.subtotal;
-          localStorage.setItem("cart", JSON.stringify(cart));
           updateItems();
           updateCart();
           return;
@@ -198,7 +174,6 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
         cart.totalPrice += thisItem.cost * thisItem.quantity;
       }
       setThisQuantity(Number(quantity));
-      localStorage.setItem("cart", JSON.stringify(cart));
       updateItems();
       updateCart();
     }

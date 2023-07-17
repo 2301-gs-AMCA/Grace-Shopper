@@ -40,19 +40,6 @@ itemsRouter.get("/:itemId", async (req, res) => {
   });
 });
 
-/*
-//GET /api/items/:category
-itemsRouter.get("/:category", async (req, res) => {
-  const { category } = req.params;
-  const items = await getItemsByCategory(category);
-  res.send({
-    success: true,
-    message: "Got Category Items",
-    items,
-  });
-});
-*/
-
 //POST /api/items
 itemsRouter.post("/", authRequired, async (req, res, next) => {
   let image = "";
@@ -84,9 +71,6 @@ itemsRouter.post("/", authRequired, async (req, res, next) => {
         message: "Null value in required field",
       });
     }
-    // if(item){
-
-    // }
   } catch ({ name, message }) {
     next({ name, message });
   }

@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import { fetchGuest, fetchMe, registerUser } from "../api/auth";
+import { fetchGuest, fetchMe } from "../api/auth";
 // Create the context
 export const AuthContext = createContext();
 
@@ -17,7 +17,7 @@ const AuthProvider = ({ children }) => {
           setUser(result.user);
         } else {
           const result2 = await fetchGuest();
-          console.log("result2", result2);
+
           setUser(result2.user);
 
           setLoggedIn(true);

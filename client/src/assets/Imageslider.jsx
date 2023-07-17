@@ -1,7 +1,7 @@
 import SliderData from "./SliderData";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchItemByImg } from "../api/items";
+
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
 export default function Imageslider() {
   const nav = useNavigate();
