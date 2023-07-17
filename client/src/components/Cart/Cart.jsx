@@ -7,6 +7,8 @@ import AddToCart from "../Shop/AddToCart";
 import RemoveCartItem from "../Shop/RemoveCartItem";
 import { patchOrder } from "../../api/orders";
 import { fetchMyCart } from "../../api/auth";
+import { Row, Col, Container, Card, Table, Alert } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import { useNavigate, Link } from "react-router-dom";
 
@@ -93,29 +95,37 @@ export default function Cart() {
 
   return (
     <div className="cart">
-      <h1>Cart</h1>
-      <h2> Total Price: $ {cart.totalPrice ? cart.totalPrice : 0}</h2>
-      <div>
-        {cart.items &&
-          cart.items.map((item) => {
-            return (
-              <div key={item.id} className="item-card">
-                <p>Item: {item.name}</p>
-                <p>Price: ${item.cost}</p>
-                <p>Subtotal: ${item.cost * item.quantity}</p>
-                <AddToCart
-                  item={item}
-                  handleClick={handleClick}
-                  setThisQuantity={setThisQuantity}
-                />
-                <RemoveCartItem item={item} />
-              </div>
-            );
-          })}
-      </div>
-      <Link to={"http://localhost:5173/checkout"}>
-        <button className="checkout">Checkout</button>
-      </Link>
+      <Container>
+        <h1>Cart</h1>
+        <h2> Total Price: $ {cart.totalPrice ? cart.totalPrice : 0}</h2>
+        <div>
+          <Row>
+            <Card className="scroll">
+              <Col md={{ span: 10, offset: 2 }}>
+                {cart.items &&
+                  cart.items.map((item) => {
+                    return (
+                      <div key={item.id} className="item-card">
+                        <p>Item: {item.name}</p>
+                        <p>Price: ${item.cost}</p>
+                        <p>Subtotal: ${item.cost * item.quantity}</p>
+                        <AddToCart
+                          item={item}
+                          handleClick={handleClick}
+                          setThisQuantity={setThisQuantity}
+                        />
+                        <RemoveCartItem item={item} />
+                      </div>
+                    );
+                  })}
+              </Col>
+            </Card>
+          </Row>
+        </div>
+        <Link to={"http://localhost:5173/checkout"}>
+          <button className="checkout">Checkout</button>
+        </Link>
+      </Container>
     </div>
   );
 }
