@@ -1,10 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 
-import Navbar from "./components/Navbar";
-
 import Home from "./components/Home";
 import Footer from "./components/Footer";
-
+import Navbar from "./components/Navbar";
 import Profile from "./components/Profile";
 import Shop from "./components/Shop/Shop";
 import Cart from "./components/Cart/Cart";

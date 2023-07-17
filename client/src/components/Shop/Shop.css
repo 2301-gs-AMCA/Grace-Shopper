@@ -1,5 +1,4 @@
 .modal-dialog {
-  color: aquamarine;
   position: fixed;
   top: auto;
   right: 0;
@@ -10,7 +9,11 @@
 #remove_confirm {
   position: absolute;
   top: 30%;
-  left: 0%;
+  left: 10%;
+  background-color: white;
+  height: 250px;
+  border: 0.05em solid black;
+  border-radius: 15px;
 }
 
 #success {
