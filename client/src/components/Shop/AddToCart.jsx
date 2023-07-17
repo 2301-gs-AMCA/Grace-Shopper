@@ -173,7 +173,6 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
       for (let thisItem of cart.items) {
         cart.totalPrice += thisItem.cost * thisItem.quantity;
       }
-      setThisQuantity(Number(quantity));
       updateItems();
       updateCart();
     }
