@@ -14,7 +14,6 @@ export default function pupupEditWindow(props) {
     ///isnt null, then it will run the PATCH
     if (update != {}) {
       async function postUpdate() {
-        console.log(title, rating, review);
         try {
           const response = await updateReview(update);
           const result = await response.json();

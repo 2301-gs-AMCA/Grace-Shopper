@@ -5,7 +5,6 @@ import useAuth from "../../hooks/useAuth";
 import useCart from "../../hooks/useCart";
 import AddToCart from "../Shop/AddToCart";
 import RemoveCartItem from "../Shop/RemoveCartItem";
-import { patchOrder } from "../../api/orders";
 import { fetchMyCart } from "../../api/auth";
 import { Row, Col, Container, Card } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";

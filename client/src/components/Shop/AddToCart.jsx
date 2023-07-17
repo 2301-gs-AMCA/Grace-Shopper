@@ -99,7 +99,6 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
   ////////////////////////////////////////////////////////
   function updateCart() {
     setCart(cart);
-    //localStorage.setItem("cart", JSON.stringify(cart));
   }
   ///////////////////////////////////////////////////
   useEffect(() => {
@@ -149,7 +148,6 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
             thatItem.quantity += quantity;
           }
           thatItem.subtotal += item.subtotal;
-          //localStorage.setItem("cart", JSON.stringify(cart));
           updateItems();
           updateCart();
           return;
@@ -176,7 +174,6 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
         cart.totalPrice += thisItem.cost * thisItem.quantity;
       }
       setThisQuantity(Number(quantity));
-      //localStorage.setItem("cart", JSON.stringify(cart));
       updateItems();
       updateCart();
     }

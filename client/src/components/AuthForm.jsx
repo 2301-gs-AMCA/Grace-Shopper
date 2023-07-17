@@ -9,7 +9,7 @@ import useCart from "../hooks/useCart";
 export default function AuthForm() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const { user, setUser, setLoggedIn } = useAuth();
+  const { setUser } = useAuth();
   const { cart, setCart, setOrderId } = useCart();
 
   const [username, setUsername] = useState("");
@@ -23,14 +23,12 @@ export default function AuthForm() {
       let result;
       if (pathname === "/register") {
         result = await registerUser(username, password);
-        console.log("register result", result);
       } else {
         result = await login(username, password);
       }
 
       result && result.success
         ? (alert(result.message),
-          //setLoggedIn(true),
           setUser(result.user),
           updateCart(),
           setUsername(""),
@@ -56,9 +54,8 @@ export default function AuthForm() {
             orderId = result2.order.id;
             setOrderId(orderId);
           }
-          console.log("cart.items", cart.items);
+
           for (let item of cart.items) {
-            console.log("thisCart", thisCart);
             let found;
             if (thisCart.items) {
               found = thisCart.items.find(
@@ -82,7 +79,6 @@ export default function AuthForm() {
                   }
                   updateOrderItem();
                   setCart(cart);
-                  //localStorage.setItem("cart", JSON.stringify(cart));
                 }
               }
             } else {
