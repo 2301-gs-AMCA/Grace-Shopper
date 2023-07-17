@@ -84,7 +84,7 @@ export default function AddToCart({ item, handleClick, setThisQuantity }) {
       }*/
       if (result.success) {
         setDisplayConfirmationModal(true);
-        //setTimeout(() => setDisplayConfirmationModal(false), 1000);
+        setTimeout(() => setDisplayConfirmationModal(false), 1000);
       }
 
       return result.order_item;
