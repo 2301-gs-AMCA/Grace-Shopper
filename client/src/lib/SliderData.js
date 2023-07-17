@@ -1,9 +1,9 @@
 import { fetchImageByItemId } from "../api/assets";
 
-const collection = [];
 //builds initial seed of images for the slider for items in client.
 //may add a admin function to make it changeable.
-async function buildSlideshow() {
+export async function buildSlideshow() {
+  const collection = [];
   let initialSeed = 9;
   for (let i = 1; i <= initialSeed; i++) {
     const img = await fetchImageByItemId(i);
@@ -13,7 +13,3 @@ async function buildSlideshow() {
 
   return collection;
 }
-
-let SliderData = await buildSlideshow();
-
-export default SliderData;

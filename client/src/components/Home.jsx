@@ -1,5 +1,5 @@
 // import React from "react";
-import Imageslider from "../assets/Imageslider";
+import Imageslider from "./Imageslider";
 import { motion as m } from "framer-motion";
 import useAuth from "../hooks/useAuth";
 import { Link } from "react-router-dom";
