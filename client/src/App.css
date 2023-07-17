@@ -7,7 +7,6 @@
 .app,
 html {
   min-height: 100vh;
-  min-width: none;
   text-align: center;
   font-family: "Fira_Sans";
   color: #222823;
@@ -20,23 +19,26 @@ html {
   position: sticky;
   top: 0;
   justify-content: space-between;
-  align-items: center;
+  
   box-shadow: 1px 1px 1px 1px;
   border-radius: 6px;
   z-index: 1;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   font-style: italic;
 }
-
+.nav-header{
+  margin: 12px
+}
 .navlinks {
   display: flex;
   list-style: none;
   align-items: center;
   font-size: 1.25rem;
 }
-
+.shop-navlinks{
+  margin-right: 0;
+}
 .home-page {
-  width: 99vw;
   min-height: 75vh;
 }
 
@@ -199,17 +201,6 @@ html {
   text-align: center;
 }
 
-.userInfo {
-  display: flex;
-  flex-direction: column;
-  float: right;
-  align-items: right;
-  list-style: none;
-  font-size: 24px;
-  padding: 4rem;
-  border: 2px solid;
-  margin-right: 2rem;
-}
 
 .reviews {
   margin: auto;
@@ -236,12 +227,22 @@ html {
 #submit-review-container textarea {
   width: 200px;
 }
+.userInfo {
+  /* display: flex;
+  flex-direction: column; */
+  float: right;
+  list-style: none;
+  font-size: 24px;
+  padding: 4rem;
+  border: 2px solid;
+  margin-right: 2rem;
+  min-height: 43vh;
+}
 
 .itemsULike {
   display: flex;
   flex-direction: column;
-  float: left;
-  min-width: 60vw;
+  width: 60vw;
   min-height: 43vh;
   border: 2px solid;
 }
@@ -250,18 +251,17 @@ html {
   list-style: none;
 }
 
-.orderHistory {
+.buy-again {
   display: flex;
   flex-direction: column;
-  margin-top: 30rem;
+  margin-top: 5rem;
   border: 2px solid;
   min-height: 30vh;
 }
 
-.history {
+.buy-back {
   list-style: none;
 }
-
 .items-shop {
   min-height: 99vh;
   overflow: hidden;
@@ -361,10 +361,11 @@ html {
 }
 .counter {
   position: relative;
-  justify-content: center;
-  align-items: center;
-  top: 2.5rem;
-  right: 0.75rem;
+  /* justify-content: center;
+  align-items: center; */
+  /* top: 2.5rem; */
+  /* right: .75rem; */
+  left: .75rem;
   width: 20px;
   height: 20px;
   font-size: small;
@@ -439,4 +440,31 @@ html {
 
 #navbar {
   position: sticky;
+}
+@media (max-width: 930px){
+  .userInfo{
+    float: none;
+    padding: 2rem;
+    width: 80vw
+  }
+  .itemsULike{
+    margin-top: 2rem;
+    width: 80vw;
+  }
+  .buy-again{
+    margin-top: 2rem;
+    width: 80vw;
+  }
+  .navbar{
+    font-size: 24px;
+    text-align: center;
+  }
+  .nav-header{
+    text-align: center;
+  }
+  .navlinks{
+    font-size: 16px;
+    padding: 0;
+    margin: 0;
+  }
 }

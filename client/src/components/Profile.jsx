@@ -21,7 +21,6 @@ export default function Profile() {
 
   const [myOrders, setMyOrders] = useState();
 
-
   async function getOrders() {
     let order = await getMyOrders();
     console.log("my orders", order);
@@ -40,6 +39,7 @@ export default function Profile() {
       <h1 className="userHeader">Welcome, {user.username}!</h1>
       <div className="userInfo">
         <u>USER INFO</u>
+        <br></br>
         <br></br>
         <Link
           to={`/dashboard/orderHistory/${user.id}`}
@@ -72,9 +72,9 @@ export default function Profile() {
         </ul>
       </div>
       {/*//ORDER HISTORY TABLE///*/}
-      <div className="orderHistory">
+      <div className="buy-again">
         <h2>Buy Again</h2>
-        <ul className="history">
+        <ul className="buy-back">
           <li>Your Recently Ordered Items</li>
         </ul>
       </div>
