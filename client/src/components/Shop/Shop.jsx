@@ -11,7 +11,6 @@ export default function Shop() {
   async function getItems() {
     try {
       const result = await fetchAllItems();
-      console.log("result from getItems: ", result);
       setItems(result.items);
     } catch (error) {
       console.error(error);

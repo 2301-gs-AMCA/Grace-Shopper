@@ -11,7 +11,7 @@ import useAuth from "../../hooks/useAuth";
 export const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
-  const { user, setUser, loggedIn } = useAuth();
+  const { user } = useAuth();
   const [orderId, setOrderId] = useState(null);
   const [isCounted, setIsCounted] = useState(false);
   const [cart, setCart] = useState({
@@ -29,7 +29,6 @@ const CartProvider = ({ children }) => {
         const result = await fetchMyCart();
 
         if (result.success) {
-          console.log("result in getMyCart", result);
           setCart(result.order);
           return;
         } else {
@@ -65,9 +64,7 @@ const CartProvider = ({ children }) => {
       }*/
       getMyCart();
     }
-
   }, [user.id, cart.id, cart.isComplete, orderId, isCounted]);
-
 
   const contextValue = {
     cart,

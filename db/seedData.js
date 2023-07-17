@@ -16,7 +16,7 @@ const items = [
     isAvailable: true,
     itemCost: "15",
     itemDescription: "a soft bunny friend.",
-    itemCategory: "plush",
+    itemCategory: "Plush",
     inventory_qty: 50,
   },
   {
@@ -25,7 +25,7 @@ const items = [
     itemCost: "20",
     itemDescription:
       "a plush of your favorite blue trouble maker.Disney please don't sue.",
-    itemCategory: "plush",
+    itemCategory: "Plush",
     inventory_qty: 50,
   },
   {
@@ -33,7 +33,7 @@ const items = [
     isAvailable: true,
     itemCost: "50",
     itemDescription: "keeps your little guy cozy; in style.",
-    itemCategory: "pets",
+    itemCategory: "Pets",
     inventory_qty: 50,
   },
   {
@@ -41,7 +41,7 @@ const items = [
     isAvailable: true,
     itemCost: "20",
     itemDescription: "soft an dcomfortable.best to wear on a staycation.",
-    itemCategory: "shoes",
+    itemCategory: "Shoes",
     inventory_qty: 50,
   },
   {
@@ -50,7 +50,7 @@ const items = [
     itemCost: "10",
     itemDescription:
       "ever stubbed your toe and now you fell like its a bit off? this will help straighten and support your big toe",
-    itemCategory: "accessories",
+    itemCategory: "Accessories",
     inventory_qty: 50,
   },
   {
@@ -59,7 +59,7 @@ const items = [
     itemCost: "35",
     itemDescription:
       "from Gloriosum, this will be a perfect blanket for a chill night watching netflix",
-    itemCategory: "bedding",
+    itemCategory: "Bedding",
     inventory_qty: 50,
   },
   {
@@ -67,7 +67,7 @@ const items = [
     isAvailable: true,
     itemCost: "50",
     itemDescription: "a soft bed for your soft ,sometimes hostile, buddy",
-    itemCategory: "pets",
+    itemCategory: "Pets",
     inventory_qty: 50,
   },
   {
@@ -76,7 +76,7 @@ const items = [
     itemCost: "35",
     itemDescription:
       "a blanket that can also tell your future. its a comfortable one",
-    itemCategory: "bedding",
+    itemCategory: "Bedding",
     inventory_qty: 50,
   },
   {
@@ -85,7 +85,7 @@ const items = [
     itemCost: "40",
     itemDescription:
       "omniptent being under the stress of the bad vibes of the cosmos.help him out by getting yourself confy with this blanket or another of our great products!",
-    itemCategory: "accessories",
+    itemCategory: "Accessories",
     inventory_qty: 50,
   },
 ];

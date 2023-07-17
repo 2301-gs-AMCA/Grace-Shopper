@@ -7,8 +7,7 @@ export async function updateUserInfo(username) {
       },
       body: JSON.stringify(username),
     });
-    console.log(response);
-    return result;
+    return response;
   } catch (error) {
     throw error;
   }

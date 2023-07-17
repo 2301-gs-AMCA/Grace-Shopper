@@ -12,7 +12,7 @@ export async function getOrder(orderId) {
   try {
     const response = await fetch(`/api/order/${orderId}`);
     const result = await response.json();
-    console.log("result from getOrder");
+
     return result;
   } catch (error) {
     console.error(error);
@@ -34,7 +34,7 @@ export async function getCurrentOrder() {
   try {
     const response = await fetch(`/api/order/myOrders`);
     const result = await response.json();
-    console.log("result getCurrentOrder", result);
+
     if (result.success) {
       const result2 = result.orders[orders.length - 1];
       return result2;
@@ -69,7 +69,7 @@ export async function postOrder(userId) {
       }),
     });
     const result = await response.json();
-    console.log("result from postOrder: ", result);
+
     return result;
   } catch (error) {
     console.error(error);
@@ -86,7 +86,7 @@ export async function patchOrder(orderId, updatedOrder) {
       body: JSON.stringify(updatedOrder),
     });
     const result = await response.json();
-    console.log("result from patchOrder: ", result);
+
     return result;
   } catch (error) {
     console.error(error);

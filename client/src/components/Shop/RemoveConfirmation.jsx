@@ -1,15 +1,15 @@
 import { Modal, Button } from "react-bootstrap";
 import { useState } from "react";
+import "./Shop.css";
 
 export default function RemoveConfirmation({
   showModal,
   hideModal,
   confirmModal,
   item,
-  message,
 }) {
   return (
-    <Modal show={showModal} onHide={hideModal}>
+    <Modal id="remove_confirm" show={showModal} onHide={hideModal}>
       <Modal.Header>
         <Modal.Title>Remove Confirmation</Modal.Title>
       </Modal.Header>

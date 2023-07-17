@@ -1,7 +1,33 @@
 .modal-dialog {
   position: fixed;
-  top: 0;
+  top: auto;
   right: 0;
   left: auto;
-  bottom: auto;
+  bottom: 0;
+}
+
+#remove_confirm {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: white;
+  height: 250px;
+  border: thin solid black;
+  border-radius: 15px;
+  box-shadow: 3px 4px 6px #999;
+}
+
+#success {
+  height: 100%;
+  margin: none;
+  padding: none;
+}
+
+.modal-backdrop {
+  background-color: transparent;
+}
+
+.modal-content {
+  background-color: transparent;
+  border: 0;
 }

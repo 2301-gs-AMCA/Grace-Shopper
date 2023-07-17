@@ -1,5 +1,4 @@
 import { fetchImageByItemId } from "../api/assets";
-import useState from "react";
 
 const collection = [];
 //builds initial seed of images for the slider for items in client.

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import AddToCart from "./AddToCart";
 import { postReviewApi } from "../../api/reviews";
 import useAuth from "../../hooks/useAuth";
-import { Row, Col, Container, Card, Table, Alert } from "react-bootstrap";
+import { Row, Col, Container, Card } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function SingleItem() {
