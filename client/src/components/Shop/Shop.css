@@ -12,8 +12,9 @@
   left: 10%;
   background-color: white;
   height: 250px;
-  border: 0.05em solid black;
+  border: thin solid black;
   border-radius: 15px;
+  box-shadow: 3px 4px 6px #999;
 }
 
 #success {
